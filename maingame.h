@@ -10,5 +10,12 @@ class MainGame : public QMainWindow
 public:
     MainGame(QWidget *parent = nullptr);
     ~MainGame();
+
+public slots:
+    void update();
+
+private:
+    QTimer *timer;
+    int board[10][10];
 };
 #endif // MAINGAME_H
