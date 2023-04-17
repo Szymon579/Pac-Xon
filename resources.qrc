@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>assets/arrow_down.png</file>
+        <file>assets/arrow_left.png</file>
+        <file>assets/arrow_right.png</file>
+        <file>assets/arrow_up.png</file>
+        <file>assets/black_tile.png</file>
+        <file>assets/blue_tile.png</file>
+        <file>assets/pacman_down.png</file>
+        <file>assets/pacman_left.png</file>
+        <file>assets/pacman_right.png</file>
+        <file>assets/pacman_up.png</file>
+    </qresource>
+</RCC>

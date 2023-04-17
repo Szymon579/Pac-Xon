@@ -14,8 +14,12 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
-        maingame.cpp
-        maingame.h
+        player.cpp
+        player.h
+        board.cpp
+        board.h
+        resources.qrc
+
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
