@@ -27,7 +27,7 @@ Player::Player()
     buffer_up = false;
     buffer_down = false;
 
-    this->setRect(0, 0, player_width, player_height);
+    this->setRect(0, 0, player_size, player_size);
     this->setBrush(player_brush);
     this->setPen(Qt::NoPen);
     this->setFlag(QGraphicsItem::ItemIsFocusable);
@@ -63,25 +63,25 @@ void Player::keyPressEvent(QKeyEvent *event)
 
 void Player::checkDirectionChange()
 {
-    if(buffer_left && fmod(this->y(), 20) == 0) {
+    if(buffer_left && fmod(this->y(), player_size) == 0) {
         qDebug() << "left";
         direction = MoveDirection::left;
         player_texture = pacman_left;
         buffer_left = false;
     }
-    if(buffer_right && fmod(this->y(), 20) == 0) {
+    if(buffer_right && fmod(this->y(), player_size) == 0) {
         qDebug() << "right";
         direction = MoveDirection::right;
         player_texture = pacman_right;
         buffer_right = false;
     }
-    if(buffer_up && fmod(this->x(), 20) == 0) {
+    if(buffer_up && fmod(this->x(), player_size) == 0) {
         qDebug() << "up";
         direction = MoveDirection::up;
         player_texture = pacman_up;
         buffer_up = false;
     }
-    if(buffer_down && fmod(this->x(), 20) == 0) {
+    if(buffer_down && fmod(this->x(), player_size) == 0) {
         qDebug() << "down";
         direction = MoveDirection::down;
         player_texture = pacman_down;
@@ -97,22 +97,34 @@ void Player::borderControl()
     if(direction == MoveDirection::left && this->x() == 0) {
         direction = MoveDirection::none;
     }
-    if(direction == MoveDirection::right && this->x() == 900 - player_width) {
+    if(direction == MoveDirection::right && this->x() == 900 - player_size) {
         direction = MoveDirection::none;
     }
     if(direction == MoveDirection::up && this->y() == 0) {
         direction = MoveDirection::none;
     }
-    if(direction == MoveDirection::down && this->y() == 600 - player_height) {
+    if(direction == MoveDirection::down && this->y() == 600 - player_size) {
         direction = MoveDirection::none;
     }
 
+}
+
+void Player::positionOnBoard()
+{
+    if(fmod(this->x(), player_size) == 0)
+        x_pos = this->x() / player_size;
+
+    if(fmod(this->y(), player_size) == 0)
+        y_pos = this->y() / player_size;
+
+    qDebug() << "x_pos: " << x_pos << ", y_pos: " << y_pos;
 }
 
 void Player::movePlayer()
 {
     borderControl();
     checkDirectionChange();
+    positionOnBoard();
 
     if(direction == MoveDirection::left) {
         setPos(x() - step, y());

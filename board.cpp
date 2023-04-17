@@ -4,9 +4,11 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-Board::Board(QObject *parent)
+Board::Board(QGraphicsScene *scene, QObject *parent)
     : QObject{parent}
 {
+    this->scene = scene;
+
     initBoard();
 
     blue_tile_texture = QPixmap(":/assets/blue_tile.png");
@@ -35,14 +37,14 @@ void Board::initBoard()
     }
 }
 
-void Board::drawBoard(QGraphicsScene *scene)
+void Board::drawBoard()
 {
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
             QGraphicsRectItem *tile = new QGraphicsRectItem();
-            qDebug() << "iteration nr: " << i << ", " << j;
+            //qDebug() << "iteration nr: " << i << ", " << j;
             tile->setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
 
             if(board[i][j] == 1)
@@ -53,6 +55,9 @@ void Board::drawBoard(QGraphicsScene *scene)
             scene->addItem(tile);
         }
     }
+
+    qDebug() << "drawBoard called";
 }
+
 
 

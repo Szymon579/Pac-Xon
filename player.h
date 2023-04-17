@@ -24,6 +24,7 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void checkDirectionChange();
     void borderControl();
+    void positionOnBoard();
 
 public slots:
     void movePlayer();
@@ -31,9 +32,12 @@ public slots:
 private:
     MoveDirection direction;
 
+    int x_pos;
+    int y_pos;
+
     QPixmap player_texture;
-    qreal player_width = 20;
-    qreal player_height = 20;
+    qreal player_size = 20;
+
 
     //hold textures of player
     QPixmap pacman_left;

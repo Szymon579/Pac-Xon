@@ -2,6 +2,7 @@
 #define BOARD_H
 
 #include <QObject>
+#include <QGraphicsScene>
 #include <QGraphicsRectItem>
 #include <QPixmap>
 #include <QBrush>
@@ -11,14 +12,15 @@ class Board : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    explicit Board(QObject *parent = nullptr);
+    explicit Board(QGraphicsScene *scene, QObject *parent = nullptr);
 
-    void drawBoard(QGraphicsScene *scene);
+    void drawBoard();
 
 
 private:
     void initBoard();
 
+    QGraphicsScene *scene;
     static const int width = 45; //45
     static const int height = 30; //30
 
