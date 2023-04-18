@@ -98,5 +98,10 @@ void Board::drawTileBoard()
     qDebug() << "drawTileBoard called";
 }
 
+void Board::updateBoard(int x_pos, int y_pos)
+{
+    tile_board[y_pos][x_pos].setBrush(blue_brush);
+}
+
 
 

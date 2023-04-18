@@ -8,7 +8,7 @@
 
 class Player : public QObject, public QGraphicsRectItem
 {
-
+    Q_OBJECT
 public:
     Player();
 
@@ -26,11 +26,18 @@ public:
     void borderControl();
     void positionOnBoard();
 
+
+
 public slots:
     void movePlayer();
 
+signals:
+    void positionChanged(int x_pos, int y_pos);
+
 private:
     MoveDirection direction;
+
+    //int prev pos
 
     int x_pos;
     int y_pos;

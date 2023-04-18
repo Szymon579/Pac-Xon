@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
     Board *board = new Board(scene);
     //scene->addItem(board);
     //board->drawBoard();
+
     board->drawTileBoard();
 
     //adding player
@@ -27,10 +28,12 @@ int main(int argc, char *argv[])
     scene->addItem(player);
     player->setZValue(5);
 
+    QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
     //timer
     QTimer player_timer;
-    //QObject::connect(&player_timer, &QTimer::timeout, board, &Board::drawBoard);
+
+    //QObject::connect(&player_timer, &QTimer::timeout, board, &Board::drawTileBoard);
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     player_timer.start(10);
 

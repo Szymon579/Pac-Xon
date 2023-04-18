@@ -117,6 +117,8 @@ void Player::positionOnBoard()
     if(fmod(this->y(), player_size) == 0)
         y_pos = this->y() / player_size;
 
+    emit positionChanged(x_pos, y_pos); //to be received in board.cpp
+
     qDebug() << "x_pos: " << x_pos << ", y_pos: " << y_pos;
 }
 

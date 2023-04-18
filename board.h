@@ -17,6 +17,8 @@ public:
     void drawBoard();
     void drawTileBoard();
 
+public slots:
+    void updateBoard(int x_pos, int y_pos);
 
 private:
     void initBoard();
