@@ -10,6 +10,7 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     this->scene = scene;
 
     initBoard();
+    initTileBoard();
 
     blue_tile_texture = QPixmap(":/assets/blue_tile.png");
     blue_brush = QBrush(blue_tile_texture);
@@ -37,6 +38,26 @@ void Board::initBoard()
     }
 }
 
+void Board::initTileBoard()
+{
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            tile_board[i][j].setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
+            tile_board[i][j].setBrush(black_brush);
+
+            //top and bottom border
+            tile_board[0][j].setBrush(blue_brush);
+            tile_board[height - 1][j].setBrush(blue_brush);
+        }
+
+        //left and right border
+        tile_board[i][0].setBrush(blue_brush);
+        tile_board[i][width - 1].setBrush(blue_brush);
+    }
+}
+
 void Board::drawBoard()
 {
     for(int i = 0; i < height; i++)
@@ -57,6 +78,24 @@ void Board::drawBoard()
     }
 
     qDebug() << "drawBoard called";
+}
+
+void Board::drawTileBoard()
+{
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            if(board[i][j] == 1)
+                tile_board[i][j].setBrush(blue_brush);
+            else
+                tile_board[i][j].setBrush(black_brush);
+
+            scene->addItem(&tile_board[i][j]);
+        }
+    }
+
+    qDebug() << "drawTileBoard called";
 }
 
 

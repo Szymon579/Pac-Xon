@@ -15,10 +15,12 @@ public:
     explicit Board(QGraphicsScene *scene, QObject *parent = nullptr);
 
     void drawBoard();
+    void drawTileBoard();
 
 
 private:
     void initBoard();
+    void initTileBoard();
 
     QGraphicsScene *scene;
     static const int width = 45; //45
@@ -37,6 +39,8 @@ private:
 //        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
 //        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 //    };
+
+    QGraphicsRectItem tile_board[height][width];
 
     QPixmap blue_tile_texture;
     QPixmap black_tile_texture;

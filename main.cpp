@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
 
     Board *board = new Board(scene);
     //scene->addItem(board);
-    board->drawBoard();
+    //board->drawBoard();
+    board->drawTileBoard();
 
     //adding player
     Player *player = new Player();
