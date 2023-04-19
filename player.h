@@ -13,7 +13,9 @@ public:
     Player();
 
     qreal step = 1;
-    enum MoveDirection {
+
+    enum MoveDirection
+    {
         left,
         right,
         up,
@@ -25,8 +27,6 @@ public:
     void checkDirectionChange();
     void borderControl();
     void positionOnBoard();
-
-
 
 public slots:
     void movePlayer();
@@ -46,7 +46,7 @@ private:
     qreal player_size = 20;
 
 
-    //hold textures of player
+    //textures of player
     QPixmap pacman_left;
     QPixmap pacman_right;
     QPixmap pacman_up;

@@ -38,24 +38,24 @@ Player::Player()
 void Player::keyPressEvent(QKeyEvent *event)
 {
     if(event->key() == Qt::Key_Left) {
-        qDebug() << "left";
+        qDebug() << "left pressed";
         buffer_left = true;
     }
     if(event->key() == Qt::Key_Right) {
-        qDebug() << "right";
+        qDebug() << "right pressed";
         buffer_right = true;
     }
     if(event->key() == Qt::Key_Up) {
-        qDebug() << "up";
+        qDebug() << "up pressed";
         buffer_up = true;
     }
     if(event->key() == Qt::Key_Down) {
-        qDebug() << "down";
+        qDebug() << "down pressed";
         buffer_down = true;
     }
 
     if(event->key() == Qt::Key_P) {
-        qDebug() << "stop";
+        qDebug() << "stop pressed";
         direction = MoveDirection::none;
     }
 
@@ -119,7 +119,7 @@ void Player::positionOnBoard()
 
     emit positionChanged(x_pos, y_pos); //to be received in board.cpp
 
-    qDebug() << "x_pos: " << x_pos << ", y_pos: " << y_pos;
+    //qDebug() << "x_pos: " << x_pos << ", y_pos: " << y_pos;
 }
 
 void Player::movePlayer()
@@ -141,7 +141,7 @@ void Player::movePlayer()
         setPos(x(), y() + step);
     }
     if(direction == MoveDirection::none) {
-        //dont move;
+        //do not move;
     }
 
 }

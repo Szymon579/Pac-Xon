@@ -7,28 +7,34 @@
 #include <QPixmap>
 #include <QBrush>
 
-
 class Board : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
     explicit Board(QGraphicsScene *scene, QObject *parent = nullptr);
 
-    void drawBoard();
+    enum LogicBoard
+    {
+        blue,
+        black,
+        trace
+    };
+
+
     void drawTileBoard();
 
 public slots:
     void updateBoard(int x_pos, int y_pos);
 
 private:
-    void initBoard();
+    void initLogicBoard();
     void initTileBoard();
 
     QGraphicsScene *scene;
     static const int width = 45; //45
     static const int height = 30; //30
 
-    int board[height][width];
+    LogicBoard logic_board[height][width];
 //    {
 //        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 //        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -42,6 +48,7 @@ private:
 //        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
 //    };
 
+
     QGraphicsRectItem tile_board[height][width];
 
     QPixmap blue_tile_texture;
@@ -49,8 +56,6 @@ private:
 
     QBrush blue_brush;
     QBrush black_brush;
-
-
 
 };
 

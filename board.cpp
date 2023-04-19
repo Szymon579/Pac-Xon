@@ -9,7 +9,7 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 {
     this->scene = scene;
 
-    initBoard();
+    initLogicBoard();
     initTileBoard();
 
     blue_tile_texture = QPixmap(":/assets/blue_tile.png");
@@ -19,22 +19,22 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     black_brush = QBrush(black_tile_texture);
 }
 
-void Board::initBoard()
+void Board::initLogicBoard()
 {
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
-            board[i][j] = 0;
+            logic_board[i][j] = LogicBoard::black;
 
             //top and bottom border
-            board[0][j] = 1;
-            board[height - 1][j] = 1;
+            logic_board[0][j] = LogicBoard::blue;
+            logic_board[height - 1][j] = LogicBoard::blue;
         }
 
         //left and right border
-        board[i][0] = 1;
-        board[i][width - 1] = 1;
+        logic_board[i][0] = LogicBoard::blue;
+        logic_board[i][width - 1] = LogicBoard::blue;
     }
 }
 
@@ -58,35 +58,13 @@ void Board::initTileBoard()
     }
 }
 
-void Board::drawBoard()
-{
-    for(int i = 0; i < height; i++)
-    {
-        for(int j = 0; j < width; j++)
-        {
-            QGraphicsRectItem *tile = new QGraphicsRectItem();
-            //qDebug() << "iteration nr: " << i << ", " << j;
-            tile->setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
-
-            if(board[i][j] == 1)
-                tile->setBrush(blue_brush);
-            else
-                tile->setBrush(black_brush);
-
-            scene->addItem(tile);
-        }
-    }
-
-    qDebug() << "drawBoard called";
-}
-
 void Board::drawTileBoard()
 {
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
-            if(board[i][j] == 1)
+            if(logic_board[i][j] == LogicBoard::blue)
                 tile_board[i][j].setBrush(blue_brush);
             else
                 tile_board[i][j].setBrush(black_brush);
@@ -102,6 +80,7 @@ void Board::updateBoard(int x_pos, int y_pos)
 {
     tile_board[y_pos][x_pos].setBrush(blue_brush);
 }
+
 
 
 
