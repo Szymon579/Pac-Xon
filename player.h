@@ -35,16 +35,16 @@ signals:
     void positionChanged(int x_pos, int y_pos);
 
 private:
+    //player's current direction
     MoveDirection direction;
 
-    //int prev pos
-
+    //player's x and y cords
     int x_pos;
     int y_pos;
 
+
     QPixmap player_texture;
     qreal player_size = 20;
-
 
     //textures of player
     QPixmap pacman_left;

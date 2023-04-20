@@ -18,9 +18,6 @@ int main(int argc, char *argv[])
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
 
     Board *board = new Board(scene);
-    //scene->addItem(board);
-    //board->drawBoard();
-
     board->drawTileBoard();
 
     //adding player
@@ -36,7 +33,6 @@ int main(int argc, char *argv[])
     //QObject::connect(&player_timer, &QTimer::timeout, board, &Board::drawTileBoard);
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     player_timer.start(10);
-
 
     QGraphicsView *view = new QGraphicsView(scene);
     view->show();
