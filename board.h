@@ -30,6 +30,7 @@ private:
     void initLogicBoard();
     void initTileBoard();
     void logicBoardToTileBoard(LogicBoardEnum tile, int x, int y);
+
     void rememberTrace(int x, int y);
     void changeTraceToBlue();
 
@@ -53,21 +54,21 @@ private:
 
     QGraphicsRectItem tile_board[height][width];
 
-    bool drawing_trace;
 
+    bool drawing_trace;
     std::vector<std::pair<int, int>> trace_cords;
 
+
     QPixmap blue_tile_texture;
-    QPixmap black_tile_texture;
-
-    QPixmap border_tile_texture;
-    QPixmap trace_tile_texture;
-
-
     QBrush blue_brush;
+
+    QPixmap black_tile_texture;
     QBrush black_brush;
 
+    QPixmap border_tile_texture;
     QBrush border_brush;
+
+    QPixmap trace_tile_texture;
     QBrush trace_brush;
 
 };

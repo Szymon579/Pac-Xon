@@ -25,6 +25,25 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     trace_brush = QBrush(trace_tile_texture);
 }
 
+//setting tile burshes based on enum value
+void Board::drawTileBoard()
+{
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            if(logic_board[i][j] == LogicBoardEnum::border)
+                tile_board[i][j].setBrush(border_brush);
+            else
+                tile_board[i][j].setBrush(black_brush);
+
+            scene->addItem(&tile_board[i][j]);
+        }
+    }
+
+    qDebug() << "drawTileBoard called";
+}
+
 void Board::initLogicBoard()
 {
     for(int i = 0; i < height; i++)
@@ -94,25 +113,6 @@ void Board::changeTraceToBlue()
     }
 
     trace_cords.clear();
-}
-
-//setting tile burshes based on enum value
-void Board::drawTileBoard()
-{
-    for(int i = 0; i < height; i++)
-    {
-        for(int j = 0; j < width; j++)
-        {
-            if(logic_board[i][j] == LogicBoardEnum::border)
-                tile_board[i][j].setBrush(border_brush);
-            else
-                tile_board[i][j].setBrush(black_brush);
-
-            scene->addItem(&tile_board[i][j]);
-        }
-    }
-
-    qDebug() << "drawTileBoard called";
 }
 
 void Board::updateBoard(int x_pos, int y_pos)
