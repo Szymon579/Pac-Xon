@@ -4,6 +4,9 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
+//for board debug
+#include <iostream>
+
 Board::Board(QGraphicsScene *scene, QObject *parent)
     : QObject{parent}
 {
@@ -61,6 +64,8 @@ void Board::initLogicBoard()
         logic_board[i][0] = LogicBoardEnum::border;
         logic_board[i][width - 1] = LogicBoardEnum::border;
     }
+
+    //debugBoard();
 }
 
 void Board::initTileBoard()
@@ -112,8 +117,68 @@ void Board::changeTraceToBlue()
         tile_board[trace_cords[i].second][trace_cords[i].first].setBrush(blue_brush);
     }
 
+    if(trace_cords.size() != 0)
+    {
+        indexToFill();
+
+    }
+
     trace_cords.clear();
+    //indexToFill();
 }
+
+void Board::indexToFill()
+{
+    qDebug() << "indexToFill() called";
+    fillArea(2, 2);
+
+}
+
+void Board::fillArea(int y, int x)
+{
+    int help_y = y;
+    int help_x = x;
+
+    logic_board[help_y][help_x] = LogicBoardEnum::blue;
+    logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+
+    if (logic_board[help_y + 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y++;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y - 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y--;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y][help_x + 1] == LogicBoardEnum::black)
+    {
+        help_x++;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y][help_x - 1] == LogicBoardEnum::black)
+    {
+        help_x--;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    else
+    {
+        return;
+    }
+
+    debugBoard();
+}
+
+
 
 void Board::updateBoard(int x_pos, int y_pos)
 {
@@ -131,6 +196,7 @@ void Board::updateBoard(int x_pos, int y_pos)
 
     if(!drawing_trace)
     {
+        qDebug() << "drawing_trace = false";
         changeTraceToBlue();
     }
 
@@ -144,6 +210,38 @@ void Board::updateBoard(int x_pos, int y_pos)
     //TODO: check if pacman is on blue already or if
     //      he is drawing a trace on black area
     logic_board[y_pos][x_pos] = LogicBoardEnum::blue;
+}
+
+
+
+
+
+void Board::debugBoard()
+{
+    std::cout << "debugBoard called" << std::endl;
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            switch(logic_board[i][j])
+            {
+            case blue:
+                std::cout << "1 ";
+                break;
+            case black:
+                std::cout << "0 ";
+                break;
+            case trace:
+                std::cout << "3 ";
+                break;
+            case border:
+                std::cout << "4 ";
+                break;
+            }
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }
 
 

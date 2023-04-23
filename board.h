@@ -34,6 +34,9 @@ private:
     void rememberTrace(int x, int y);
     void changeTraceToBlue();
 
+    void indexToFill();
+    void fillArea(int y, int x);
+
     QGraphicsScene *scene;
     static const int width = 45; //45
     static const int height = 30; //30
@@ -70,6 +73,8 @@ private:
 
     QPixmap trace_tile_texture;
     QBrush trace_brush;
+
+    void debugBoard();
 
 };
 
