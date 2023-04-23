@@ -32,7 +32,8 @@ public slots:
     void movePlayer();
 
 signals:
-    void positionChanged(int x_pos, int y_pos);
+    void positionChanged(int y_pos, int x_pos);
+    //void positionChanged(int x_pos, int y_pos);
 
 private:
     //player's current direction

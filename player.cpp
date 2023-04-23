@@ -122,8 +122,8 @@ void Player::positionOnBoard()
 
 
     if(prev_x != x_pos || prev_y != y_pos)
-        emit positionChanged(x_pos, y_pos); //to be received in board.cpp
-        //qDebug() << "x_pos: " << x_pos << ", y_pos: " << y_pos;
+        emit positionChanged(y_pos, x_pos); //to be received in board.cpp
+
 }
 
 void Player::movePlayer()

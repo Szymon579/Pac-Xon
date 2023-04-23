@@ -24,14 +24,14 @@ public:
     void drawTileBoard();
 
 public slots:
-    void updateBoard(int x_pos, int y_pos);
+    void updateBoard(int y_pos, int x_pos);
 
 private:
     void initLogicBoard();
     void initTileBoard();
     void logicBoardToTileBoard(LogicBoardEnum tile, int x, int y);
 
-    void rememberTrace(int x, int y);
+    void rememberTrace(int y, int x);
     void changeTraceToBlue();
 
     void indexToFill();
@@ -60,6 +60,7 @@ private:
 
     bool drawing_trace;
     std::vector<std::pair<int, int>> trace_cords;
+    std::pair<int, int> first_trace;
 
 
     QPixmap blue_tile_texture;

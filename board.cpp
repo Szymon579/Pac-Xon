@@ -76,7 +76,6 @@ void Board::initTileBoard()
         for(int j = 0; j < width; j++)
         {
             tile_board[i][j].setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
-
         }
     }
 }
@@ -100,38 +99,39 @@ void Board::logicBoardToTileBoard(LogicBoardEnum tile, int x, int y)
     }
 }
 
-void Board::rememberTrace(int x, int y)
+void Board::rememberTrace(int y, int x)
 {
     std::pair<int, int> cords;
     cords.first = y;
     cords.second = x;
 
     trace_cords.push_back(cords);
-    qDebug() << "pushed to trace_cords x: " << cords.first << ", y: " << cords.second;
+    qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
 }
 
 void Board::changeTraceToBlue()
 {
     for(int i = 0; i < trace_cords.size(); i++)
     {
-        tile_board[trace_cords[i].second][trace_cords[i].first].setBrush(blue_brush);
+        tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(blue_brush);
     }
 
     if(trace_cords.size() != 0)
     {
+        first_trace = trace_cords.front();
         indexToFill();
-
     }
 
     trace_cords.clear();
-    //indexToFill();
 }
 
 void Board::indexToFill()
 {
-    qDebug() << "indexToFill() called";
-    fillArea(2, 2);
+    qDebug() << "indexToFill() calle for y: " << first_trace.first <<
+                ", x: " << first_trace.second;
 
+    fillArea(first_trace.first + 1, first_trace.second + 1);
+    debugBoard();
 }
 
 void Board::fillArea(int y, int x)
@@ -174,13 +174,11 @@ void Board::fillArea(int y, int x)
     {
         return;
     }
-
-    debugBoard();
 }
 
 
 
-void Board::updateBoard(int x_pos, int y_pos)
+void Board::updateBoard(int y_pos, int x_pos)
 {
     if(logic_board[y_pos][x_pos] == LogicBoardEnum::border ||
        logic_board[y_pos][x_pos] == LogicBoardEnum::blue)
@@ -207,13 +205,8 @@ void Board::updateBoard(int x_pos, int y_pos)
     }
 
 
-    //TODO: check if pacman is on blue already or if
-    //      he is drawing a trace on black area
     logic_board[y_pos][x_pos] = LogicBoardEnum::blue;
 }
-
-
-
 
 
 void Board::debugBoard()
