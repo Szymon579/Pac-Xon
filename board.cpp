@@ -80,21 +80,21 @@ void Board::initTileBoard()
     }
 }
 
-void Board::logicBoardToTileBoard(LogicBoardEnum tile, int x, int y)
+void Board::logicBoardToTileBoard(LogicBoardEnum tile, int y, int x)
 {
     switch(tile)
     {
     case blue:
-        tile_board[x][y].setBrush(blue_brush);
+        tile_board[y][x].setBrush(blue_brush);
         break;
     case black:
-        tile_board[x][y].setBrush(black_brush);
+        tile_board[y][x].setBrush(black_brush);
         break;
     case border:
-        tile_board[x][y].setBrush(border_brush);
+        tile_board[y][x].setBrush(border_brush);
         break;
     case trace:
-        tile_board[x][y].setBrush(trace_brush);
+        tile_board[y][x].setBrush(trace_brush);
         break;
     }
 }
@@ -126,13 +126,56 @@ void Board::changeTraceToBlue()
 }
 
 void Board::indexToFill()
-{
+{ 
     qDebug() << "indexToFill() calle for y: " << first_trace.first <<
                 ", x: " << first_trace.second;
 
     fillArea(first_trace.first + 1, first_trace.second + 1);
     debugBoard();
 }
+
+void Board::fillAreaLogic(int y, int x)
+{
+    int help_y = y;
+    int help_x = x;
+
+    logic_board[help_y][help_x] = LogicBoardEnum::blue;
+    logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+
+    if (logic_board[help_y + 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y++;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y - 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y--;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y][help_x + 1] == LogicBoardEnum::black)
+    {
+        help_x++;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[help_y][help_x - 1] == LogicBoardEnum::black)
+    {
+        help_x--;
+        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    else
+    {
+        return;
+    }
+}
+
 
 void Board::fillArea(int y, int x)
 {

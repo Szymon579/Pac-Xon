@@ -18,6 +18,8 @@ set(PROJECT_SOURCES
         player.h
         board.cpp
         board.h
+        ghost.cpp
+        ghost.h
         resources.qrc
 
 )

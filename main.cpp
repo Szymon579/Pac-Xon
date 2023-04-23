@@ -1,6 +1,7 @@
 //#include "logic.h"
 #include "player.h"
 #include "board.h"
+#include "ghost.h"
 
 #include <QObject>
 #include <QApplication>
@@ -19,6 +20,9 @@ int main(int argc, char *argv[])
 
     Board *board = new Board(scene);
     board->drawTileBoard();
+
+    Ghost *ghost = new Ghost();
+    scene->addItem(ghost);
 
     //adding player
     Player *player = new Player();

@@ -29,12 +29,13 @@ public slots:
 private:
     void initLogicBoard();
     void initTileBoard();
-    void logicBoardToTileBoard(LogicBoardEnum tile, int x, int y);
+    void logicBoardToTileBoard(LogicBoardEnum tile, int y, int x);
 
     void rememberTrace(int y, int x);
     void changeTraceToBlue();
 
     void indexToFill();
+    void fillAreaLogic(int y, int x);
     void fillArea(int y, int x);
 
     QGraphicsScene *scene;

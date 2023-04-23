@@ -12,5 +12,6 @@
         <file>assets/pacman_up.png</file>
         <file>assets/border_tile.png</file>
         <file>assets/trace_tile.png</file>
+        <file>assets/ghost.png</file>
     </qresource>
 </RCC>
