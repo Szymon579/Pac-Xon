@@ -13,4 +13,25 @@ Ghost::Ghost()
     this->setPen(Qt::NoPen);
     this->setFlag(QGraphicsItem::ItemIsFocusable);
 
+    direction = GhostDirection::rightDown;
+
+}
+
+void Ghost::moveGhost()
+{
+    if(direction == GhostDirection::leftUp) {
+        setPos(x() - step, y() - step);
+    }
+    if(direction == GhostDirection::leftDown) {
+        setPos(x() - step, y() + step);
+    }
+    if(direction == GhostDirection::rightUp) {
+        setPos(x() + step, y() - step);
+    }
+    if(direction == GhostDirection::rightDown) {
+        setPos(x() + step, y() + step);
+    }
+    if(direction == GhostDirection::none) {
+        //do not move;
+    }
 }

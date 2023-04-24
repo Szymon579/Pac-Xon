@@ -9,13 +9,31 @@ class Ghost : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    explicit Ghost();
+    Ghost(); //explicit
+
+    enum GhostDirection
+    {
+        leftUp,
+        leftDown,
+        rightUp,
+        rightDown,
+        none
+    };
+
+
+    void changeDirection();
 
 signals:
+
+public slots:
+    void moveGhost();
 
 private:
     QPixmap ghost_texture;
     qreal ghost_size = 20;
+
+    qreal step = 0.5;
+    GhostDirection direction;
 
 };
 

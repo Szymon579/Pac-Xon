@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     //timer
     QTimer player_timer;
 
-    //QObject::connect(&player_timer, &QTimer::timeout, board, &Board::drawTileBoard);
+    QObject::connect(&player_timer, &QTimer::timeout, ghost, &Ghost::moveGhost);
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     player_timer.start(10);
 
