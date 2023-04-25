@@ -31,9 +31,11 @@ int main(int argc, char *argv[])
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
-    //timer
-    QTimer player_timer;
+    //caousing some problems
+    QObject::connect(ghost, &Ghost::checkMove, board, &Board::checkBoard);
+    QObject::connect(board, &Board::borderHit, ghost, &Ghost::changeDirection);
 
+    QTimer player_timer;
     QObject::connect(&player_timer, &QTimer::timeout, ghost, &Ghost::moveGhost);
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     player_timer.start(10);

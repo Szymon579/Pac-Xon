@@ -21,13 +21,17 @@ public:
         trace   //trace drawn by the player before closing with border
     };
 
+
     void drawTileBoard();
+
 
 public slots:
     void updateBoard(int y_pos, int x_pos);
+    void checkBoard(int y_pos, int x_pos);
 
 signals:
-    void boardUpdated(Board::LogicBoardEnum logic_board[30][45]);
+    void boardUpdated();
+    void borderHit();
 
 private:
     void initLogicBoard();
@@ -44,6 +48,7 @@ private:
     QGraphicsScene *scene;
     static const int width = 45; //45
     static const int height = 30; //30
+
 
     LogicBoardEnum logic_board[height][width];
 //    {

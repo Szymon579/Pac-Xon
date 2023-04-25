@@ -250,7 +250,18 @@ void Board::updateBoard(int y_pos, int x_pos)
 
     logic_board[y_pos][x_pos] = LogicBoardEnum::blue;
 
-    emit boardUpdated(logic_board);
+    emit boardUpdated();
+}
+
+void Board::checkBoard(int y_pos, int x_pos)
+{
+    qDebug() << "checkBoard()";
+    if(logic_board[y_pos][x_pos] != LogicBoardEnum::black)
+    {
+        emit borderHit();
+        qDebug() << "borderHit emited"; //this is called in a loop
+    }
+
 }
 
 

@@ -20,11 +20,10 @@ public:
         none
     };
 
-
     void changeDirection();
 
 signals:
-    void checkBoardState();
+    void checkMove(int y_pos, int x_pos);
 
 public slots:
     void moveGhost();
@@ -35,6 +34,10 @@ private:
 
     qreal step = 0.5;
     GhostDirection direction;
+
+    void positionOnBoard();
+    int x_pos;
+    int y_pos;
 
 };
 
