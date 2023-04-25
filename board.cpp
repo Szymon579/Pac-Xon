@@ -249,6 +249,8 @@ void Board::updateBoard(int y_pos, int x_pos)
 
 
     logic_board[y_pos][x_pos] = LogicBoardEnum::blue;
+
+    emit boardUpdated(logic_board);
 }
 
 

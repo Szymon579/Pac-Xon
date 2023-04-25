@@ -24,6 +24,7 @@ public:
     void changeDirection();
 
 signals:
+    void checkBoardState();
 
 public slots:
     void moveGhost();

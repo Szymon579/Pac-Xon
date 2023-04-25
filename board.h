@@ -26,6 +26,9 @@ public:
 public slots:
     void updateBoard(int y_pos, int x_pos);
 
+signals:
+    void boardUpdated(Board::LogicBoardEnum logic_board[30][45]);
+
 private:
     void initLogicBoard();
     void initTileBoard();
