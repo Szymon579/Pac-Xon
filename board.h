@@ -27,11 +27,15 @@ public:
 
 public slots:
     void updateBoard(int y_pos, int x_pos);
+
+    //checks surroundings of a given point in enum array
     void checkBoard(int y_pos, int x_pos);
 
 signals:
     void boardUpdated();
-    void borderHit();
+
+    //emits signal with flags corresponding to surroundings of a point
+    void borderHit(bool left, bool right, bool up, bool down);
 
 private:
     void initLogicBoard();
@@ -42,7 +46,7 @@ private:
     void changeTraceToBlue();
 
     void indexToFill();
-    void fillAreaLogic(int y, int x);
+    void fillAreaLogic(int y, int x); //prob depreciated
     void fillArea(int y, int x);
 
     QGraphicsScene *scene;

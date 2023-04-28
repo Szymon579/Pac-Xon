@@ -23,19 +23,58 @@ Ghost::Ghost()
 
 }
 
-void Ghost::changeDirection()
+void Ghost::changeDirection(bool flag_left, bool flag_right, bool flag_up, bool flag_down)
 {
     qDebug() << "changeDirection()";
-    if(direction == GhostDirection::rightDown)
+
+    //handle rightDown
+    if(direction == GhostDirection::rightDown && flag_down)
     {
-        qDebug() << "dir changed";
-        direction = GhostDirection::leftUp;
+        direction = GhostDirection::rightUp;
+        return;
     }
-    //if(direction == GhostDirection::leftUp)
-    //{
-    //    qDebug() << "dir changed";
-    //    direction = GhostDirection::rightDown;
-    //}
+    if(direction == GhostDirection::rightDown && flag_right)
+    {
+        direction = GhostDirection::leftDown;
+        return;
+    }
+
+    //handle rightUp
+    if(direction == GhostDirection::rightUp && flag_up)
+    {
+        direction = GhostDirection::rightDown;
+        return;
+    }
+    if(direction == GhostDirection::rightUp && flag_right)
+    {
+        direction = GhostDirection::leftUp;
+        return;
+    }
+
+    //handle leftDown
+    if(direction == GhostDirection::leftDown && flag_down)
+    {
+        direction = GhostDirection::leftUp;
+        return;
+    }
+    if(direction == GhostDirection::leftDown && flag_left)
+    {
+        direction = GhostDirection::rightDown;
+        return;
+    }
+
+    //handle leftUp
+    if(direction == GhostDirection::leftUp && flag_up)
+    {
+        direction = GhostDirection::leftDown;
+        return;
+    }
+    if(direction == GhostDirection::leftUp && flag_left)
+    {
+        direction = GhostDirection::rightUp;
+        return;
+    }
+
 }
 
 void Ghost::moveGhost()
@@ -43,22 +82,28 @@ void Ghost::moveGhost()
     positionOnBoard();
 
     qDebug() << "before checkMove emit in moveGhost";
-    emit checkMove(y_pos, x_pos);
+
+    emit checkTile(y_pos, x_pos); //to baord.cpp
+
     qDebug() << "after checkMove emit in moveGhost";
     //board.cpp check whats under [x][y]
 
 
 
     if(direction == GhostDirection::leftUp) {
+        emit checkTile(y_pos - 1, x_pos - 1);
         setPos(x() - step, y() - step);
     }
     if(direction == GhostDirection::leftDown) {
+        emit checkTile(y_pos + 1, x_pos - 1);
         setPos(x() - step, y() + step);
     }
     if(direction == GhostDirection::rightUp) {
+        emit checkTile(y_pos - 1, x_pos + 1);
         setPos(x() + step, y() - step);
     }
     if(direction == GhostDirection::rightDown) {
+        emit checkTile(y_pos + 1, x_pos + 1);
         setPos(x() + step, y() + step);
     }
     if(direction == GhostDirection::none) {

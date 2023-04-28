@@ -20,10 +20,10 @@ public:
         none
     };
 
-    void changeDirection();
+    void changeDirection(bool left, bool right, bool up, bool down);
 
 signals:
-    void checkMove(int y_pos, int x_pos);
+    void checkTile(int y_pos, int x_pos);
 
 public slots:
     void moveGhost();

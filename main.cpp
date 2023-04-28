@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
     //caousing some problems
-    QObject::connect(ghost, &Ghost::checkMove, board, &Board::checkBoard);
+    QObject::connect(ghost, &Ghost::checkTile, board, &Board::checkBoard);
     QObject::connect(board, &Board::borderHit, ghost, &Ghost::changeDirection);
 
     QTimer player_timer;

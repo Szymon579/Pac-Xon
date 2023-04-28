@@ -134,49 +134,6 @@ void Board::indexToFill()
     debugBoard();
 }
 
-void Board::fillAreaLogic(int y, int x)
-{
-    int help_y = y;
-    int help_x = x;
-
-    logic_board[help_y][help_x] = LogicBoardEnum::blue;
-    logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
-
-    if (logic_board[help_y + 1][help_x] == LogicBoardEnum::black)
-    {
-        help_y++;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
-        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
-        fillArea(help_y, help_x);
-    }
-    if (logic_board[help_y - 1][help_x] == LogicBoardEnum::black)
-    {
-        help_y--;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
-        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
-        fillArea(help_y, help_x);
-    }
-    if (logic_board[help_y][help_x + 1] == LogicBoardEnum::black)
-    {
-        help_x++;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
-        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
-        fillArea(help_y, help_x);
-    }
-    if (logic_board[help_y][help_x - 1] == LogicBoardEnum::black)
-    {
-        help_x--;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
-        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
-        fillArea(help_y, help_x);
-    }
-    else
-    {
-        return;
-    }
-}
-
-
 void Board::fillArea(int y, int x)
 {
     int help_y = y;
@@ -256,18 +213,29 @@ void Board::updateBoard(int y_pos, int x_pos)
 void Board::checkBoard(int y_pos, int x_pos)
 {
     qDebug() << "checkBoard()";
-    if(logic_board[y_pos][x_pos] != LogicBoardEnum::black)
-    {
-        emit borderHit();
-        qDebug() << "borderHit emited"; //this is called in a loop
-    }
+
+    bool left = false;
+    bool right = false;
+    bool up = false;
+    bool down = false;
+
+    if(logic_board[y_pos][x_pos-1] != LogicBoardEnum::black)
+        left = true;
+    if(logic_board[y_pos][x_pos+1] != LogicBoardEnum::black)
+        right = true;
+    if(logic_board[y_pos-1][x_pos] != LogicBoardEnum::black)
+        up = true;
+    if(logic_board[y_pos+1][x_pos] != LogicBoardEnum::black)
+        down = true;
+
+    emit borderHit(left, right, up, down);
 
 }
 
 
 void Board::debugBoard()
 {
-    std::cout << "debugBoard called" << std::endl;
+    std::cout << "debugBoard() called" << std::endl;
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
