@@ -83,27 +83,22 @@ void Ghost::moveGhost()
 
     qDebug() << "before checkMove emit in moveGhost";
 
-    emit checkTile(y_pos, x_pos); //to baord.cpp
-
-    qDebug() << "after checkMove emit in moveGhost";
-    //board.cpp check whats under [x][y]
-
-
+    emit checkTile(y_pos, x_pos);
 
     if(direction == GhostDirection::leftUp) {
-        emit checkTile(y_pos - 1, x_pos - 1);
+        //emit checkTile(y_pos - 1, x_pos - 1);
         setPos(x() - step, y() - step);
     }
     if(direction == GhostDirection::leftDown) {
-        emit checkTile(y_pos + 1, x_pos - 1);
+        //emit checkTile(y_pos + 1, x_pos - 1);
         setPos(x() - step, y() + step);
     }
     if(direction == GhostDirection::rightUp) {
-        emit checkTile(y_pos - 1, x_pos + 1);
+        //emit checkTile(y_pos - 1, x_pos + 1);
         setPos(x() + step, y() - step);
     }
     if(direction == GhostDirection::rightDown) {
-        emit checkTile(y_pos + 1, x_pos + 1);
+        //emit checkTile(y_pos + 1, x_pos + 1);
         setPos(x() + step, y() + step);
     }
     if(direction == GhostDirection::none) {
