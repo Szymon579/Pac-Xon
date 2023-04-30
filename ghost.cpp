@@ -5,7 +5,7 @@
 
 Ghost::Ghost()
 {
-    ghost_texture = QPixmap(":/assets/ghost.png");
+    ghost_texture = QPixmap(":/assets/ghost_white.png");
     QBrush ghost_brush(ghost_texture);
 
     y_pos = 4;
@@ -79,9 +79,9 @@ void Ghost::changeDirection(bool flag_left, bool flag_right, bool flag_up, bool 
 
 void Ghost::moveGhost()
 {
-    positionOnBoard();
-
     qDebug() << "before checkMove emit in moveGhost";
+
+    positionOnBoard();
 
     emit checkTile(y_pos, x_pos);
 

@@ -4,7 +4,6 @@
 #include <QGraphicsScene>
 #include <QDebug>
 
-//for board debug
 #include <iostream>
 
 Board::Board(QGraphicsScene *scene, QObject *parent)
@@ -15,16 +14,16 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     initLogicBoard();
     initTileBoard();
 
-    blue_tile_texture = QPixmap(":/assets/blue_tile.png");
+    blue_tile_texture = QPixmap(":/assets/tile_blue.png");
     blue_brush = QBrush(blue_tile_texture);
 
-    black_tile_texture = QPixmap(":/assets/black_tile.png");
+    black_tile_texture = QPixmap(":/assets/tile_black.png");
     black_brush = QBrush(black_tile_texture);
 
-    border_tile_texture = QPixmap(":/assets/border_tile.png");
+    border_tile_texture = QPixmap(":/assets/tile_border.png");
     border_brush = QBrush(border_tile_texture);
 
-    trace_tile_texture = QPixmap(":/assets/trace_tile.png");
+    trace_tile_texture = QPixmap(":/assets/tile_red.png");
     trace_brush = QBrush(trace_tile_texture);
 }
 
@@ -138,6 +137,11 @@ void Board::fillArea(int y, int x)
 {
     int help_y = y;
     int help_x = x;
+
+    //get ghost position
+    //if ghost position in fillArea -> abort
+
+    //ghost cord kept in logic board
 
     logic_board[help_y][help_x] = LogicBoardEnum::blue;
     logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
