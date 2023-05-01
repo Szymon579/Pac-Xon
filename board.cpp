@@ -14,7 +14,7 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     initLogicBoard();
     initTileBoard();
 
-    blue_tile_texture = QPixmap(":/assets/tile_blue.png");
+    blue_tile_texture = QPixmap(":/assets/tile_border.png");
     blue_brush = QBrush(blue_tile_texture);
 
     black_tile_texture = QPixmap(":/assets/tile_black.png");
@@ -105,7 +105,8 @@ void Board::rememberTrace(int y, int x)
     cords.second = x;
 
     trace_cords.push_back(cords);
-    qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
+
+    //qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
 }
 
 void Board::changeTraceToBlue()
@@ -198,7 +199,7 @@ void Board::updateBoard(int y_pos, int x_pos)
 
     if(!drawing_trace)
     {
-        qDebug() << "drawing_trace = false";
+        //qDebug() << "drawing_trace = false";
         changeTraceToBlue();
     }
 
@@ -216,7 +217,7 @@ void Board::updateBoard(int y_pos, int x_pos)
 
 void Board::checkBoard(int y_pos, int x_pos)
 {
-    qDebug() << "checkBoard()";
+    //qDebug() << "checkBoard()";
 
     bool left = false;
     bool right = false;

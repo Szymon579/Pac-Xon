@@ -9,8 +9,6 @@ class Ghost : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Ghost(); //explicit
-
     enum GhostDirection
     {
         leftUp,
@@ -19,6 +17,10 @@ public:
         rightDown,
         none
     };
+
+    Ghost(int y, int x, GhostDirection init_direction); //explicit
+
+
 
     void changeDirection(bool left, bool right, bool up, bool down);
 

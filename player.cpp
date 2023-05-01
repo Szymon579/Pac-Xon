@@ -64,25 +64,25 @@ void Player::keyPressEvent(QKeyEvent *event)
 void Player::checkDirectionChange()
 {
     if(buffer_left && fmod(this->y(), player_size) == 0) {
-        qDebug() << "left";
+        //qDebug() << "left";
         direction = MoveDirection::left;
         player_texture = pacman_left;
         buffer_left = false;
     }
     if(buffer_right && fmod(this->y(), player_size) == 0) {
-        qDebug() << "right";
+        //qDebug() << "right";
         direction = MoveDirection::right;
         player_texture = pacman_right;
         buffer_right = false;
     }
     if(buffer_up && fmod(this->x(), player_size) == 0) {
-        qDebug() << "up";
+        //qDebug() << "up";
         direction = MoveDirection::up;
         player_texture = pacman_up;
         buffer_up = false;
     }
     if(buffer_down && fmod(this->x(), player_size) == 0) {
-        qDebug() << "down";
+        //qDebug() << "down";
         direction = MoveDirection::down;
         player_texture = pacman_down;
         buffer_down = false;

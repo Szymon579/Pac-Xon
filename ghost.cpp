@@ -3,13 +3,13 @@
 #include <QBrush>
 #include <QPen>
 
-Ghost::Ghost()
+Ghost::Ghost(int y, int x, GhostDirection init_direction)
 {
     ghost_texture = QPixmap(":/assets/ghost_white.png");
     QBrush ghost_brush(ghost_texture);
 
-    y_pos = 4;
-    x_pos = 4;
+    y_pos = y;
+    x_pos = x;
 
                 // y_pos * 20
     this->setRect(0, 0, ghost_size, ghost_size);
@@ -19,13 +19,15 @@ Ghost::Ghost()
 
     this->setPos(x_pos * 20, y_pos * 20);
 
-    direction = GhostDirection::rightDown;
+    direction = init_direction;
+
+
 
 }
 
 void Ghost::changeDirection(bool flag_left, bool flag_right, bool flag_up, bool flag_down)
 {
-    qDebug() << "changeDirection()";
+    //qDebug() << "changeDirection()";
 
     //handle rightDown
     if(direction == GhostDirection::rightDown && flag_down)
@@ -79,8 +81,6 @@ void Ghost::changeDirection(bool flag_left, bool flag_right, bool flag_up, bool 
 
 void Ghost::moveGhost()
 {
-    qDebug() << "before checkMove emit in moveGhost";
-
     positionOnBoard();
 
     emit checkTile(y_pos, x_pos);
