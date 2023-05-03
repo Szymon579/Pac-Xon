@@ -31,13 +31,15 @@ private:
 
     Ghost *ghost_2 = new Ghost(15, 25, Ghost::rightUp);
 
-
     //adding player
     Player *player = new Player();
 
     QGraphicsView *view = new QGraphicsView(scene);
 
     QTimer player_timer;
+
+    std::vector<std::pair<int, int>> ghosts_pos_vec;
+    void ghostPosToVec();
 };
 
 #endif // LOGIC_H

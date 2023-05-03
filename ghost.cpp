@@ -78,6 +78,15 @@ void Ghost::changeDirection(int y, int x, bool flag_left, bool flag_right, bool 
 
 }
 
+std::pair<int, int> Ghost::getGhostPos()
+{
+    std::pair<int, int> cords;
+    cords.first = y_pos;
+    cords.second = x_pos;
+
+    return cords;
+}
+
 void Ghost::moveGhost()
 {
     positionOnBoard();

@@ -23,6 +23,7 @@ public:
 
 
     void changeDirection(int y, int x, bool left, bool right, bool up, bool down);
+    std::pair<int, int> getGhostPos();
 
 signals:
     void checkTile(int y_pos, int x_pos);
@@ -34,7 +35,7 @@ private:
     QPixmap ghost_texture;
     qreal ghost_size = 20;
 
-    qreal step = 0.5;
+    qreal step = 0.5; /// 1
     GhostDirection direction;
 
     bool at_border;

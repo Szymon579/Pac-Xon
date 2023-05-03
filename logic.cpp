@@ -44,3 +44,9 @@ void Logic::makeGame(QGraphicsScene *scene)
 {
 
 }
+
+void Logic::ghostPosToVec()
+{
+    ghosts_pos_vec.push_back(ghost_1->getGhostPos());
+    ghosts_pos_vec.push_back(ghost_2->getGhostPos());
+}
