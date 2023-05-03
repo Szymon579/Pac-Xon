@@ -11,7 +11,6 @@ Ghost::Ghost(int y, int x, GhostDirection init_direction)
     y_pos = y;
     x_pos = x;
 
-                // y_pos * 20
     this->setRect(0, 0, ghost_size, ghost_size);
     this->setBrush(ghost_brush);
     this->setPen(Qt::NoPen);
@@ -21,13 +20,13 @@ Ghost::Ghost(int y, int x, GhostDirection init_direction)
 
     direction = init_direction;
 
-
-
 }
 
-void Ghost::changeDirection(bool flag_left, bool flag_right, bool flag_up, bool flag_down)
+void Ghost::changeDirection(int y, int x, bool flag_left, bool flag_right, bool flag_up, bool flag_down)
 {
     //qDebug() << "changeDirection()";
+    if(y != y_pos || x != x_pos)
+        return;
 
     //handle rightDown
     if(direction == GhostDirection::rightDown && flag_down)
@@ -86,19 +85,15 @@ void Ghost::moveGhost()
     emit checkTile(y_pos, x_pos);
 
     if(direction == GhostDirection::leftUp) {
-        //emit checkTile(y_pos - 1, x_pos - 1);
         setPos(x() - step, y() - step);
     }
     if(direction == GhostDirection::leftDown) {
-        //emit checkTile(y_pos + 1, x_pos - 1);
         setPos(x() - step, y() + step);
     }
     if(direction == GhostDirection::rightUp) {
-        //emit checkTile(y_pos - 1, x_pos + 1);
         setPos(x() + step, y() - step);
     }
     if(direction == GhostDirection::rightDown) {
-        //emit checkTile(y_pos + 1, x_pos + 1);
         setPos(x() + step, y() + step);
     }
     if(direction == GhostDirection::none) {
@@ -111,12 +106,12 @@ void Ghost::positionOnBoard()
     int prev_x = x_pos;
     int prev_y = y_pos;
 
-    if(fmod(this->x(), ghost_size) == 0)
+    if(fmod(this->x(), ghost_size) == 0) {
         x_pos = this->x() / ghost_size;
-
-    if(fmod(this->y(), ghost_size) == 0)
+    }
+    if(fmod(this->y(), ghost_size) == 0) {
         y_pos = this->y() / ghost_size;
-
+    }
 
     if(prev_x != x_pos || prev_y != y_pos)
         qDebug() << "ghost y: " << y_pos << ", x: " << x_pos;

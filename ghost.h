@@ -22,7 +22,7 @@ public:
 
 
 
-    void changeDirection(bool left, bool right, bool up, bool down);
+    void changeDirection(int y, int x, bool left, bool right, bool up, bool down);
 
 signals:
     void checkTile(int y_pos, int x_pos);
@@ -37,6 +37,7 @@ private:
     qreal step = 0.5;
     GhostDirection direction;
 
+    bool at_border;
     void positionOnBoard();
     int x_pos;
     int y_pos;

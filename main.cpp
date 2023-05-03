@@ -1,8 +1,3 @@
-//#include "logic.h"
-#include "player.h"
-#include "board.h"
-#include "ghost.h"
-
 #include "logic.h"
 
 #include <QObject>

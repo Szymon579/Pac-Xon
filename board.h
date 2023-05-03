@@ -21,7 +21,6 @@ public:
         trace   //trace drawn by the player before closing with border
     };
 
-
     void drawTileBoard();
 
 
@@ -35,7 +34,7 @@ signals:
     void boardUpdated();
 
     //emits signal with flags corresponding to surroundings of a point
-    void borderHit(bool left, bool right, bool up, bool down);
+    void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down);
 
 private:
     void initLogicBoard();

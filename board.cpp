@@ -233,7 +233,7 @@ void Board::checkBoard(int y_pos, int x_pos)
     if(logic_board[y_pos+1][x_pos] != LogicBoardEnum::black)
         down = true;
 
-    emit borderHit(left, right, up, down);
+    emit borderHit(y_pos, x_pos, left, right, up, down);
 
 }
 
