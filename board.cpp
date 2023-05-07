@@ -34,7 +34,7 @@ void Board::drawTileBoard()
     {
         for(int j = 0; j < width; j++)
         {
-            if(logic_board[i][j] == LogicBoardEnum::border)
+            if(logic_board[i][j][0] == LogicBoardEnum::border)
                 tile_board[i][j].setBrush(border_brush);
             else
                 tile_board[i][j].setBrush(black_brush);
@@ -52,16 +52,16 @@ void Board::initLogicBoard()
     {
         for(int j = 0; j < width; j++)
         {
-            logic_board[i][j] = LogicBoardEnum::black;
+            logic_board[i][j][0] = LogicBoardEnum::black;
 
             //top and bottom border
-            logic_board[0][j] = LogicBoardEnum::border;
-            logic_board[height - 1][j] = LogicBoardEnum::border;
+            logic_board[0][j][0] = LogicBoardEnum::border;
+            logic_board[height - 1][j][0] = LogicBoardEnum::border;
         }
 
         //left and right border
-        logic_board[i][0] = LogicBoardEnum::border;
-        logic_board[i][width - 1] = LogicBoardEnum::border;
+        logic_board[i][0][0] = LogicBoardEnum::border;
+        logic_board[i][width - 1][0] = LogicBoardEnum::border;
     }
 
     //debugBoard();
@@ -144,34 +144,34 @@ void Board::fillArea(int y, int x)
 
     //ghost cord kept in logic board
 
-    logic_board[help_y][help_x] = LogicBoardEnum::blue;
+    logic_board[help_y][help_x][0] = LogicBoardEnum::blue;
     logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
 
-    if (logic_board[help_y + 1][help_x] == LogicBoardEnum::black)
+    if (logic_board[help_y + 1][help_x][0] == LogicBoardEnum::black)
     {
         help_y++;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logic_board[help_y][help_x][0] = LogicBoardEnum::blue;
         logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
         fillArea(help_y, help_x);
     }
-    if (logic_board[help_y - 1][help_x] == LogicBoardEnum::black)
+    if (logic_board[help_y - 1][help_x][0] == LogicBoardEnum::black)
     {
         help_y--;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logic_board[help_y][help_x][0] = LogicBoardEnum::blue;
         logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
         fillArea(help_y, help_x);
     }
-    if (logic_board[help_y][help_x + 1] == LogicBoardEnum::black)
+    if (logic_board[help_y][help_x + 1][0] == LogicBoardEnum::black)
     {
         help_x++;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logic_board[help_y][help_x][0] = LogicBoardEnum::blue;
         logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
         fillArea(help_y, help_x);
     }
-    if (logic_board[help_y][help_x - 1] == LogicBoardEnum::black)
+    if (logic_board[help_y][help_x - 1][0] == LogicBoardEnum::black)
     {
         help_x--;
-        logic_board[help_y][help_x] = LogicBoardEnum::blue;
+        logic_board[help_y][help_x][0] = LogicBoardEnum::blue;
         logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
         fillArea(help_y, help_x);
     }
@@ -185,13 +185,13 @@ void Board::fillArea(int y, int x)
 
 void Board::updateBoard(int y_pos, int x_pos)
 {
-    if(logic_board[y_pos][x_pos] == LogicBoardEnum::border ||
-       logic_board[y_pos][x_pos] == LogicBoardEnum::blue)
+    if(logic_board[y_pos][x_pos][0] == LogicBoardEnum::border ||
+       logic_board[y_pos][x_pos][0] == LogicBoardEnum::blue)
     {
         drawing_trace = false;
     }
 
-    if(logic_board[y_pos][x_pos] == LogicBoardEnum::black)
+    if(logic_board[y_pos][x_pos][0] == LogicBoardEnum::black)
     {
         drawing_trace = true;
         rememberTrace(y_pos, x_pos);
@@ -203,14 +203,14 @@ void Board::updateBoard(int y_pos, int x_pos)
         changeTraceToBlue();
     }
 
-    if(logic_board[y_pos][x_pos] != LogicBoardEnum::border &&
-       logic_board[y_pos][x_pos] != LogicBoardEnum::blue)
+    if(logic_board[y_pos][x_pos][0] != LogicBoardEnum::border &&
+       logic_board[y_pos][x_pos][0] != LogicBoardEnum::blue)
     {
         logicBoardToTileBoard(LogicBoardEnum::trace, y_pos, x_pos);
     }
 
 
-    logic_board[y_pos][x_pos] = LogicBoardEnum::blue;
+    logic_board[y_pos][x_pos][0] = LogicBoardEnum::blue;
 
     emit boardUpdated();
 }
@@ -224,13 +224,13 @@ void Board::checkBoard(int y_pos, int x_pos)
     bool up = false;
     bool down = false;
 
-    if(logic_board[y_pos][x_pos-1] != LogicBoardEnum::black)
+    if(logic_board[y_pos][x_pos-1][0] != LogicBoardEnum::black)
         left = true;
-    if(logic_board[y_pos][x_pos+1] != LogicBoardEnum::black)
+    if(logic_board[y_pos][x_pos+1][0] != LogicBoardEnum::black)
         right = true;
-    if(logic_board[y_pos-1][x_pos] != LogicBoardEnum::black)
+    if(logic_board[y_pos-1][x_pos][0] != LogicBoardEnum::black)
         up = true;
-    if(logic_board[y_pos+1][x_pos] != LogicBoardEnum::black)
+    if(logic_board[y_pos+1][x_pos][0] != LogicBoardEnum::black)
         down = true;
 
     emit borderHit(y_pos, x_pos, left, right, up, down);
@@ -245,7 +245,7 @@ void Board::debugBoard()
     {
         for(int j = 0; j < width; j++)
         {
-            switch(logic_board[i][j])
+            switch(logic_board[i][j][0])
             {
             case blue:
                 std::cout << "1 ";

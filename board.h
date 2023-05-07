@@ -15,10 +15,16 @@ public:
 
     enum LogicBoardEnum
     {
+        // depth = 0 enums
         blue,   //blue area
         black,  //black area
         border, //trace after filling marked area
-        trace   //trace drawn by the player before closing with border
+        trace,   //trace drawn by the player before closing with border
+
+        // depth = 1 enums
+        player,
+        ghost,
+        fruit
     };
 
     void drawTileBoard();
@@ -49,11 +55,11 @@ private:
     void fillArea(int y, int x);
 
     QGraphicsScene *scene;
+    static const int height = 30;//30
     static const int width = 45; //45
-    static const int height = 30; //30
+    static const int depth = 2;
 
-
-    LogicBoardEnum logic_board[height][width];
+    LogicBoardEnum logic_board[height][width][depth];
 //    {
 //        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 //        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
