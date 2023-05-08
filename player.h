@@ -32,17 +32,17 @@ public slots:
     void movePlayer();
 
 signals:
-    void positionChanged(int y_pos, int x_pos);
-    //void positionChanged(int x_pos, int y_pos);
+    void positionChanged(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
 
 private:
     //player's current direction
     MoveDirection direction;
 
     //player's x and y cords
-    int x_pos;
-    int y_pos;
-
+    int x_pos = 0;
+    int y_pos = 0;
+    int x_prev_pos = 0;
+    int y_prev_pos = 0;
 
     QPixmap player_texture;
     qreal player_size = 20;

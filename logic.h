@@ -6,12 +6,10 @@
 #include "ghost.h"
 
 #include <QObject>
-#include <QApplication>
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QTimer>
 #include <QDebug>
-#include <QPixmap>
 
 class Logic : public QObject
 {
@@ -19,22 +17,16 @@ class Logic : public QObject
 public:
     Logic();
 
-    static void makeGame(QGraphicsScene *scene);
-
 private:
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
+    QGraphicsView *view = new QGraphicsView(scene);
 
     Board *board = new Board(scene);
-
-
-    Ghost *ghost_1 = new Ghost(4, 4, Ghost::rightDown);
-
-    Ghost *ghost_2 = new Ghost(15, 25, Ghost::rightUp);
-
-    //adding player
     Player *player = new Player();
-
-    QGraphicsView *view = new QGraphicsView(scene);
+    Ghost *ghost_1 = new Ghost(4, 4, Ghost::rightDown);
+    Ghost *ghost_2 = new Ghost(15, 25, Ghost::rightUp);
+    Ghost *ghost_3 = new Ghost(20, 8, Ghost::leftDown);
+    Ghost *ghost_4 = new Ghost(6, 15, Ghost::leftUp);
 
     QTimer player_timer;
 
