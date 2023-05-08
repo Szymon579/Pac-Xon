@@ -16,11 +16,9 @@ public:
     enum LogicBoardEnum
     {
         // depth = 0 enums
-        blue,   //blue area
-        black,  //black area
-        border, //trace after filling marked area
-        trace,   //trace drawn by the player before closing with border
-
+        blue,
+        black,
+        trace,
         // depth = 1 enums
         player,
         ghost,
@@ -29,52 +27,33 @@ public:
 
     void drawTileBoard();
 
-
 public slots:
     void updateBoard(int y_pos, int x_pos);
-
-    //checks surroundings of a given point in enum array
-    void checkBoard(int y_pos, int x_pos);
+    void checkBoard(int y_pos, int x_pos); //checks surroundings
 
 signals:
     void boardUpdated();
-
-    //emits signal with flags corresponding to surroundings of a point
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down);
 
 private:
+    QGraphicsScene *scene;
+
+    static const int height = 30;//30
+    static const int width = 45; //45
+    static const int depth = 2;
+
+    LogicBoardEnum logic_board[height][width][depth];
+    QGraphicsRectItem tile_board[height][width];
+
     void initLogicBoard();
-    void initTileBoard();
+    void initTileBoard(); //setting size and position of tiles
     void logicBoardToTileBoard(LogicBoardEnum tile, int y, int x);
 
     void rememberTrace(int y, int x);
     void changeTraceToBlue();
 
     void indexToFill();
-    void fillAreaLogic(int y, int x); //prob depreciated
     void fillArea(int y, int x);
-
-    QGraphicsScene *scene;
-    static const int height = 30;//30
-    static const int width = 45; //45
-    static const int depth = 2;
-
-    LogicBoardEnum logic_board[height][width][depth];
-//    {
-//        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-//        { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
-//    };
-
-    QGraphicsRectItem tile_board[height][width];
-
 
     bool drawing_trace;
     std::vector<std::pair<int, int>> trace_cords;
@@ -82,15 +61,13 @@ private:
 
 
     QPixmap blue_tile_texture;
-    QBrush blue_brush;
-
     QPixmap black_tile_texture;
-    QBrush black_brush;
-
     QPixmap border_tile_texture;
-    QBrush border_brush;
-
     QPixmap trace_tile_texture;
+
+    QBrush black_brush;
+    QBrush blue_brush;
+    QBrush border_brush;
     QBrush trace_brush;
 
     void debugBoard();

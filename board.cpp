@@ -3,7 +3,6 @@
 #include <QPen>
 #include <QGraphicsScene>
 #include <QDebug>
-
 #include <iostream>
 
 Board::Board(QGraphicsScene *scene, QObject *parent)
@@ -15,35 +14,14 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     initTileBoard();
 
     blue_tile_texture = QPixmap(":/assets/tile_border.png");
-    blue_brush = QBrush(blue_tile_texture);
-
     black_tile_texture = QPixmap(":/assets/tile_black.png");
-    black_brush = QBrush(black_tile_texture);
-
     border_tile_texture = QPixmap(":/assets/tile_border.png");
-    border_brush = QBrush(border_tile_texture);
-
     trace_tile_texture = QPixmap(":/assets/tile_red.png");
+
+    black_brush = QBrush(black_tile_texture);
+    blue_brush = QBrush(blue_tile_texture);
+    border_brush = QBrush(border_tile_texture);
     trace_brush = QBrush(trace_tile_texture);
-}
-
-//setting tile burshes based on enum value
-void Board::drawTileBoard()
-{
-    for(int i = 0; i < height; i++)
-    {
-        for(int j = 0; j < width; j++)
-        {
-            if(logic_board[i][j][0] == LogicBoardEnum::border)
-                tile_board[i][j].setBrush(border_brush);
-            else
-                tile_board[i][j].setBrush(black_brush);
-
-            scene->addItem(&tile_board[i][j]);
-        }
-    }
-
-    qDebug() << "drawTileBoard called";
 }
 
 void Board::initLogicBoard()
@@ -55,26 +33,39 @@ void Board::initLogicBoard()
             logic_board[i][j][0] = LogicBoardEnum::black;
 
             //top and bottom border
-            logic_board[0][j][0] = LogicBoardEnum::border;
-            logic_board[height - 1][j][0] = LogicBoardEnum::border;
+            logic_board[0][j][0] = LogicBoardEnum::blue;
+            logic_board[height - 1][j][0] = LogicBoardEnum::blue;
         }
 
         //left and right border
-        logic_board[i][0][0] = LogicBoardEnum::border;
-        logic_board[i][width - 1][0] = LogicBoardEnum::border;
+        logic_board[i][0][0] = LogicBoardEnum::blue;
+        logic_board[i][width - 1][0] = LogicBoardEnum::blue;
     }
-
-    //debugBoard();
 }
 
 void Board::initTileBoard()
 {
-    //setting size and position of tiles
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
             tile_board[i][j].setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
+        }
+    }
+}
+
+void Board::drawTileBoard()
+{
+    for(int i = 0; i < height; i++)
+    {
+        for(int j = 0; j < width; j++)
+        {
+            if(logic_board[i][j][0] == LogicBoardEnum::blue)
+                tile_board[i][j].setBrush(border_brush);
+            else
+                tile_board[i][j].setBrush(black_brush);
+
+            scene->addItem(&tile_board[i][j]);
         }
     }
 }
@@ -89,9 +80,6 @@ void Board::logicBoardToTileBoard(LogicBoardEnum tile, int y, int x)
     case black:
         tile_board[y][x].setBrush(black_brush);
         break;
-    case border:
-        tile_board[y][x].setBrush(border_brush);
-        break;
     case trace:
         tile_board[y][x].setBrush(trace_brush);
         break;
@@ -105,7 +93,6 @@ void Board::rememberTrace(int y, int x)
     cords.second = x;
 
     trace_cords.push_back(cords);
-
     //qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
 }
 
@@ -185,8 +172,7 @@ void Board::fillArea(int y, int x)
 
 void Board::updateBoard(int y_pos, int x_pos)
 {
-    if(logic_board[y_pos][x_pos][0] == LogicBoardEnum::border ||
-       logic_board[y_pos][x_pos][0] == LogicBoardEnum::blue)
+    if(logic_board[y_pos][x_pos][0] == LogicBoardEnum::blue)
     {
         drawing_trace = false;
     }
@@ -199,16 +185,13 @@ void Board::updateBoard(int y_pos, int x_pos)
 
     if(!drawing_trace)
     {
-        //qDebug() << "drawing_trace = false";
         changeTraceToBlue();
     }
 
-    if(logic_board[y_pos][x_pos][0] != LogicBoardEnum::border &&
-       logic_board[y_pos][x_pos][0] != LogicBoardEnum::blue)
+    if(logic_board[y_pos][x_pos][0] != LogicBoardEnum::blue)
     {
         logicBoardToTileBoard(LogicBoardEnum::trace, y_pos, x_pos);
     }
-
 
     logic_board[y_pos][x_pos][0] = LogicBoardEnum::blue;
 
@@ -234,7 +217,6 @@ void Board::checkBoard(int y_pos, int x_pos)
         down = true;
 
     emit borderHit(y_pos, x_pos, left, right, up, down);
-
 }
 
 
@@ -255,9 +237,6 @@ void Board::debugBoard()
                 break;
             case trace:
                 std::cout << "3 ";
-                break;
-            case border:
-                std::cout << "4 ";
                 break;
             }
         }
