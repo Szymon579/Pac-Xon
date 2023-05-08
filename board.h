@@ -22,14 +22,15 @@ public:
         // depth = 1 enums
         player,
         ghost,
-        fruit
+        fruit,
+        none
     };
 
     void drawTileBoard();
 
 public slots:
-    void updateBoard(int y_pos, int x_pos);
-    void checkBoard(int y_pos, int x_pos); //checks surroundings
+    void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
+    void checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
 
 signals:
     void boardUpdated();
@@ -70,7 +71,7 @@ private:
     QBrush border_brush;
     QBrush trace_brush;
 
-    void debugBoard();
+    void debugBoard(int layer);
 
 };
 

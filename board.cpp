@@ -118,7 +118,7 @@ void Board::indexToFill()
                 ", x: " << first_trace.second;
 
     fillArea(first_trace.first + 1, first_trace.second + 1);
-    debugBoard();
+    debugBoard(0);
 }
 
 void Board::fillArea(int y, int x)
@@ -170,8 +170,11 @@ void Board::fillArea(int y, int x)
 
 
 
-void Board::updateBoard(int y_pos, int x_pos)
+void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
+    logic_board[y_pos][x_pos][1] = LogicBoardEnum::player;
+    logic_board[y_prev_pos][x_prev_pos][1] = LogicBoardEnum::none;
+
     if(logic_board[y_pos][x_pos][0] == LogicBoardEnum::blue)
     {
         drawing_trace = false;
@@ -186,6 +189,7 @@ void Board::updateBoard(int y_pos, int x_pos)
     if(!drawing_trace)
     {
         changeTraceToBlue();
+        //debugBoard(1);
     }
 
     if(logic_board[y_pos][x_pos][0] != LogicBoardEnum::blue)
@@ -195,12 +199,14 @@ void Board::updateBoard(int y_pos, int x_pos)
 
     logic_board[y_pos][x_pos][0] = LogicBoardEnum::blue;
 
+
     emit boardUpdated();
 }
 
-void Board::checkBoard(int y_pos, int x_pos)
+void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
-    //qDebug() << "checkBoard()";
+    logic_board[y_pos][x_pos][1] = LogicBoardEnum::ghost;
+    logic_board[y_prev_pos][x_prev_pos][1] = LogicBoardEnum::none;
 
     bool left = false;
     bool right = false;
@@ -220,14 +226,14 @@ void Board::checkBoard(int y_pos, int x_pos)
 }
 
 
-void Board::debugBoard()
+void Board::debugBoard(int layer)
 {
     std::cout << "debugBoard() called" << std::endl;
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
-            switch(logic_board[i][j][0])
+            switch(logic_board[i][j][layer])
             {
             case blue:
                 std::cout << "1 ";
@@ -237,6 +243,19 @@ void Board::debugBoard()
                 break;
             case trace:
                 std::cout << "3 ";
+                break;
+
+            case player:
+                std::cout << "1 ";
+                break;
+            case ghost:
+                std::cout << "2 ";
+                break;
+            case fruit:
+                std::cout << "3 ";
+                break;
+            case none:
+                std::cout << "0 ";
                 break;
             }
         }

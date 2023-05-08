@@ -91,7 +91,7 @@ void Ghost::moveGhost()
 {
     positionOnBoard();
 
-    emit checkTile(y_pos, x_pos);
+    emit checkTile(y_pos, x_pos, y_prev_pos, x_prev_pos);
 
     if(direction == GhostDirection::leftUp) {
         setPos(x() - step, y() - step);
@@ -112,8 +112,8 @@ void Ghost::moveGhost()
 
 void Ghost::positionOnBoard()
 {
-    int prev_x = x_pos;
-    int prev_y = y_pos;
+    x_prev_pos = x_pos;
+    y_prev_pos = y_pos;
 
     if(fmod(this->x(), ghost_size) == 0) {
         x_pos = this->x() / ghost_size;
@@ -122,7 +122,7 @@ void Ghost::positionOnBoard()
         y_pos = this->y() / ghost_size;
     }
 
-    if(prev_x != x_pos || prev_y != y_pos)
+    if(y_prev_pos != y_pos || x_prev_pos != x_pos)
         qDebug() << "ghost y: " << y_pos << ", x: " << x_pos;
 
 }

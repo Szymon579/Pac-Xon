@@ -111,8 +111,8 @@ void Player::borderControl()
 
 void Player::positionOnBoard()
 {
-    int prev_x = x_pos;
-    int prev_y = y_pos;
+    x_prev_pos = x_pos;
+    y_prev_pos = y_pos;
 
     if(fmod(this->x(), player_size) == 0)
         x_pos = this->x() / player_size;
@@ -121,8 +121,8 @@ void Player::positionOnBoard()
         y_pos = this->y() / player_size;
 
 
-    if(prev_x != x_pos || prev_y != y_pos)
-        emit positionChanged(y_pos, x_pos); //to be received in board.cpp
+    if(y_prev_pos != y_pos || x_prev_pos != x_pos)
+        emit positionChanged(y_pos, x_pos, y_prev_pos, x_prev_pos); //to be received in board.cpp
 
 }
 

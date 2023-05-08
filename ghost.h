@@ -26,7 +26,7 @@ public:
     std::pair<int, int> getGhostPos();
 
 signals:
-    void checkTile(int y_pos, int x_pos);
+    void checkTile(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
 
 public slots:
     void moveGhost();
@@ -40,8 +40,11 @@ private:
 
     bool at_border;
     void positionOnBoard();
-    int x_pos;
-    int y_pos;
+
+    int x_pos = 0;
+    int y_pos = 0;
+    int x_prev_pos = 0;
+    int y_prev_pos = 0;
 
 };
 
