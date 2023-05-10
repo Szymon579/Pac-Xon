@@ -89,9 +89,8 @@ std::pair<int, int> Ghost::getGhostPos()
 
 void Ghost::moveGhost()
 {
-    positionOnBoard();
-
-    emit checkTile(y_pos, x_pos, y_prev_pos, x_prev_pos);
+    if(positionOnBoard())
+        emit checkTile(y_pos, x_pos, y_prev_pos, x_prev_pos);
 
     if(direction == GhostDirection::leftUp) {
         setPos(x() - step, y() - step);
@@ -110,7 +109,7 @@ void Ghost::moveGhost()
     }
 }
 
-void Ghost::positionOnBoard()
+bool Ghost::positionOnBoard()
 {
     x_prev_pos = x_pos;
     y_prev_pos = y_pos;
@@ -123,6 +122,10 @@ void Ghost::positionOnBoard()
     }
 
     if(y_prev_pos != y_pos || x_prev_pos != x_pos)
+    {
         qDebug() << "ghost y: " << y_pos << ", x: " << x_pos;
-
+        return true;
+    }
+    //pos didnt change
+    return false;
 }
