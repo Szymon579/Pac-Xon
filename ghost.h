@@ -39,7 +39,7 @@ private:
     GhostDirection direction;
 
     bool at_border;
-    void positionOnBoard();
+    bool positionOnBoard();
 
     int x_pos = 0;
     int y_pos = 0;

@@ -117,8 +117,49 @@ void Board::indexToFill()
     qDebug() << "indexToFill() calle for y: " << first_trace.first <<
                 ", x: " << first_trace.second;
 
-    fillArea2(first_trace.first + 1, first_trace.second + 1);
+    int y = first_trace.first;
+    int x = first_trace.second;
+
     debugBoard(0);
+    debugBoard(1);
+
+    //fillArea(y, x);
+
+
+    ghost_found = false;
+    rememberBoardState();
+
+    if (logic_board[0][y + 1][x] == LogicBoardEnum::black)
+    {
+        tryForIndex(y + 1, x);
+    }
+
+    ghost_found = false;
+    rememberBoardState();
+
+    if (logic_board[0][y - 1][x] == LogicBoardEnum::black)
+    {
+        tryForIndex(y - 1, x);
+    }
+
+    ghost_found = false;
+    rememberBoardState();
+
+    if (logic_board[0][y][x - 1] == LogicBoardEnum::black)
+    {
+        tryForIndex(y, x - 1);
+    }
+
+    ghost_found = false;
+    rememberBoardState();
+
+    if (logic_board[0][y][x + 1] == LogicBoardEnum::black)
+    {
+        tryForIndex(y, x + 1);
+    }
+
+    ghost_found = false;
+
 }
 
 void Board::fillArea2(int y, int x)
@@ -168,7 +209,76 @@ void Board::fillArea2(int y, int x)
     }
 }
 
+void Board::fillArea(int y, int x)
+{
+    int help_y = y;
+    int help_x = x;
 
+    if (logic_board[1][help_y][help_x] == LogicBoardEnum::ghost)
+    {
+        ghost_found = true;
+    }
+
+    if (logic_board[0][help_y + 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y++;
+        logic_board[0][help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[0][help_y - 1][help_x] == LogicBoardEnum::black)
+    {
+        help_y--;
+        logic_board[0][help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[0][help_y][help_x + 1] == LogicBoardEnum::black)
+    {
+        help_x++;
+        logic_board[0][help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    if (logic_board[0][help_y][help_x - 1] == LogicBoardEnum::black)
+    {
+        help_x--;
+        logic_board[0][help_y][help_x] = LogicBoardEnum::blue;
+        logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
+        fillArea(help_y, help_x);
+    }
+    else
+    {
+        return;
+    }
+}
+
+void Board::rememberBoardState()
+{
+    for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                helper_board[y][x] = logic_board[0][y][x];
+            }
+    }
+}
+
+void Board::tryForIndex(int y, int x)
+{
+    fillArea(y, x);
+
+    if (ghost_found == true)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                logic_board[0][y][x] = helper_board[y][x];
+            }
+        }
+    }
+}
 
 void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
@@ -205,8 +315,11 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
 void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
+    qDebug() << "checkBoard called for y:" << y_pos << ", x: " << x_pos;
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::ghost;
-    logic_board[1][y_prev_pos][x_prev_pos] = LogicBoardEnum::none;
+
+    if(y_pos != y_prev_pos || x_pos != x_prev_pos)
+        logic_board[1][y_prev_pos][x_prev_pos] = LogicBoardEnum::none;
 
     bool left = false;
     bool right = false;
@@ -246,15 +359,18 @@ void Board::debugBoard(int layer)
                 break;
 
             case player:
-                std::cout << "1 ";
+                std::cout << "P ";
                 break;
             case ghost:
-                std::cout << "2 ";
+                std::cout << "G ";
                 break;
             case fruit:
                 std::cout << "3 ";
                 break;
             case none:
+                std::cout << "0 ";
+                break;
+            default:
                 std::cout << "0 ";
                 break;
             }
