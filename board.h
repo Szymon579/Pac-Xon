@@ -43,7 +43,7 @@ private:
     static const int width = 45; //45
     static const int depth = 2;
 
-    LogicBoardEnum logic_board[height][width][depth];
+    LogicBoardEnum logic_board[depth][height][width];
     QGraphicsRectItem tile_board[height][width];
 
     void initLogicBoard();
@@ -54,7 +54,7 @@ private:
     void changeTraceToBlue();
 
     void indexToFill();
-    void fillArea(int y, int x);
+    void fillArea2(int y, int x);
 
     bool drawing_trace;
     std::vector<std::pair<int, int>> trace_cords;
