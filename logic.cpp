@@ -12,7 +12,7 @@ Logic::Logic()
 {
     qDebug() << "logic constructor";
 
-    board->renameTileBoard();
+    board->renderTileBoard();
 
     scene->addItem(player);
     player->setZValue(5);

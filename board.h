@@ -26,7 +26,7 @@ public:
         none
     };
 
-    void renameTileBoard();
+    void renderTileBoard();
 
 public slots:
     void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
@@ -34,7 +34,8 @@ public slots:
 
 signals:
     void boardUpdated();
-    void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down);
+    void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
+                   bool left_up, bool left_down, bool right_up, bool right_down);
 
 private:
     QGraphicsScene *scene;
