@@ -22,59 +22,83 @@ Ghost::Ghost(int y, int x, GhostDirection init_direction)
 
 }
 
-void Ghost::changeDirection(int y, int x, bool flag_left, bool flag_right, bool flag_up, bool flag_down)
+void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool down, bool left_up, bool left_down, bool right_up, bool right_down)
 {
     //qDebug() << "changeDirection()";
     if(y != y_pos || x != x_pos)
         return;
 
     //handle rightDown
-    if(direction == GhostDirection::rightDown && flag_down)
+    if(direction == GhostDirection::rightDown && !left && !right && !up && down)
     {
         direction = GhostDirection::rightUp;
         return;
     }
-    if(direction == GhostDirection::rightDown && flag_right)
+    if(direction == GhostDirection::rightDown && !left && right && !up && !down)
     {
         direction = GhostDirection::leftDown;
         return;
     }
+    if(direction == GhostDirection::rightDown && right_down)
+    {
+        direction = GhostDirection::leftUp;
+        return;
+    }
+
 
     //handle rightUp
-    if(direction == GhostDirection::rightUp && flag_up)
+    if(direction == GhostDirection::rightUp && !left && !right && up && !down)
     {
         direction = GhostDirection::rightDown;
         return;
     }
-    if(direction == GhostDirection::rightUp && flag_right)
+    if(direction == GhostDirection::rightUp && !left && right && !up && !down)
     {
         direction = GhostDirection::leftUp;
         return;
     }
-
-    //handle leftDown
-    if(direction == GhostDirection::leftDown && flag_down)
-    {
-        direction = GhostDirection::leftUp;
-        return;
-    }
-    if(direction == GhostDirection::leftDown && flag_left)
-    {
-        direction = GhostDirection::rightDown;
-        return;
-    }
-
-    //handle leftUp
-    if(direction == GhostDirection::leftUp && flag_up)
+    if(direction == GhostDirection::rightUp && right_up)
     {
         direction = GhostDirection::leftDown;
         return;
     }
-    if(direction == GhostDirection::leftUp && flag_left)
+
+
+    //handle leftDown
+    if(direction == GhostDirection::leftDown && !left && !right && !up && down)
+    {
+        direction = GhostDirection::leftUp;
+        return;
+    }
+    if(direction == GhostDirection::leftDown && left && !right && !up && !down)
+    {
+        direction = GhostDirection::rightDown;
+        return;
+    }
+    if(direction == GhostDirection::leftDown && left_down)
     {
         direction = GhostDirection::rightUp;
         return;
     }
+
+
+    //handle leftUp
+    if(direction == GhostDirection::leftUp && !left && !right && up && !down)
+    {
+        direction = GhostDirection::leftDown;
+        return;
+    }
+    if(direction == GhostDirection::leftUp && left && !right && !up && !down)
+    {
+        direction = GhostDirection::rightUp;
+        return;
+    }
+    if(direction == GhostDirection::leftUp && left_up)
+    {
+        direction = GhostDirection::rightDown;
+        return;
+    }
+
 
 }
 

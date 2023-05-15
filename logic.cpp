@@ -12,7 +12,7 @@ Logic::Logic()
 {
     qDebug() << "logic constructor";
 
-    board->drawTileBoard();
+    board->renderTileBoard();
 
     scene->addItem(player);
     player->setZValue(5);
@@ -46,8 +46,6 @@ Logic::Logic()
     view->show();
 
 }
-
-
 
 void Logic::ghostPosToVec()
 {
