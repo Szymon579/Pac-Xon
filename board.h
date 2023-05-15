@@ -26,7 +26,7 @@ public:
         none
     };
 
-    void drawTileBoard();
+    void renameTileBoard();
 
 public slots:
     void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);

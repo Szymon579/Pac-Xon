@@ -50,11 +50,18 @@ void Board::initTileBoard()
         for(int j = 0; j < width; j++)
         {
             tile_board[i][j].setRect(0 + (20 * j), 0 + (20 * i), 20, 20);
+
+            if(logic_board[0][i][j] == LogicBoardEnum::blue)
+                tile_board[i][j].setBrush(border_brush);
+            else
+                tile_board[i][j].setBrush(black_brush);
+
+            scene->addItem(&tile_board[i][j]);
         }
     }
 }
 
-void Board::drawTileBoard()
+void Board::renameTileBoard()
 {
     for(int i = 0; i < height; i++)
     {
@@ -64,8 +71,6 @@ void Board::drawTileBoard()
                 tile_board[i][j].setBrush(border_brush);
             else
                 tile_board[i][j].setBrush(black_brush);
-
-            scene->addItem(&tile_board[i][j]);
         }
     }
 }
@@ -123,8 +128,6 @@ void Board::indexToFill()
     debugBoard(0);
     debugBoard(1);
 
-    //fillArea(y, x);
-
 
     ghost_found = false;
     rememberBoardState();
@@ -160,6 +163,8 @@ void Board::indexToFill()
 
     ghost_found = false;
 
+    renameTileBoard();
+    debugBoard(0);
 }
 
 void Board::fillArea2(int y, int x)

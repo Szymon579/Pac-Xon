@@ -20,8 +20,6 @@ public:
 
     Ghost(int y, int x, GhostDirection init_direction); //explicit
 
-
-
     void changeDirection(int y, int x, bool left, bool right, bool up, bool down);
     std::pair<int, int> getGhostPos();
 
