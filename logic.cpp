@@ -22,6 +22,8 @@ Logic::Logic()
     scene->addItem(ghost_3);
     //scene->addItem(ghost_4);
 
+    scene->addItem(fruit);
+
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
     QObject::connect(ghost_1, &Ghost::checkTile, board, &Board::checkBoard);

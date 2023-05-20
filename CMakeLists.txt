@@ -22,6 +22,8 @@ set(PROJECT_SOURCES
         board.h
         ghost.cpp
         ghost.h
+        fruit.cpp
+        fruit.h
         resources.qrc
 
 )
