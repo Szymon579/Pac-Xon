@@ -9,5 +9,8 @@
         <file>assets/tile_blue.png</file>
         <file>assets/tile_border.png</file>
         <file>assets/tile_red.png</file>
+        <file>assets/window_icon.png</file>
+        <file>assets/cherry.png</file>
+        <file>assets/pear.png</file>
     </qresource>
 </RCC>
