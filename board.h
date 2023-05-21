@@ -36,6 +36,7 @@ signals:
     void boardUpdated();
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
                    bool left_up, bool left_down, bool right_up, bool right_down);
+    void coloredArea(double filled);
 
 private:
     QGraphicsScene *scene;
@@ -67,6 +68,7 @@ private:
     std::vector<std::pair<int, int>> trace_cords;
     std::pair<int, int> first_trace;
 
+    void howMuchFilled();
 
     QPixmap blue_tile_texture;
     QPixmap black_tile_texture;

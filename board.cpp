@@ -10,9 +10,6 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 {
     this->scene = scene;
 
-    initLogicBoard();
-    initTileBoard();
-
     blue_tile_texture = QPixmap(":/assets/tile_border.png");
     black_tile_texture = QPixmap(":/assets/tile_black.png");
     border_tile_texture = QPixmap(":/assets/tile_border.png");
@@ -22,6 +19,9 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
     blue_brush = QBrush(blue_tile_texture);
     border_brush = QBrush(border_tile_texture);
     trace_brush = QBrush(trace_tile_texture);
+
+    initLogicBoard();
+    initTileBoard();
 }
 
 void Board::initLogicBoard()
@@ -119,15 +119,14 @@ void Board::changeTraceToBlue()
 
 void Board::indexToFill()
 { 
-    qDebug() << "indexToFill() calle for y: " << first_trace.first <<
-                ", x: " << first_trace.second;
+    //qDebug() << "indexToFill() calle for y: " << first_trace.first <<
+    //            ", x: " << first_trace.second;
 
     int y = first_trace.first;
     int x = first_trace.second;
 
     debugBoard(0);
     debugBoard(1);
-
 
     ghost_found = false;
     rememberBoardState();
@@ -165,6 +164,8 @@ void Board::indexToFill()
 
     renderTileBoard();
     debugBoard(0);
+
+    howMuchFilled();
 }
 
 void Board::fillArea(int y, int x)
@@ -236,6 +237,28 @@ void Board::tryForIndex(int y, int x)
             }
         }
     }
+}
+
+void Board::howMuchFilled()
+{
+    int filled = 0;
+    double percent = 0;
+    for (int y = 1; y < height - 1; y++)
+    {
+        for (int x = 1; x < width - 1; x++)
+        {
+            if(logic_board[0][y][x] == LogicBoardEnum::blue)
+            {
+                filled++;
+            }
+        }
+    }
+    percent = (double(filled)/964)*100;
+
+    qDebug() << "filled: " << filled << " of 964 or " << percent << "%";
+    //qDebug() << "filled: " ;
+
+    emit coloredArea(percent);
 }
 
 void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
