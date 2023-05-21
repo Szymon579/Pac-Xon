@@ -8,9 +8,11 @@
 #include <QTimer>
 #include <QDebug>
 
-Logic::Logic()
+Logic::Logic(int lives)
 {
     qDebug() << "logic constructor";
+
+    this->lives = lives;
 
     board->renderTileBoard();
 

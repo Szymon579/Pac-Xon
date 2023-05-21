@@ -18,12 +18,11 @@ class Logic : public QObject
 {
     Q_OBJECT
 public:
-    Logic();
+    Logic(int lives);
 
 private:
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
     QGraphicsView *view = new QGraphicsView(scene);
-
 
     Board *board = new Board(scene);
     Player *player = new Player();
@@ -40,6 +39,13 @@ private:
 
     std::vector<std::pair<int, int>> ghosts_pos_vec;
     void ghostPosToVec();
+
+
+    int score = 0;
+    int lives = 0;
+    bool game_over = false;
+
+
 };
 
 #endif // LOGIC_H
