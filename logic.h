@@ -22,6 +22,7 @@ public:
 
 public slots:
     void stopTimer();
+    void isGameWon(double filled);
 
 private:
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
@@ -40,14 +41,9 @@ private:
 
     QTimer player_timer;
 
-    std::vector<std::pair<int, int>> ghosts_pos_vec;
-    void ghostPosToVec();
-
-
     int score = 0;
     int lives = 0;
     bool game_over = false;
-
 
 };
 

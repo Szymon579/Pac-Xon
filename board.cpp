@@ -10,15 +10,10 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 {
     this->scene = scene;
 
-    blue_tile_texture = QPixmap(":/assets/tile_border.png");
-    black_tile_texture = QPixmap(":/assets/tile_black.png");
-    border_tile_texture = QPixmap(":/assets/tile_border.png");
-    trace_tile_texture = QPixmap(":/assets/tile_red.png");
-
-    black_brush = QBrush(black_tile_texture);
-    blue_brush = QBrush(blue_tile_texture);
-    border_brush = QBrush(border_tile_texture);
-    trace_brush = QBrush(trace_tile_texture);
+    black_brush = QBrush(QPixmap(":/assets/tile_black.png"));
+    blue_brush = QBrush(QPixmap(":/assets/tile_border.png"));
+    border_brush = QBrush(QPixmap(":/assets/tile_border.png"));
+    trace_brush = QBrush(QPixmap(":/assets/tile_red.png"));
 
     initLogicBoard();
     initTileBoard();
@@ -120,9 +115,6 @@ void Board::changeTraceToBlue()
 
 void Board::indexToFill()
 { 
-    //qDebug() << "indexToFill() calle for y: " << first_trace.first <<
-    //            ", x: " << first_trace.second;
-
     int y = first_trace.first;
     int x = first_trace.second;
 
@@ -163,6 +155,22 @@ void Board::indexToFill()
     debugBoard(0);
 
     howMuchFilled();
+}
+
+void Board::tryForIndex(int y, int x)
+{
+    fillArea(y, x);
+
+    if (ghost_found == true)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                logic_board[0][y][x] = helper_board[y][x];
+            }
+        }
+    }
 }
 
 void Board::fillArea(int y, int x)
@@ -220,26 +228,13 @@ void Board::rememberBoardState()
     }
 }
 
-void Board::tryForIndex(int y, int x)
-{
-    fillArea(y, x);
 
-    if (ghost_found == true)
-    {
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                logic_board[0][y][x] = helper_board[y][x];
-            }
-        }
-    }
-}
 
 void Board::howMuchFilled()
 {
     int filled = 0;
     double percent = 0;
+
     for (int y = 1; y < height - 1; y++)
     {
         for (int x = 1; x < width - 1; x++)
@@ -250,10 +245,10 @@ void Board::howMuchFilled()
             }
         }
     }
-    percent = (double(filled)/964)*100;
 
-    qDebug() << "filled: " << filled << " of 964 or " << percent << "%";
-    //qDebug() << "filled: " ;
+    percent = (double(filled)/1204)*100;
+
+    qDebug() << "filled: " << filled << " of 1204 or " << percent << "%";
 
     emit coloredArea(percent);
 }
@@ -282,15 +277,13 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
         //debugBoard(1);
     }
 
-
-
     debugBoard(0);
     emit boardUpdated();
 }
 
+//needs some improvement
 void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
-    //qDebug() << "checkBoard called for y:" << y_pos << ", x: " << x_pos;
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::ghost;
 
     if(y_pos != y_prev_pos || x_pos != x_prev_pos)
@@ -325,6 +318,7 @@ void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
     if(logic_board[0][y_pos+1][x_pos+1] != LogicBoardEnum::black)
         right_down = true;
 
+
     if((y_prev_pos+1 == y_pos) && (x_prev_pos+1 == x_pos))
     {
         if(logic_board[0][y_pos+1][x_pos+1] == LogicBoardEnum::trace)
@@ -352,7 +346,7 @@ void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
 void Board::debugBoard(int layer)
 {
-    std::cout << "debugBoard() called" << std::endl;
+    std::cout << "Board state at layer " << layer << ": " << std::endl;
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
