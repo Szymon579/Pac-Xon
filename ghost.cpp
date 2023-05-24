@@ -22,11 +22,18 @@ Ghost::Ghost(int y, int x, GhostDirection init_direction)
 
 }
 
-void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool down, bool left_up, bool left_down, bool right_up, bool right_down)
+void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool down, bool left_up, bool left_down, bool right_up, bool right_down, bool game_over)
 {
     //qDebug() << "changeDirection()";
     if(y != y_pos || x != x_pos)
         return;
+
+    if(game_over)
+    {
+        qDebug() << "gameOver() emited";
+        emit gameOver();
+        return;
+    }
 
     //handle rightDown
     if(direction == GhostDirection::rightDown && !left && !right && !up && down)
@@ -147,7 +154,7 @@ bool Ghost::positionOnBoard()
 
     if(y_prev_pos != y_pos || x_prev_pos != x_pos)
     {
-        qDebug() << "ghost y: " << y_pos << ", x: " << x_pos;
+        //qDebug() << "ghost y: " << y_pos << ", x: " << x_pos;
         return true;
     }
     //pos didnt change

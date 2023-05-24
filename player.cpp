@@ -90,6 +90,7 @@ void Player::checkDirectionChange()
 
     QBrush brush(player_texture);
     this->setBrush(brush);
+
 }
 
 void Player::borderControl()
@@ -119,7 +120,6 @@ void Player::positionOnBoard()
 
     if(fmod(this->y(), player_size) == 0)
         y_pos = this->y() / player_size;
-
 
     if(y_prev_pos != y_pos || x_prev_pos != x_pos)
         emit positionChanged(y_pos, x_pos, y_prev_pos, x_prev_pos); //to be received in board.cpp

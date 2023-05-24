@@ -24,7 +24,7 @@ Logic::Logic(int lives)
     scene->addItem(ghost_3);
     //scene->addItem(ghost_4);
 
-    scene->addItem(fruit);
+    //scene->addItem(fruit);
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
@@ -32,6 +32,10 @@ Logic::Logic(int lives)
     QObject::connect(ghost_2, &Ghost::checkTile, board, &Board::checkBoard);
     QObject::connect(ghost_3, &Ghost::checkTile, board, &Board::checkBoard);
     //QObject::connect(ghost_4, &Ghost::checkTile, board, &Board::checkBoard);
+
+    QObject::connect(ghost_1, &Ghost::gameOver, this, &Logic::stopTimer);
+    QObject::connect(ghost_2, &Ghost::gameOver, this, &Logic::stopTimer);
+    QObject::connect(ghost_3, &Ghost::gameOver, this, &Logic::stopTimer);
 
     QObject::connect(board, &Board::borderHit, ghost_1, &Ghost::changeDirection);
     QObject::connect(board, &Board::borderHit, ghost_2, &Ghost::changeDirection);
@@ -49,6 +53,11 @@ Logic::Logic(int lives)
 
     view->show();
 
+}
+
+void Logic::stopTimer()
+{
+    player_timer.stop();
 }
 
 void Logic::ghostPosToVec()

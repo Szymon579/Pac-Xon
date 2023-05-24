@@ -20,6 +20,9 @@ class Logic : public QObject
 public:
     Logic(int lives);
 
+public slots:
+    void stopTimer();
+
 private:
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
     QGraphicsView *view = new QGraphicsView(scene);
@@ -33,7 +36,7 @@ private:
     Ghost *ghost_3 = new Ghost(20, 8, Ghost::leftDown);
     Ghost *ghost_4 = new Ghost(6, 15, Ghost::leftUp);
 
-    Fruit *fruit = new Fruit(10, 20);
+    //Fruit *fruit = new Fruit(10, 20);
 
     QTimer player_timer;
 

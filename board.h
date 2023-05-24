@@ -35,14 +35,14 @@ public slots:
 signals:
     void boardUpdated();
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
-                   bool left_up, bool left_down, bool right_up, bool right_down);
+                   bool left_up, bool left_down, bool right_up, bool right_down, bool game_over);
     void coloredArea(double filled);
 
 private:
     QGraphicsScene *scene;
 
-    static const int height = 30;//30
-    static const int width = 45; //45
+    static const int height = 30;
+    static const int width = 45;
     static const int depth = 2;
 
     LogicBoardEnum logic_board[depth][height][width];
