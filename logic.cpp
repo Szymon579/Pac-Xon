@@ -1,5 +1,4 @@
 #include "logic.h"
-
 #include "player.h"
 #include "board.h"
 #include "ghost.h"
@@ -22,8 +21,6 @@ Logic::Logic(int lives)
     scene->addItem(ghost_1);
     scene->addItem(ghost_2);
     scene->addItem(ghost_3);
-
-    //scene->addItem(fruit);
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
@@ -49,7 +46,7 @@ Logic::Logic(int lives)
 
     player_timer.start(10);
 
-    view->show();
+    //view->show();
 
 }
 

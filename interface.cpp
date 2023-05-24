@@ -1,12 +1,18 @@
 #include "interface.h"
 #include "ui_interface.h"
 
-Interface::Interface(QWidget *parent) :
-    QWidget(parent),
+#include <QDebug>
+#include <QGraphicsView>
+#include <QWidget>
+#include <QStackedWidget>
+
+Interface::Interface(QGraphicsScene *scene, QWidget *parent) :
+    QMainWindow(parent),
     ui(new Ui::Interface)
 {
     ui->setupUi(this);
     ui->stackView->setCurrentIndex(0);
+    this->scene = scene;
 }
 
 Interface::~Interface()
@@ -18,7 +24,12 @@ Interface::~Interface()
 void Interface::on_startButton_clicked()
 {
     ui->stackView->setCurrentIndex(1);
+
+    ui->graphicsView->setScene(scene);
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
+
 
 void Interface::on_leadButton_clicked()
 {

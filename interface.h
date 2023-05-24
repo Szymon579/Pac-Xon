@@ -2,21 +2,23 @@
 #define INTERFACE_H
 
 #include <QWidget>
+#include <QGraphicsScene>
+#include <QMainWindow>
+#include <QStackedWidget>
 
 namespace Ui {
 class Interface;
 }
 
-class Interface : public QWidget
+class Interface : public QMainWindow //QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Interface(QWidget *parent = nullptr);
+    Interface(QGraphicsScene *scene, QWidget *parent = nullptr);
     ~Interface();
 
 private slots:
-
     void on_startButton_clicked();
     void on_leadButton_clicked();
     void on_backButton_clicked();
@@ -24,6 +26,8 @@ private slots:
 
 private:
     Ui::Interface *ui;
+    QGraphicsScene *scene;
+
 };
 
 #endif // INTERFACE_H
