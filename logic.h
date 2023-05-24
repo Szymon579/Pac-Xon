@@ -19,9 +19,15 @@ class Logic : public QObject
     Q_OBJECT
 public:
     Logic(int lives);
+    QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
+
+public slots:
+    void stopTimer();
+    void isGameWon(double filled);
 
 private:
-    QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
+    //QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
+    //QGraphicsScene *scene;
     QGraphicsView *view = new QGraphicsView(scene);
 
     Board *board = new Board(scene);
@@ -33,18 +39,12 @@ private:
     Ghost *ghost_3 = new Ghost(20, 8, Ghost::leftDown);
     Ghost *ghost_4 = new Ghost(6, 15, Ghost::leftUp);
 
-    Fruit *fruit = new Fruit(10, 20);
 
     QTimer player_timer;
-
-    std::vector<std::pair<int, int>> ghosts_pos_vec;
-    void ghostPosToVec();
-
 
     int score = 0;
     int lives = 0;
     bool game_over = false;
-
 
 };
 

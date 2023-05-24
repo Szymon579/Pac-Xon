@@ -10,15 +10,10 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 {
     this->scene = scene;
 
-    blue_tile_texture = QPixmap(":/assets/tile_border.png");
-    black_tile_texture = QPixmap(":/assets/tile_black.png");
-    border_tile_texture = QPixmap(":/assets/tile_border.png");
-    trace_tile_texture = QPixmap(":/assets/tile_red.png");
-
-    black_brush = QBrush(black_tile_texture);
-    blue_brush = QBrush(blue_tile_texture);
-    border_brush = QBrush(border_tile_texture);
-    trace_brush = QBrush(trace_tile_texture);
+    black_brush = QBrush(QPixmap(":/assets/tile_black.png"));
+    blue_brush = QBrush(QPixmap(":/assets/tile_border.png"));
+    border_brush = QBrush(QPixmap(":/assets/tile_border.png"));
+    trace_brush = QBrush(QPixmap(":/assets/tile_red.png"));
 
     initLogicBoard();
     initTileBoard();
@@ -105,6 +100,7 @@ void Board::changeTraceToBlue()
 {
     for(int i = 0; i < trace_cords.size(); i++)
     {
+        logic_board[0][trace_cords[i].first][trace_cords[i].second] = LogicBoardEnum::blue;
         tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(blue_brush);
     }
 
@@ -119,9 +115,6 @@ void Board::changeTraceToBlue()
 
 void Board::indexToFill()
 { 
-    //qDebug() << "indexToFill() calle for y: " << first_trace.first <<
-    //            ", x: " << first_trace.second;
-
     int y = first_trace.first;
     int x = first_trace.second;
 
@@ -130,7 +123,6 @@ void Board::indexToFill()
 
     ghost_found = false;
     rememberBoardState();
-
     if (logic_board[0][y + 1][x] == LogicBoardEnum::black)
     {
         tryForIndex(y + 1, x);
@@ -138,7 +130,6 @@ void Board::indexToFill()
 
     ghost_found = false;
     rememberBoardState();
-
     if (logic_board[0][y - 1][x] == LogicBoardEnum::black)
     {
         tryForIndex(y - 1, x);
@@ -146,7 +137,6 @@ void Board::indexToFill()
 
     ghost_found = false;
     rememberBoardState();
-
     if (logic_board[0][y][x - 1] == LogicBoardEnum::black)
     {
         tryForIndex(y, x - 1);
@@ -154,7 +144,6 @@ void Board::indexToFill()
 
     ghost_found = false;
     rememberBoardState();
-
     if (logic_board[0][y][x + 1] == LogicBoardEnum::black)
     {
         tryForIndex(y, x + 1);
@@ -166,6 +155,22 @@ void Board::indexToFill()
     debugBoard(0);
 
     howMuchFilled();
+}
+
+void Board::tryForIndex(int y, int x)
+{
+    fillArea(y, x);
+
+    if (ghost_found == true)
+    {
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                logic_board[0][y][x] = helper_board[y][x];
+            }
+        }
+    }
 }
 
 void Board::fillArea(int y, int x)
@@ -215,34 +220,21 @@ void Board::fillArea(int y, int x)
 void Board::rememberBoardState()
 {
     for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                helper_board[y][x] = logic_board[0][y][x];
-            }
-    }
-}
-
-void Board::tryForIndex(int y, int x)
-{
-    fillArea(y, x);
-
-    if (ghost_found == true)
     {
-        for (int y = 0; y < height; y++)
+        for (int x = 0; x < width; x++)
         {
-            for (int x = 0; x < width; x++)
-            {
-                logic_board[0][y][x] = helper_board[y][x];
-            }
+            helper_board[y][x] = logic_board[0][y][x];
         }
     }
 }
+
+
 
 void Board::howMuchFilled()
 {
     int filled = 0;
     double percent = 0;
+
     for (int y = 1; y < height - 1; y++)
     {
         for (int x = 1; x < width - 1; x++)
@@ -253,10 +245,10 @@ void Board::howMuchFilled()
             }
         }
     }
-    percent = (double(filled)/964)*100;
 
-    qDebug() << "filled: " << filled << " of 964 or " << percent << "%";
-    //qDebug() << "filled: " ;
+    percent = (double(filled)/1204)*100;
+
+    qDebug() << "filled: " << filled << " of 1204 or " << percent << "%";
 
     emit coloredArea(percent);
 }
@@ -275,6 +267,8 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
     {
         drawing_trace = true;
         rememberTrace(y_pos, x_pos);
+        logic_board[0][y_pos][x_pos] = LogicBoardEnum::trace;
+        logicBoardToTileBoard(LogicBoardEnum::trace, y_pos, x_pos);
     }
 
     if(!drawing_trace)
@@ -283,20 +277,13 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
         //debugBoard(1);
     }
 
-    if(logic_board[0][y_pos][x_pos] != LogicBoardEnum::blue)
-    {
-        logicBoardToTileBoard(LogicBoardEnum::trace, y_pos, x_pos);
-    }
-
-    logic_board[0][y_pos][x_pos] = LogicBoardEnum::blue;
-
-
+    debugBoard(0);
     emit boardUpdated();
 }
 
+//needs some improvement
 void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
-    qDebug() << "checkBoard called for y:" << y_pos << ", x: " << x_pos;
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::ghost;
 
     if(y_pos != y_prev_pos || x_pos != x_prev_pos)
@@ -310,6 +297,8 @@ void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
     bool left_down = false;
     bool right_up = false;
     bool right_down = false;
+
+    bool game_over = false;
 
     if(logic_board[0][y_pos][x_pos-1] != LogicBoardEnum::black)
         left = true;
@@ -329,14 +318,35 @@ void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
     if(logic_board[0][y_pos+1][x_pos+1] != LogicBoardEnum::black)
         right_down = true;
 
-    emit borderHit(y_pos, x_pos, left, right, up, down,
-                   left_up, left_down, right_up, right_down);
-}
 
+    if((y_prev_pos+1 == y_pos) && (x_prev_pos+1 == x_pos))
+    {
+        if(logic_board[0][y_pos+1][x_pos+1] == LogicBoardEnum::trace)
+            game_over = true;
+    }
+    if((y_prev_pos-1 == y_pos) && (x_prev_pos-1 == x_pos))
+    {
+        if(logic_board[0][y_pos-1][x_pos-1] == LogicBoardEnum::trace)
+            game_over = true;
+    }
+    if((y_prev_pos+1 == y_pos) && (x_prev_pos-1 == x_pos))
+    {
+        if(logic_board[0][y_pos+1][x_pos-1] == LogicBoardEnum::trace)
+            game_over = true;
+    }
+    if((y_prev_pos-1 == y_pos) && (x_prev_pos+1 == x_pos))
+    {
+        if(logic_board[0][y_pos-1][x_pos+1] == LogicBoardEnum::trace)
+            game_over = true;
+    }
+
+    emit borderHit(y_pos, x_pos, left, right, up, down,
+                   left_up, left_down, right_up, right_down, game_over);
+}
 
 void Board::debugBoard(int layer)
 {
-    std::cout << "debugBoard() called" << std::endl;
+    std::cout << "Board state at layer " << layer << ": " << std::endl;
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
@@ -360,7 +370,7 @@ void Board::debugBoard(int layer)
                 std::cout << "G ";
                 break;
             case fruit:
-                std::cout << "3 ";
+                std::cout << "F ";
                 break;
             case none:
                 std::cout << "0 ";

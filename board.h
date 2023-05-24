@@ -35,14 +35,15 @@ public slots:
 signals:
     void boardUpdated();
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
-                   bool left_up, bool left_down, bool right_up, bool right_down);
+                   bool left_up, bool left_down, bool right_up, bool right_down, bool game_over);
     void coloredArea(double filled);
+
 
 private:
     QGraphicsScene *scene;
 
-    static const int height = 30;//30
-    static const int width = 45; //45
+    static const int height = 30;
+    static const int width = 45;
     static const int depth = 2;
 
     LogicBoardEnum logic_board[depth][height][width];
@@ -57,11 +58,12 @@ private:
     void rememberTrace(int y, int x);
     void changeTraceToBlue();
 
+    //algo
     void indexToFill();
-    void fillArea2(int y, int x);
+    void tryForIndex(int y, int x);
     void fillArea(int y, int x);
     void rememberBoardState();
-    void tryForIndex(int y, int x);
+
     bool ghost_found;
 
     bool drawing_trace;
@@ -69,11 +71,6 @@ private:
     std::pair<int, int> first_trace;
 
     void howMuchFilled();
-
-    QPixmap blue_tile_texture;
-    QPixmap black_tile_texture;
-    QPixmap border_tile_texture;
-    QPixmap trace_tile_texture;
 
     QBrush black_brush;
     QBrush blue_brush;
