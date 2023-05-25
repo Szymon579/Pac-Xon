@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Pac Xon</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0, 0, 48);</string>
   </property>
   <widget class="QStackedWidget" name="stackView">
    <property name="geometry">
@@ -30,9 +33,9 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>130</y>
+       <y>240</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -46,9 +49,9 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
       <string>START</string>
@@ -58,9 +61,9 @@ border-radius: 20;</string>
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>250</y>
+       <y>360</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -74,9 +77,9 @@ border-radius: 20;</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
       <string>LEADERBOARD</string>
@@ -86,9 +89,9 @@ border-radius: 20;</string>
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>370</y>
+       <y>480</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -102,9 +105,9 @@ border-radius: 20;</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
       <string>QUIT</string>
