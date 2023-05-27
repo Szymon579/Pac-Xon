@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string notr="true">Pac Xon</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(0, 0, 48);</string>
   </property>
   <widget class="QStackedWidget" name="stackView">
    <property name="geometry">
@@ -30,9 +33,9 @@
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>130</y>
+       <y>240</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -46,21 +49,21 @@
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>START</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="leadButton">
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>250</y>
+       <y>360</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -74,21 +77,21 @@ border-radius: 20;</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>LEADERBOARD</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="quitButton">
      <property name="geometry">
       <rect>
        <x>280</x>
-       <y>370</y>
+       <y>480</y>
        <width>340</width>
-       <height>91</height>
+       <height>90</height>
       </rect>
      </property>
      <property name="font">
@@ -102,12 +105,25 @@ border-radius: 20;</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>QUIT</string>
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>60</y>
+       <width>620</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/assets/logo.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
