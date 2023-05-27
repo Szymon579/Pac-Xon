@@ -54,7 +54,7 @@ background-color: rgb(27, 37, 222);
 border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>START</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="leadButton">
@@ -82,7 +82,7 @@ background-color: rgb(27, 37, 222);
 border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>LEADERBOARD</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="quitButton">
@@ -110,7 +110,20 @@ background-color: rgb(27, 37, 222);
 border-radius: 30;</string>
      </property>
      <property name="text">
-      <string>QUIT</string>
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>60</y>
+       <width>620</width>
+       <height>100</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/assets/logo.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
