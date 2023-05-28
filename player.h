@@ -28,7 +28,8 @@ public:
     void borderControl();
     void positionOnBoard();
 
-    //void setPos(int y, int x);
+    //void setPosition(int y, int x);
+    void setMoveDirection(MoveDirection dir);
 
 public slots:
     void movePlayer();

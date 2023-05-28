@@ -14,5 +14,8 @@ int main(int argc, char *argv[])
     Interface interface(logic.scene);
     interface.show();
 
+    QObject::connect(&logic, &Logic::livesSignal, &interface, &Interface::lives);
+    QObject::connect(&logic, &Logic::scoreSignal, &interface, &Interface::score);
+
     return a.exec();
 }

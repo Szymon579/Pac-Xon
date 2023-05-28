@@ -362,6 +362,8 @@ void Board::traceDrawingFailed()
         logic_board[0][trace_cords[i].first][trace_cords[i].second] = LogicBoardEnum::black;
         tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(black_brush);
     }
+
+    trace_cords.clear();
 }
 
 void Board::debugBoard(int layer)

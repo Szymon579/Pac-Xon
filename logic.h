@@ -22,11 +22,17 @@ public:
 
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
 
+signals:
+    void livesSignal(int lives);
+    void scoreSignal(double score);
+
 public slots:
-    void stopTimer();
+    void killedByGhost();
     void isGameWon(double filled);
 
 private:
+    QTimer player_timer;
+
     QGraphicsView *view = new QGraphicsView(scene);
 
     Board *board = new Board(scene);
@@ -37,9 +43,6 @@ private:
     Ghost *ghost_2 = new Ghost(15, 25, Ghost::rightUp);
     Ghost *ghost_3 = new Ghost(20, 8, Ghost::leftDown);
     Ghost *ghost_4 = new Ghost(6, 15, Ghost::leftUp);
-
-
-    QTimer player_timer;
 
     int score = 0;
     int lives = 0;
