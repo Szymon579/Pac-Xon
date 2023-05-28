@@ -19,6 +19,7 @@ class Logic : public QObject
     Q_OBJECT
 public:
     Logic(int lives);
+
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
 
 public slots:
@@ -26,8 +27,6 @@ public slots:
     void isGameWon(double filled);
 
 private:
-    //QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
-    //QGraphicsScene *scene;
     QGraphicsView *view = new QGraphicsView(scene);
 
     Board *board = new Board(scene);

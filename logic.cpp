@@ -24,9 +24,9 @@ Logic::Logic(int lives)
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
-    QObject::connect(ghost_1, &Ghost::checkTile, board, &Board::checkBoard);
-    QObject::connect(ghost_2, &Ghost::checkTile, board, &Board::checkBoard);
-    QObject::connect(ghost_3, &Ghost::checkTile, board, &Board::checkBoard);
+    QObject::connect(ghost_1, &Ghost::checkTile, board, &Board::handleGhost);
+    QObject::connect(ghost_2, &Ghost::checkTile, board, &Board::handleGhost);
+    QObject::connect(ghost_3, &Ghost::checkTile, board, &Board::handleGhost);
 
     QObject::connect(ghost_1, &Ghost::gameOver, this, &Logic::stopTimer);
     QObject::connect(ghost_2, &Ghost::gameOver, this, &Logic::stopTimer);
@@ -52,7 +52,8 @@ Logic::Logic(int lives)
 
 void Logic::stopTimer()
 {
-    player_timer.stop();
+    //player->setPos(0, 0);
+    //player_timer.stop();
 }
 
 void Logic::isGameWon(double filled)

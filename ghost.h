@@ -18,16 +18,18 @@ public:
         none
     };
 
-    Ghost(int y, int x, GhostDirection init_direction); //explicit
+    Ghost(int y, int x, GhostDirection init_direction);
 
-    void changeDirection(int y, int x, bool left, bool right, bool up, bool down,
-               bool left_up, bool left_down, bool right_up, bool right_down, bool game_over);
-
-    std::pair<int, int> getGhostPos();
+    void changeDirection(int y, int x,
+                         bool left, bool right, bool up, bool down,
+                         bool left_up, bool left_down,
+                         bool right_up, bool right_down,
+                         bool trace_hit);
 
 signals:
     void checkTile(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
     void gameOver();
+
 public slots:
     void moveGhost();
 

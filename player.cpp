@@ -126,6 +126,8 @@ void Player::positionOnBoard()
 
 }
 
+//void Player::setPos(int y, int x) {y_pos = y; x_pos = x; }
+
 void Player::movePlayer()
 {
     borderControl();
