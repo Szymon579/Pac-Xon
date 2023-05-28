@@ -30,7 +30,7 @@ public:
 
 public slots:
     void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
-    void checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
+    void handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
 
 signals:
     void boardUpdated();
@@ -56,13 +56,15 @@ private:
     void logicBoardToTileBoard(LogicBoardEnum tile, int y, int x);
 
     void rememberTrace(int y, int x);
-    void changeTraceToBlue();
+    void traceDrawingFinished();
+    void traceDrawingFailed();
 
     //algo
     void indexToFill();
     void tryForIndex(int y, int x);
     void fillArea(int y, int x);
     void rememberBoardState();
+    void restoreBoardState();
 
     bool ghost_found;
 

@@ -29,6 +29,9 @@ Interface::Interface(QGraphicsScene *scene, QWidget *parent) :
     ui->quitButton->setIcon(quit_icon);
     ui->quitButton->setIconSize(quit_pixmap.rect().size());
 
+    lives(3);
+    score(0);
+
 }
 
 Interface::~Interface()
@@ -46,7 +49,7 @@ void Interface::on_startButton_clicked()
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
-
+//main page
 void Interface::on_leadButton_clicked()
 {
     ui->stackView->setCurrentIndex(2);
@@ -60,6 +63,26 @@ void Interface::on_backButton_clicked()
 void Interface::on_quitButton_clicked()
 {
     QCoreApplication::quit();
+}
+
+
+//game page
+void Interface::lives(int lives)
+{
+    std::string s_lives = std::to_string(lives);
+    QString label = "lives: " + QString::fromStdString(s_lives);
+    ui->livesLabel->setText(label);
+}
+
+void Interface::score(double score)
+{
+    score = round(score);
+    int scr = int(score);
+
+    std::string s_lives = std::to_string(scr);
+
+    QString label = "score: " + QString::fromStdString(s_lives) + "%";
+    ui->scoreLabel->setText(label);
 }
 
 

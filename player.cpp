@@ -126,6 +126,13 @@ void Player::positionOnBoard()
 
 }
 
+void Player::setMoveDirection(MoveDirection dir)
+{
+    direction = dir;
+}
+
+//void Player::setPosition(int y, int x) {y_pos = y; x_pos = x; }
+
 void Player::movePlayer()
 {
     borderControl();

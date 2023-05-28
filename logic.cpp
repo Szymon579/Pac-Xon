@@ -16,7 +16,7 @@ Logic::Logic(int lives)
     board->renderTileBoard();
 
     scene->addItem(player);
-    player->setZValue(5);
+    //player->setZValue(5);
 
     scene->addItem(ghost_1);
     scene->addItem(ghost_2);
@@ -24,13 +24,13 @@ Logic::Logic(int lives)
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
 
-    QObject::connect(ghost_1, &Ghost::checkTile, board, &Board::checkBoard);
-    QObject::connect(ghost_2, &Ghost::checkTile, board, &Board::checkBoard);
-    QObject::connect(ghost_3, &Ghost::checkTile, board, &Board::checkBoard);
+    QObject::connect(ghost_1, &Ghost::checkTile, board, &Board::handleGhost);
+    QObject::connect(ghost_2, &Ghost::checkTile, board, &Board::handleGhost);
+    QObject::connect(ghost_3, &Ghost::checkTile, board, &Board::handleGhost);
 
-    QObject::connect(ghost_1, &Ghost::gameOver, this, &Logic::stopTimer);
-    QObject::connect(ghost_2, &Ghost::gameOver, this, &Logic::stopTimer);
-    QObject::connect(ghost_3, &Ghost::gameOver, this, &Logic::stopTimer);
+    QObject::connect(ghost_1, &Ghost::gameOver, this, &Logic::killedByGhost);
+    QObject::connect(ghost_2, &Ghost::gameOver, this, &Logic::killedByGhost);
+    QObject::connect(ghost_3, &Ghost::gameOver, this, &Logic::killedByGhost);
 
     QObject::connect(board, &Board::borderHit, ghost_1, &Ghost::changeDirection);
     QObject::connect(board, &Board::borderHit, ghost_2, &Ghost::changeDirection);
@@ -50,13 +50,21 @@ Logic::Logic(int lives)
 
 }
 
-void Logic::stopTimer()
+void Logic::killedByGhost()
 {
-    player_timer.stop();
+    lives--;
+    emit livesSignal(lives);
+
+    player->setPos(0, 0);
+    player->setMoveDirection(Player::MoveDirection::none);
+
+    //player_timer.stop();
 }
 
 void Logic::isGameWon(double filled)
 {
+    emit scoreSignal(filled);
+
     if(filled > 80.0)
     {
         player_timer.stop();

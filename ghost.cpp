@@ -22,13 +22,14 @@ Ghost::Ghost(int y, int x, GhostDirection init_direction)
 
 }
 
-void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool down, bool left_up, bool left_down, bool right_up, bool right_down, bool game_over)
+void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool down,
+       bool left_up, bool left_down, bool right_up, bool right_down, bool trace_hit)
 {
     //qDebug() << "changeDirection()";
     if(y != y_pos || x != x_pos)
         return;
 
-    if(game_over)
+    if(trace_hit)
     {
         qDebug() << "gameOver() emited";
         emit gameOver();
@@ -106,17 +107,8 @@ void Ghost::changeDirection(int y, int x, bool left, bool right, bool up, bool d
         return;
     }
 
-
 }
 
-std::pair<int, int> Ghost::getGhostPos()
-{
-    std::pair<int, int> cords;
-    cords.first = y_pos;
-    cords.second = x_pos;
-
-    return cords;
-}
 
 void Ghost::moveGhost()
 {

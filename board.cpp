@@ -96,7 +96,7 @@ void Board::rememberTrace(int y, int x)
     //qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
 }
 
-void Board::changeTraceToBlue()
+void Board::traceDrawingFinished()
 {
     for(int i = 0; i < trace_cords.size(); i++)
     {
@@ -163,13 +163,7 @@ void Board::tryForIndex(int y, int x)
 
     if (ghost_found == true)
     {
-        for (int y = 0; y < height; y++)
-        {
-            for (int x = 0; x < width; x++)
-            {
-                logic_board[0][y][x] = helper_board[y][x];
-            }
-        }
+        restoreBoardState();
     }
 }
 
@@ -228,6 +222,17 @@ void Board::rememberBoardState()
     }
 }
 
+void Board::restoreBoardState()
+{
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            logic_board[0][y][x] = helper_board[y][x];
+        }
+    }
+}
+
 
 
 void Board::howMuchFilled()
@@ -273,8 +278,7 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
     if(!drawing_trace)
     {
-        changeTraceToBlue();
-        //debugBoard(1);
+        traceDrawingFinished();
     }
 
     debugBoard(0);
@@ -282,7 +286,7 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 }
 
 //needs some improvement
-void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
+void Board::handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::ghost;
 
@@ -337,11 +341,29 @@ void Board::checkBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
     if((y_prev_pos-1 == y_pos) && (x_prev_pos+1 == x_pos))
     {
         if(logic_board[0][y_pos-1][x_pos+1] == LogicBoardEnum::trace)
+        {
             game_over = true;
+        }
     }
+
+    if(game_over)
+        traceDrawingFailed();
 
     emit borderHit(y_pos, x_pos, left, right, up, down,
                    left_up, left_down, right_up, right_down, game_over);
+}
+
+void Board::traceDrawingFailed()
+{
+    qDebug() << "traceDrawingFailed called";
+
+    for(int i = 0; i < trace_cords.size(); i++)
+    {
+        logic_board[0][trace_cords[i].first][trace_cords[i].second] = LogicBoardEnum::black;
+        tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(black_brush);
+    }
+
+    trace_cords.clear();
 }
 
 void Board::debugBoard(int layer)
