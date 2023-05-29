@@ -144,7 +144,7 @@ border-radius: 30;</string>
     <widget class="QLabel" name="scoreLabel">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>760</x>
        <y>10</y>
        <width>120</width>
        <height>25</height>
