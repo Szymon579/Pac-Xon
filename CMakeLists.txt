@@ -14,19 +14,25 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
 set(PROJECT_SOURCES
         main.cpp
+
         interface.cpp
         interface.h
         interface.ui
-        logic.cpp
-        logic.h
-        player.cpp
-        player.h
+
+        gamebuilder.cpp
+        gamebuilder.h
+        levelmanager.cpp
+        levelmanager.h
+
         board.cpp
         board.h
+        player.cpp
+        player.h     
         ghost.cpp
         ghost.h
         fruit.cpp
-        fruit.h        
+        fruit.h
+
         resources.qrc
 
 )

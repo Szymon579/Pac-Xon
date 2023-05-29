@@ -1,6 +1,9 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
 
+#include "levelmanager.h"
+#include "gamebuilder.h"
+
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QMainWindow>
@@ -15,8 +18,10 @@ class Interface : public QMainWindow //QWidget
     Q_OBJECT
 
 public:
-    Interface(QGraphicsScene *scene, QWidget *parent = nullptr);
+    Interface(QWidget *parent = nullptr);
     ~Interface();
+
+    LevelManager level_manager;
 
 private slots:
     void on_startButton_clicked();
@@ -25,13 +30,14 @@ private slots:
     void on_quitButton_clicked();
 
 public slots:
-    void lives(int lives);
-    void score(double score);
+    void livesSlot(int lives);
+    void scoreSlot(double score);
 
 private:
     Ui::Interface *ui;
     QGraphicsScene *scene;
 
+    void uiSetup();
 };
 
 #endif // INTERFACE_H
