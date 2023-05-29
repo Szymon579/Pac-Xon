@@ -6,31 +6,22 @@
 #include <QWidget>
 #include <QStackedWidget>
 
-Interface::Interface(QGraphicsScene *scene, QWidget *parent) :
+Interface::Interface(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::Interface)
 {
     ui->setupUi(this);
     ui->stackView->setCurrentIndex(0);
-    this->scene = scene;
 
-    QPixmap start_pixmap(":/assets/play.png");
-    QIcon start_icon(start_pixmap);
-    ui->startButton->setIcon(start_icon);
-    ui->startButton->setIconSize(start_pixmap.rect().size());
+    this->scene = level_manager.scene;
 
-    QPixmap leader_pixmap(":/assets/results.png");
-    QIcon leader_icon(leader_pixmap);
-    ui->leadButton->setIcon(leader_icon);
-    ui->leadButton->setIconSize(leader_pixmap.rect().size());
+    uiSetup();
 
-    QPixmap quit_pixmap(":/assets/quit.png");
-    QIcon quit_icon(quit_pixmap);
-    ui->quitButton->setIcon(quit_icon);
-    ui->quitButton->setIconSize(quit_pixmap.rect().size());
 
-    lives(3);
-    score(0);
+    QObject::connect(&level_manager, &LevelManager::livesSignal, this, &Interface::livesSlot);
+    QObject::connect(&level_manager, &LevelManager::scoreSignal, this, &Interface::scoreSlot);
+    //lives(3);
+    //score(0);
 
 }
 
@@ -38,7 +29,6 @@ Interface::~Interface()
 {
     delete ui;
 }
-
 
 void Interface::on_startButton_clicked()
 {
@@ -67,14 +57,14 @@ void Interface::on_quitButton_clicked()
 
 
 //game page
-void Interface::lives(int lives)
+void Interface::livesSlot(int lives)
 {
     std::string s_lives = std::to_string(lives);
     QString label = "lives: " + QString::fromStdString(s_lives);
     ui->livesLabel->setText(label);
 }
 
-void Interface::score(double score)
+void Interface::scoreSlot(double score)
 {
     score = round(score);
     int scr = int(score);
@@ -83,6 +73,25 @@ void Interface::score(double score)
 
     QString label = "score: " + QString::fromStdString(s_lives) + "%";
     ui->scoreLabel->setText(label);
+}
+
+void Interface::uiSetup()
+{
+    QPixmap start_pixmap(":/assets/play.png");
+    QIcon start_icon(start_pixmap);
+    ui->startButton->setIcon(start_icon);
+    ui->startButton->setIconSize(start_pixmap.rect().size());
+
+    QPixmap leader_pixmap(":/assets/results.png");
+    QIcon leader_icon(leader_pixmap);
+    ui->leadButton->setIcon(leader_icon);
+    ui->leadButton->setIconSize(leader_pixmap.rect().size());
+
+    QPixmap quit_pixmap(":/assets/quit.png");
+    QIcon quit_icon(quit_pixmap);
+    ui->quitButton->setIcon(quit_icon);
+    ui->quitButton->setIconSize(quit_pixmap.rect().size());
+
 }
 
 
