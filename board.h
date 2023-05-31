@@ -11,7 +11,8 @@ class Board : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    explicit Board(QGraphicsScene *scene, QObject *parent = nullptr);
+    Board(QGraphicsScene *scene, QObject *parent = nullptr);
+    ~Board();
 
     enum LogicBoardEnum
     {

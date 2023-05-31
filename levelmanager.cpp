@@ -2,24 +2,31 @@
 #include "gamebuilder.h"
 
 #include <QObject>
+//#include <random>
 
 LevelManager::LevelManager()
 {
-    Ghost *ghost_1 = new Ghost(4, 4, Ghost::rightDown);
-    Ghost *ghost_2 = new Ghost(15, 25, Ghost::rightUp);
-    Ghost *ghost_3 = new Ghost(20, 8, Ghost::leftDown);
 
-    std::vector<Ghost*> ghost_vec;
-    ghost_vec.push_back(ghost_1);
-    ghost_vec.push_back(ghost_2);
-    ghost_vec.push_back(ghost_3);
 
-    game = new GameBuilder(1, 3, ghost_vec);
+}
+
+void LevelManager::createLevel(int level_num)
+{
+    //std::vector<Ghost*> ghost_vec;
+    makeGhosts(level_num);
+
+    game = new GameBuilder(level_num, 3, ghost_vec);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
     QObject::connect(game, &GameBuilder::scoreSignal, this, &LevelManager::scoreSlot);
 
     this->scene = game->scene;
+
+    ghost_vec.clear();
+
+    emit livesSignal(3);
+    emit scoreSignal(0);
+    emit levelSignal(level_num);
 }
 
 void LevelManager::livesSlot(int lives)
@@ -32,4 +39,17 @@ void LevelManager::scoreSlot(double score)
 {
     this->score = score;
     emit scoreSignal(score);
+}
+
+void LevelManager::makeGhosts(int quantity)
+{
+    for(int i = 0; i < quantity; i++)
+    {
+        int rand_y = 2 + (rand() % 28);
+        int rand_x = 2 + (rand() % 43);
+        int rand_dir = rand() % 4;
+
+        Ghost *ghost = new Ghost(rand_y, rand_x, (Ghost::GhostDirection)rand_dir);
+        ghost_vec.push_back(ghost);
+    }
 }

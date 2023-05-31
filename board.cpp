@@ -17,25 +17,36 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 
     initLogicBoard();
     initTileBoard();
+
+    renderTileBoard();
+}
+
+Board::~Board()
+{
+    delete scene;
 }
 
 void Board::initLogicBoard()
-{
+{   
     for(int i = 0; i < height; i++)
     {
         for(int j = 0; j < width; j++)
         {
+            //player, ghosts, fruits layer
+            logic_board[1][i][j] = LogicBoardEnum::none;
+
+            //tiles layer
             logic_board[0][i][j] = LogicBoardEnum::black;
 
             //top and bottom border
             logic_board[0][0][j] = LogicBoardEnum::blue;
             logic_board[0][height - 1][j] = LogicBoardEnum::blue;
-        }
 
+        }
         //left and right border
         logic_board[0][i][0] = LogicBoardEnum::blue;
         logic_board[0][i][width - 1] = LogicBoardEnum::blue;
-    }
+    }   
 }
 
 void Board::initTileBoard()
@@ -93,7 +104,6 @@ void Board::rememberTrace(int y, int x)
     cords.second = x;
 
     trace_cords.push_back(cords);
-    //qDebug() << "pushed to trace_cords y: " << cords.first << ", x: " << cords.second;
 }
 
 void Board::traceDrawingFinished()
@@ -118,8 +128,8 @@ void Board::indexToFill()
     int y = first_trace.first;
     int x = first_trace.second;
 
-    debugBoard(0);
-    debugBoard(1);
+    //debugBoard(0);
+    //debugBoard(1);
 
     ghost_found = false;
     rememberBoardState();
@@ -152,7 +162,7 @@ void Board::indexToFill()
     ghost_found = false;
 
     renderTileBoard();
-    debugBoard(0);
+    //debugBoard(0);
 
     howMuchFilled();
 }
@@ -281,7 +291,7 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
         traceDrawingFinished();
     }
 
-    debugBoard(0);
+    //debugBoard(0);
     emit boardUpdated();
 }
 

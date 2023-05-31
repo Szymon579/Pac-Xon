@@ -32,6 +32,13 @@ GameBuilder::GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec)
 
 }
 
+GameBuilder::~GameBuilder()
+{
+    delete scene;
+    delete board;
+    delete player;
+}
+
 void GameBuilder::killedByGhost()
 {
     lives--;
