@@ -13,16 +13,11 @@ Interface::Interface(QWidget *parent) :
     ui->setupUi(this);
     ui->stackView->setCurrentIndex(0);
 
-    this->scene = level_manager.scene;
-
     uiSetup();
-
 
     QObject::connect(&level_manager, &LevelManager::livesSignal, this, &Interface::livesSlot);
     QObject::connect(&level_manager, &LevelManager::scoreSignal, this, &Interface::scoreSlot);
-    //lives(3);
-    //score(0);
-
+    QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
 }
 
 Interface::~Interface()
@@ -34,7 +29,11 @@ void Interface::on_startButton_clicked()
 {
     ui->stackView->setCurrentIndex(1);
 
+    level_manager.createLevel(1);
+    this->scene = level_manager.scene;
+
     ui->graphicsView->setScene(scene);
+
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -69,10 +68,20 @@ void Interface::scoreSlot(double score)
     score = round(score);
     int scr = int(score);
 
+    if(score > 20)
+        level_manager.createLevel(4);
+
     std::string s_lives = std::to_string(scr);
 
     QString label = "score: " + QString::fromStdString(s_lives) + "%";
     ui->scoreLabel->setText(label);
+}
+
+void Interface::levelSlot(int level)
+{
+    std::string s_lives = std::to_string(level);
+    QString label = "level: " + QString::fromStdString(s_lives);
+    ui->levelLabel->setText(label);
 }
 
 void Interface::uiSetup()

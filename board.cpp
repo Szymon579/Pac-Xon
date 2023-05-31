@@ -17,6 +17,8 @@ Board::Board(QGraphicsScene *scene, QObject *parent)
 
     initLogicBoard();
     initTileBoard();
+
+    renderTileBoard();
 }
 
 void Board::initLogicBoard()

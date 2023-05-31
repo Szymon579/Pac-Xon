@@ -9,11 +9,12 @@
 #include <QMainWindow>
 #include <QStackedWidget>
 
-namespace Ui {
-class Interface;
+namespace Ui
+{
+    class Interface;
 }
 
-class Interface : public QMainWindow //QWidget
+class Interface : public QMainWindow
 {
     Q_OBJECT
 
@@ -29,9 +30,11 @@ private slots:
     void on_backButton_clicked();
     void on_quitButton_clicked();
 
+
 public slots:
     void livesSlot(int lives);
     void scoreSlot(double score);
+    void levelSlot(int level);
 
 private:
     Ui::Interface *ui;

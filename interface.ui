@@ -166,7 +166,7 @@ border-radius: 30;</string>
     <widget class="QLabel" name="livesLabel">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>410</x>
        <y>10</y>
        <width>120</width>
        <height>25</height>
@@ -183,6 +183,28 @@ border-radius: 30;</string>
      </property>
      <property name="text">
       <string>lives: </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="levelLabel">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>10</y>
+       <width>120</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>level:</string>
      </property>
     </widget>
    </widget>
