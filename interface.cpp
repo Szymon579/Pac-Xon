@@ -29,13 +29,7 @@ void Interface::on_startButton_clicked()
 {
     ui->stackView->setCurrentIndex(1);
 
-    level_manager.createLevel(1);
-    this->scene = level_manager.scene;
-
-    ui->graphicsView->setScene(scene);
-
-    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    updateLevelView(level);
 }
 
 //main page
@@ -68,8 +62,12 @@ void Interface::scoreSlot(double score)
     score = round(score);
     int scr = int(score);
 
+
     if(score > 20)
-        level_manager.createLevel(4);
+    {
+        updateLevelView(++level);
+    }
+
 
     std::string s_lives = std::to_string(scr);
 
@@ -101,6 +99,17 @@ void Interface::uiSetup()
     ui->quitButton->setIcon(quit_icon);
     ui->quitButton->setIconSize(quit_pixmap.rect().size());
 
+}
+
+void Interface::updateLevelView(int level)
+{
+    level_manager.createLevel(level);
+    this->scene = level_manager.scene;
+
+    ui->graphicsView->setScene(scene);
+
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 

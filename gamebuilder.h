@@ -18,6 +18,7 @@ class GameBuilder : public QObject
     Q_OBJECT
 public:
     GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec);
+    ~GameBuilder();
 
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
 

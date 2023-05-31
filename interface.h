@@ -41,6 +41,9 @@ private:
     QGraphicsScene *scene;
 
     void uiSetup();
+
+    int level = 1;
+    void updateLevelView(int level);
 };
 
 #endif // INTERFACE_H

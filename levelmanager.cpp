@@ -15,7 +15,7 @@ void LevelManager::createLevel(int level_num)
     //std::vector<Ghost*> ghost_vec;
     makeGhosts(level_num);
 
-    game = new GameBuilder(1, 3, ghost_vec);
+    game = new GameBuilder(level_num, 3, ghost_vec);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
     QObject::connect(game, &GameBuilder::scoreSignal, this, &LevelManager::scoreSlot);
@@ -27,9 +27,6 @@ void LevelManager::createLevel(int level_num)
     emit livesSignal(3);
     emit scoreSignal(0);
     emit levelSignal(level_num);
-
-    //delete game;
-
 }
 
 void LevelManager::livesSlot(int lives)
