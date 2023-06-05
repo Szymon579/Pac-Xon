@@ -17,5 +17,8 @@
         <file>assets/leaderboard.png</file>
         <file>assets/quit.png</file>
         <file>assets/results.png</file>
+        <file>assets/menu.png</file>
+        <file>assets/next.png</file>
+        <file>assets/back60.png</file>
     </qresource>
 </RCC>

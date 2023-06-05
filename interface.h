@@ -44,6 +44,8 @@ private:
 
     int level = 1;
     void updateLevelView(int level);
+
+    int req_area = 20; //defalut 80
 };
 
 #endif // INTERFACE_H

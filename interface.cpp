@@ -18,6 +18,8 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::livesSignal, this, &Interface::livesSlot);
     QObject::connect(&level_manager, &LevelManager::scoreSignal, this, &Interface::scoreSlot);
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
+
+
 }
 
 Interface::~Interface()
@@ -55,6 +57,11 @@ void Interface::livesSlot(int lives)
     std::string s_lives = std::to_string(lives);
     QString label = "lives: " + QString::fromStdString(s_lives);
     ui->livesLabel->setText(label);
+
+    if(lives < 1)
+    {
+        ui->stackView->setCurrentIndex(2);
+    }
 }
 
 void Interface::scoreSlot(double score)
@@ -63,7 +70,7 @@ void Interface::scoreSlot(double score)
     int scr = int(score);
 
 
-    if(score > 20)
+    if(score > req_area)
     {
         updateLevelView(++level);
     }
@@ -84,6 +91,7 @@ void Interface::levelSlot(int level)
 
 void Interface::uiSetup()
 {
+    //main page
     QPixmap start_pixmap(":/assets/play.png");
     QIcon start_icon(start_pixmap);
     ui->startButton->setIcon(start_icon);
@@ -98,6 +106,27 @@ void Interface::uiSetup()
     QIcon quit_icon(quit_pixmap);
     ui->quitButton->setIcon(quit_icon);
     ui->quitButton->setIconSize(quit_pixmap.rect().size());
+
+    //leaderboard page
+    QPixmap back_pixmap(":/assets/back60.png");
+    QIcon back_icon(back_pixmap);
+    ui->backButton->setIcon(back_icon);
+    ui->backButton->setIconSize(back_pixmap.rect().size()/2);
+
+
+    //game page
+
+//    ui->widget->setVisible(false);
+
+//    QPixmap next_pixmap(":/assets/next.png");
+//    QIcon next_icon(next_pixmap);
+//    ui->nextButton->setIcon(next_icon);
+//    ui->nextButton->setIconSize(next_pixmap.rect().size());
+
+//    QPixmap menu_pixmap(":/assets/menu.png");
+//    QIcon menu_icon(menu_pixmap);
+//    ui->menuButton->setIcon(menu_icon);
+//    ui->menuButton->setIconSize(menu_pixmap.rect().size());
 
 }
 
