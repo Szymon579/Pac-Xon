@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>0</x>
-     <y>0</y>
+     <y>-10</y>
      <width>900</width>
      <height>640</height>
     </rect>
@@ -113,7 +113,7 @@ border-radius: 30;</string>
       <string/>
      </property>
     </widget>
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="pacxonLabel">
      <property name="geometry">
       <rect>
        <x>140</x>
@@ -212,38 +212,10 @@ border-radius: 30;</string>
     <widget class="QPushButton" name="backButton">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>30</x>
        <y>30</y>
-       <width>101</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Source Code Pro</family>
-       <pointsize>15</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
-     </property>
-     <property name="text">
-      <string>BACK</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="leaderLabel">
-     <property name="geometry">
-      <rect>
-       <x>280</x>
-       <y>30</y>
-       <width>340</width>
-       <height>91</height>
+       <width>140</width>
+       <height>40</height>
       </rect>
      </property>
      <property name="font">
@@ -257,12 +229,25 @@ border-radius: 20;</string>
       <cursorShape>PointingHandCursor</cursorShape>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(238, 238, 0);
-background-color: rgb(1, 1, 182);
-border-radius: 20;</string>
+      <string notr="true">color: rgb(255, 247, 77);
+background-color: rgb(27, 37, 222);
+border-radius: 15;</string>
      </property>
      <property name="text">
-      <string>LEADERBOARD</string>
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="pacxonLabel_2">
+     <property name="geometry">
+      <rect>
+       <x>290</x>
+       <y>20</y>
+       <width>320</width>
+       <height>60</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/assets/results.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
