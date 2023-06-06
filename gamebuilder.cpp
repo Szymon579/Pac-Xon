@@ -28,6 +28,8 @@ GameBuilder::GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec)
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWon);
 
+    QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
+
     player_timer.start(10);
 
 }
@@ -59,5 +61,21 @@ void GameBuilder::isGameWon(double filled)
         player_timer.stop();
         qDebug() << "YOU WIN!";
     }
+}
+
+void GameBuilder::pauseSlot()
+{
+    if(!pause)
+    {
+        player_timer.stop();
+        pause = true;
+    }
+    else
+    {
+        player_timer.start();
+        pause = false;
+    }
+
+    emit pauseSignal(pause);
 }
 

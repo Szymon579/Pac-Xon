@@ -36,6 +36,7 @@ public slots:
 
 signals:
     void positionChanged(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
+    void pause();
 
 private:
     //player's current direction

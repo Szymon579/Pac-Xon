@@ -25,10 +25,12 @@ public:
 signals:
     void livesSignal(int lives);
     void scoreSignal(double score);
+    void pauseSignal(bool pause);
 
 public slots:
     void killedByGhost();
     void isGameWon(double filled);
+    void pauseSlot();
 
 private:
     QTimer player_timer;
@@ -42,6 +44,8 @@ private:
     double score = 0;
     int lives = 0;
     bool game_over = false;
+
+    bool pause = false;
 
 };
 
