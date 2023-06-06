@@ -35,6 +35,7 @@ public slots:
     void livesSlot(int lives);
     void scoreSlot(double score);
     void levelSlot(int level);
+    void pauseSlot(bool pause);
 
 private:
     Ui::Interface *ui;

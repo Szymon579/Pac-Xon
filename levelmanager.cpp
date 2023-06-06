@@ -19,6 +19,7 @@ void LevelManager::createLevel(int level_num)
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
     QObject::connect(game, &GameBuilder::scoreSignal, this, &LevelManager::scoreSlot);
+    QObject::connect(game, &GameBuilder::pauseSignal, this, &LevelManager::pauseSlot);
 
     this->scene = game->scene;
 
@@ -39,6 +40,11 @@ void LevelManager::scoreSlot(double score)
 {
     this->score = score;
     emit scoreSignal(score);
+}
+
+void LevelManager::pauseSlot(bool pause)
+{
+    emit pauseSignal(pause);
 }
 
 void LevelManager::makeGhosts(int quantity)

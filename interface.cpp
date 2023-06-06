@@ -18,6 +18,7 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::livesSignal, this, &Interface::livesSlot);
     QObject::connect(&level_manager, &LevelManager::scoreSignal, this, &Interface::scoreSlot);
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
+    QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
 
 }
@@ -87,6 +88,11 @@ void Interface::levelSlot(int level)
     std::string s_lives = std::to_string(level);
     QString label = "level: " + QString::fromStdString(s_lives);
     ui->levelLabel->setText(label);
+}
+
+void Interface::pauseSlot(bool pause)
+{
+    //pause widget
 }
 
 void Interface::uiSetup()

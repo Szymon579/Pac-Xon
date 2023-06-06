@@ -54,9 +54,10 @@ void Player::keyPressEvent(QKeyEvent *event)
         buffer_down = true;
     }
 
-    if(event->key() == Qt::Key_P) {
-        qDebug() << "stop pressed";
-        direction = MoveDirection::none;
+    if(event->key() == Qt::Key_Escape) {
+        qDebug() << "pause pressed";
+        //direction = MoveDirection::none;
+        emit pause();
     }
 
 }
