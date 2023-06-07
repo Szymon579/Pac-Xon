@@ -92,7 +92,7 @@ void Interface::levelSlot(int level)
 
 void Interface::pauseSlot(bool pause)
 {
-    //pause widget
+    ui->pauseWidget->setVisible(pause);
 }
 
 void Interface::uiSetup()
@@ -121,18 +121,17 @@ void Interface::uiSetup()
 
 
     //game page
+    ui->pauseWidget->setVisible(false);
 
-//    ui->widget->setVisible(false);
+//    QPixmap resume_pixmap(":/assets/resume60.png");
+//    QIcon resume_icon(resume_pixmap);
+//    ui->resumeButton->setIcon(resume_icon);
+//    ui->resumeButton->setIconSize(resume_pixmap.rect().size()/2);
 
-//    QPixmap next_pixmap(":/assets/next.png");
-//    QIcon next_icon(next_pixmap);
-//    ui->nextButton->setIcon(next_icon);
-//    ui->nextButton->setIconSize(next_pixmap.rect().size());
-
-//    QPixmap menu_pixmap(":/assets/menu.png");
-//    QIcon menu_icon(menu_pixmap);
-//    ui->menuButton->setIcon(menu_icon);
-//    ui->menuButton->setIconSize(menu_pixmap.rect().size());
+    QPixmap menu_pixmap(":/assets/quit.png");
+    QIcon menu_icon(menu_pixmap);
+    ui->menuButton->setIcon(menu_icon);
+    ui->menuButton->setIconSize(menu_pixmap.rect().size()/2);
 
 }
 
@@ -148,7 +147,8 @@ void Interface::updateLevelView(int level)
 }
 
 
-
-
-
+void Interface::on_menuButton_clicked()
+{
+    ui->stackView->setCurrentIndex(0);
+}
 

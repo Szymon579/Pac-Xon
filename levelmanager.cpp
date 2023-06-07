@@ -7,7 +7,6 @@
 LevelManager::LevelManager()
 {
 
-
 }
 
 void LevelManager::createLevel(int level_num)
@@ -28,6 +27,7 @@ void LevelManager::createLevel(int level_num)
     emit livesSignal(3);
     emit scoreSignal(0);
     emit levelSignal(level_num);
+    emit pauseSignal(false);
 }
 
 void LevelManager::livesSlot(int lives)
