@@ -1,8 +1,8 @@
-#include "gamebuilder.h"
 #include "interface.h"
 
 #include <QApplication>
 #include <QGraphicsScene>
+//#include <fstream>
 
 int main(int argc, char *argv[])
 {
@@ -12,12 +12,13 @@ int main(int argc, char *argv[])
     Interface interface;
     interface.show();
 
-//    Logic logic(3);
-//    Interface interface(logic.scene);
-//    interface.show();
-
-//    QObject::connect(&logic, &Logic::livesSignal, &interface, &Interface::lives);
-//    QObject::connect(&logic, &Logic::scoreSignal, &interface, &Interface::score);
+//    std::fstream outfile;
+//    outfile.open("leaderboard.txt", std::ios::out);
+//    if(outfile.is_open())
+//    {
+//        outfile << "test";
+//    }
+//    outfile.close();
 
     return a.exec();
 }

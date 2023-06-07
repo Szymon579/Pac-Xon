@@ -31,6 +31,8 @@ private slots:
     void on_quitButton_clicked();
 
 
+    void on_menuButton_clicked();
+
 public slots:
     void livesSlot(int lives);
     void scoreSlot(double score);

@@ -20,5 +20,8 @@
         <file>assets/menu.png</file>
         <file>assets/next.png</file>
         <file>assets/back60.png</file>
+        <file>assets/resume60.png</file>
+        <file>assets/pause.png</file>
+        <file>assets/pause30.png</file>
     </qresource>
 </RCC>
