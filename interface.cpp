@@ -39,6 +39,8 @@ void Interface::on_startButton_clicked()
 void Interface::on_leadButton_clicked()
 {
     ui->stackView->setCurrentIndex(2);
+    leaderboard.parseJson("test.json");
+    leaderboard.debug();
 }
 
 void Interface::on_backButton_clicked()

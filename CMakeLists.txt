@@ -18,11 +18,13 @@ set(PROJECT_SOURCES
         interface.cpp
         interface.h
         interface.ui
+        leaderboard.cpp
+        leaderboard.h
 
         gamebuilder.cpp
         gamebuilder.h
         levelmanager.cpp
-        levelmanager.h
+        levelmanager.h       
 
         board.cpp
         board.h

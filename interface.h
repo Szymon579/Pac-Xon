@@ -2,7 +2,8 @@
 #define INTERFACE_H
 
 #include "levelmanager.h"
-#include "gamebuilder.h"
+#include "leaderboard.h"
+
 
 #include <QWidget>
 #include <QGraphicsScene>
@@ -42,6 +43,8 @@ public slots:
 private:
     Ui::Interface *ui;
     QGraphicsScene *scene;
+
+    Leaderboard leaderboard;
 
     void uiSetup();
 
