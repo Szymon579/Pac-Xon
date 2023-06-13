@@ -43,6 +43,8 @@ std::vector<Result> Leaderboard::parseJson(QString filename)
     return results_vec;
 }
 
+
+
 void Leaderboard::debug()
 {
     for (const Result& result : results_vec)
@@ -52,3 +54,5 @@ void Leaderboard::debug()
         qDebug() << "Score:" << result.score;
     }
 }
+
+

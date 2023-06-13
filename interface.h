@@ -31,7 +31,6 @@ private slots:
     void on_backButton_clicked();
     void on_quitButton_clicked();
 
-
     void on_menuButton_clicked();
 
 public slots:
@@ -50,6 +49,8 @@ private:
 
     int level = 1;
     void updateLevelView(int level);
+
+    void displayLeaderboard();
 
     int req_area = 20; //defalut 80
 };
