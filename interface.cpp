@@ -20,6 +20,9 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
+    leaderboard.parseJson("test.json");
+
+
 
 }
 
@@ -41,6 +44,8 @@ void Interface::on_leadButton_clicked()
     ui->stackView->setCurrentIndex(2);
     leaderboard.parseJson("test.json");
     leaderboard.debug();
+
+    displayLeaderboard();
 }
 
 void Interface::on_backButton_clicked()
@@ -148,9 +153,24 @@ void Interface::updateLevelView(int level)
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
+void Interface::displayLeaderboard()
+{
+    QString text;
+
+    for(int i = 0; i < leaderboard.results_vec.size(); i++)
+    {
+        QString pos = QString::number(i+1);
+        text += pos + ". " + leaderboard.results_vec.at(i).name + '\n';
+    }
+
+    ui->textEdit->setText(text);
+}
+
 
 void Interface::on_menuButton_clicked()
 {
     ui->stackView->setCurrentIndex(0);
 }
+
+
 

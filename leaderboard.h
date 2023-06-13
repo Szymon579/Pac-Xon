@@ -18,12 +18,10 @@ public:
     void addObject(QString name, int score);
     void addJsonObjectToFile(const QString &filename, const QJsonObject &newJsonObject);
 
-
-
     std::vector<Result> parseJson(QString filename);
     void debug();
 
-private:
+public:
     std::vector<Result> results_vec;
 };
 
