@@ -21,10 +21,12 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
 
-    ui->textEdit->setReadOnly(true);
-    ui->textEdit->setFocusPolicy(Qt::NoFocus);
-    ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->leaderEdit->setReadOnly(true);
+    ui->leaderEdit->setFocusPolicy(Qt::NoFocus);
+    ui->leaderEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->leaderEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    leaderboard.parseJson("test.json");
 
 }
 
@@ -45,14 +47,7 @@ void Interface::on_leadButton_clicked()
 {
     ui->stackView->setCurrentIndex(2);
 
-    QString text = leaderboard.formatForDisplay();
-    ui->textEdit->setText(text);
-
-    QTextDocument* doc = ui->textEdit->document();
-    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
-    ui->textEdit->setDocument(doc);
-
-    //displayLeaderboard();
+    displayLeaderboard();
 }
 
 void Interface::on_backButton_clicked()
@@ -62,6 +57,8 @@ void Interface::on_backButton_clicked()
 
 void Interface::on_quitButton_clicked()
 {
+    leaderboard.saveToJsonFile("test.json");
+
     QCoreApplication::quit();
 }
 
@@ -159,15 +156,14 @@ void Interface::updateLevelView(int level)
 
 void Interface::displayLeaderboard()
 {
-    QString text;
+    leaderboard.sort();
 
-    for(int i = 0; i < leaderboard.results_vec.size(); i++)
-    {
-        QString pos = QString::number(i+1);
-        text += pos + ". " + leaderboard.results_vec.at(i).name + '\n';
-    }
+    QString text = leaderboard.formatForDisplay();
+    ui->leaderEdit->setText(text);
 
-    ui->textEdit->setText(text);
+    QTextDocument* doc = ui->leaderEdit->document();
+    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
+    ui->leaderEdit->setDocument(doc);
 }
 
 
@@ -177,4 +173,13 @@ void Interface::on_menuButton_clicked()
 }
 
 
+
+
+void Interface::on_acceptButton_clicked()
+{
+    leaderboard.addResult(ui->nameEdit->text(), 2137420);
+    ui->nameEdit->clear();
+
+    displayLeaderboard();
+}
 
