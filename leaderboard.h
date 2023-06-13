@@ -20,9 +20,13 @@ public:
 
     std::vector<Result> parseJson(QString filename);
     void debug();
+    void addResult(QString name, int score);
 
 public:
     std::vector<Result> results_vec;
+    QString formatForDisplay();
+    static bool compareByLength(const Result &a, const Result &b);
+    void sort();
 };
 
 #endif // LEADERBOARD_H

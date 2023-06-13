@@ -20,9 +20,11 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
-    leaderboard.parseJson("test.json");
 
-
+    ui->textEdit->setReadOnly(true);
+    ui->textEdit->setFocusPolicy(Qt::NoFocus);
+    ui->textEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->textEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
 }
 
@@ -42,10 +44,15 @@ void Interface::on_startButton_clicked()
 void Interface::on_leadButton_clicked()
 {
     ui->stackView->setCurrentIndex(2);
-    leaderboard.parseJson("test.json");
-    leaderboard.debug();
 
-    displayLeaderboard();
+    QString text = leaderboard.formatForDisplay();
+    ui->textEdit->setText(text);
+
+    QTextDocument* doc = ui->textEdit->document();
+    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
+    ui->textEdit->setDocument(doc);
+
+    //displayLeaderboard();
 }
 
 void Interface::on_backButton_clicked()
@@ -57,7 +64,6 @@ void Interface::on_quitButton_clicked()
 {
     QCoreApplication::quit();
 }
-
 
 //game page
 void Interface::livesSlot(int lives)
@@ -77,12 +83,10 @@ void Interface::scoreSlot(double score)
     score = round(score);
     int scr = int(score);
 
-
     if(score > req_area)
     {
         updateLevelView(++level);
     }
-
 
     std::string s_lives = std::to_string(scr);
 
