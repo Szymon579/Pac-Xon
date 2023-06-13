@@ -20,9 +20,13 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
+
+    ui->leaderEdit->setReadOnly(true);
+    ui->leaderEdit->setFocusPolicy(Qt::NoFocus);
+    ui->leaderEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->leaderEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     leaderboard.parseJson("test.json");
-
-
 
 }
 
@@ -42,8 +46,6 @@ void Interface::on_startButton_clicked()
 void Interface::on_leadButton_clicked()
 {
     ui->stackView->setCurrentIndex(2);
-    leaderboard.parseJson("test.json");
-    leaderboard.debug();
 
     displayLeaderboard();
 }
@@ -55,9 +57,10 @@ void Interface::on_backButton_clicked()
 
 void Interface::on_quitButton_clicked()
 {
+    leaderboard.saveToJsonFile("test.json");
+
     QCoreApplication::quit();
 }
-
 
 //game page
 void Interface::livesSlot(int lives)
@@ -77,12 +80,10 @@ void Interface::scoreSlot(double score)
     score = round(score);
     int scr = int(score);
 
-
     if(score > req_area)
     {
         updateLevelView(++level);
     }
-
 
     std::string s_lives = std::to_string(scr);
 
@@ -155,15 +156,14 @@ void Interface::updateLevelView(int level)
 
 void Interface::displayLeaderboard()
 {
-    QString text;
+    leaderboard.sort();
 
-    for(int i = 0; i < leaderboard.results_vec.size(); i++)
-    {
-        QString pos = QString::number(i+1);
-        text += pos + ". " + leaderboard.results_vec.at(i).name + '\n';
-    }
+    QString text = leaderboard.formatForDisplay();
+    ui->leaderEdit->setText(text);
 
-    ui->textEdit->setText(text);
+    QTextDocument* doc = ui->leaderEdit->document();
+    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
+    ui->leaderEdit->setDocument(doc);
 }
 
 
@@ -173,4 +173,13 @@ void Interface::on_menuButton_clicked()
 }
 
 
+
+
+void Interface::on_acceptButton_clicked()
+{
+    leaderboard.addResult(ui->nameEdit->text(), 2137420);
+    ui->nameEdit->clear();
+
+    displayLeaderboard();
+}
 

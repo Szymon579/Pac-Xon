@@ -15,14 +15,17 @@ class Leaderboard
 public:
     Leaderboard();
 
-    void addObject(QString name, int score);
-    void addJsonObjectToFile(const QString &filename, const QJsonObject &newJsonObject);
-
     std::vector<Result> parseJson(QString filename);
+    void saveToJsonFile(const QString& filename);
+    void addResult(QString name, int score);
+    QString formatForDisplay();
+    void sort();
+
+private:
+    static bool compareByLength(const Result &a, const Result &b);
+    std::vector<Result> results_vec;
     void debug();
 
-public:
-    std::vector<Result> results_vec;
 };
 
 #endif // LEADERBOARD_H
