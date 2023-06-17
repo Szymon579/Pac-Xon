@@ -26,13 +26,16 @@ public:
     LevelManager level_manager;
 
 private slots:
+    //stasrtPage
     void on_startButton_clicked();
     void on_leadButton_clicked();
-    void on_backButton_clicked();
     void on_quitButton_clicked();
 
+    //GamePage
     void on_menuButton_clicked();
 
+    //leaderPage
+    void on_backButton_clicked();
     void on_acceptButton_clicked();
 
 public slots:
@@ -46,15 +49,16 @@ private:
     QGraphicsScene *scene;
 
     Leaderboard leaderboard;
+    QString leaderboard_file = "test1.json";
+    int score;
 
     void uiSetup();
 
-    int level = 1;
     void updateLevelView(int level);
-
     void displayLeaderboard();
 
-    int req_area = 20; //defalut 80
+    int level = 1;
+    int req_area = 20; //filled area required to finish the level, defalut 80
 };
 
 #endif // INTERFACE_H
