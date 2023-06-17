@@ -20,19 +20,28 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
 
-
     ui->leaderEdit->setReadOnly(true);
     ui->leaderEdit->setFocusPolicy(Qt::NoFocus);
     ui->leaderEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->leaderEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    leaderboard.parseJson("test.json");
-
+    leaderboard.parseJson(leaderboard_file);
 }
 
 Interface::~Interface()
 {
     delete ui;
+}
+
+void Interface::updateLevelView(int level)
+{
+    level_manager.createLevel(level);
+    this->scene = level_manager.scene;
+
+    ui->graphicsView->setScene(scene);
+
+    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
 
 void Interface::on_startButton_clicked()
@@ -50,6 +59,27 @@ void Interface::on_leadButton_clicked()
     displayLeaderboard();
 }
 
+void Interface::displayLeaderboard()
+{
+    leaderboard.sort();
+
+    QString text = leaderboard.formatForDisplay();
+    ui->leaderEdit->setText(text);
+
+    QTextDocument* doc = ui->leaderEdit->document();
+    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
+    ui->leaderEdit->setDocument(doc);
+}
+
+void Interface::on_acceptButton_clicked()
+{
+    leaderboard.addResult(ui->nameEdit->text(), score);
+    ui->nameEdit->clear();
+
+    displayLeaderboard();
+}
+
+
 void Interface::on_backButton_clicked()
 {
     ui->stackView->setCurrentIndex(0);
@@ -57,7 +87,7 @@ void Interface::on_backButton_clicked()
 
 void Interface::on_quitButton_clicked()
 {
-    leaderboard.saveToJsonFile("test.json");
+    leaderboard.saveToJsonFile(leaderboard_file);
 
     QCoreApplication::quit();
 }
@@ -89,6 +119,8 @@ void Interface::scoreSlot(double score)
 
     QString label = "score: " + QString::fromStdString(s_lives) + "%";
     ui->scoreLabel->setText(label);
+
+    this->score = score * level;
 }
 
 void Interface::levelSlot(int level)
@@ -131,11 +163,6 @@ void Interface::uiSetup()
     //game page
     ui->pauseWidget->setVisible(false);
 
-//    QPixmap resume_pixmap(":/assets/resume60.png");
-//    QIcon resume_icon(resume_pixmap);
-//    ui->resumeButton->setIcon(resume_icon);
-//    ui->resumeButton->setIconSize(resume_pixmap.rect().size()/2);
-
     QPixmap menu_pixmap(":/assets/quit.png");
     QIcon menu_icon(menu_pixmap);
     ui->menuButton->setIcon(menu_icon);
@@ -143,28 +170,9 @@ void Interface::uiSetup()
 
 }
 
-void Interface::updateLevelView(int level)
-{
-    level_manager.createLevel(level);
-    this->scene = level_manager.scene;
 
-    ui->graphicsView->setScene(scene);
 
-    ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-    ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-}
 
-void Interface::displayLeaderboard()
-{
-    leaderboard.sort();
-
-    QString text = leaderboard.formatForDisplay();
-    ui->leaderEdit->setText(text);
-
-    QTextDocument* doc = ui->leaderEdit->document();
-    doc->setDefaultTextOption(QTextOption(Qt::AlignCenter));
-    ui->leaderEdit->setDocument(doc);
-}
 
 
 void Interface::on_menuButton_clicked()
@@ -173,13 +181,4 @@ void Interface::on_menuButton_clicked()
 }
 
 
-
-
-void Interface::on_acceptButton_clicked()
-{
-    leaderboard.addResult(ui->nameEdit->text(), 2137420);
-    ui->nameEdit->clear();
-
-    displayLeaderboard();
-}
 
