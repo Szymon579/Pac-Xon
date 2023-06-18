@@ -4,7 +4,7 @@
 #include "player.h"
 #include "board.h"
 #include "ghost.h"
-//#include "fruit.h"
+#include "fruit.h"
 
 #include <QObject>
 #include <QGraphicsScene>
@@ -31,6 +31,7 @@ public slots:
     void killedByGhost();
     void isGameWon(double filled);
     void pauseSlot();
+    void deleteFromScene();
 
 private:
     QTimer player_timer;
@@ -39,6 +40,8 @@ private:
 
     Board *board = new Board(scene);
     Player *player = new Player();
+
+    Fruit *fruit;
 
     int level = 0;
     double score = 0;

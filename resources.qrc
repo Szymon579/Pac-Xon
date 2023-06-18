@@ -23,5 +23,6 @@
         <file>assets/resume60.png</file>
         <file>assets/pause.png</file>
         <file>assets/pause30.png</file>
+        <file>assets/accept.png</file>
     </qresource>
 </RCC>

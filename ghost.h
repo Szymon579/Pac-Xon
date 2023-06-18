@@ -37,7 +37,7 @@ private:
     QPixmap ghost_texture;
     qreal ghost_size = 20;
 
-    qreal step = 0.5; /// 1
+    qreal step = 0.5;
     GhostDirection direction;
 
     bool at_border;

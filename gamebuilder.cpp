@@ -24,13 +24,17 @@ GameBuilder::GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec)
         QObject::connect(&player_timer, &QTimer::timeout, ghost_vec[i], &Ghost::moveGhost);
     }
 
+    fruit = new Fruit(13, 24);
+    scene->addItem(fruit);
+    QObject::connect(fruit, &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
+
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
     QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
     QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWon);
 
     QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
 
-    player_timer.start(10);
+    player_timer.start(10); //10
 
 }
 
@@ -77,5 +81,11 @@ void GameBuilder::pauseSlot()
     }
 
     emit pauseSignal(pause);
+}
+
+void GameBuilder::deleteFromScene()
+{
+    scene->removeItem(fruit);
+    qDebug() << "deleted form Scene";
 }
 
