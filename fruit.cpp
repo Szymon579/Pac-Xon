@@ -2,6 +2,7 @@
 
 #include <QBrush>
 #include <QPen>
+#include <QDebug>
 
 Fruit::Fruit(int y, int x)
 {
@@ -17,4 +18,25 @@ Fruit::Fruit(int y, int x)
     this->setFlag(QGraphicsItem::ItemIsFocusable);
 
     this->setPos(x_pos * 20, y_pos * 20);
+
+    setOnBoard();
+
+    timer.singleShot(sec_active * 1000, this, &Fruit::eraseFromBoard);
 }
+
+void Fruit::setOnBoard()
+{
+    active = true;
+    emit setPosOnBoard(y_pos, x_pos, active);
+}
+
+void Fruit::eraseFromBoard()
+{
+    active = false;
+    setPosOnBoard(y_pos, x_pos, active);
+
+    emit deleteFromScene();
+    qDebug() << "erased from Board";
+}
+
+

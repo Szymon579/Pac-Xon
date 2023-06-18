@@ -23,8 +23,6 @@ public:
     Interface(QWidget *parent = nullptr);
     ~Interface();
 
-    LevelManager level_manager;
-
 private slots:
     //stasrtPage
     void on_startButton_clicked();
@@ -50,15 +48,17 @@ private:
 
     Leaderboard leaderboard;
     QString leaderboard_file = "test1.json";
-    int score;
+
+    LevelManager level_manager;
 
     void uiSetup();
-
     void updateLevelView(int level);
     void displayLeaderboard();
 
+    int achived_score = 0;
     int level = 1;
-    int req_area = 20; //filled area required to finish the level, defalut 80
+    int req_area = 20; //filled area required to finish the level
+
 };
 
 #endif // INTERFACE_H

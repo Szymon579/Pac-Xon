@@ -32,6 +32,7 @@ public:
 public slots:
     void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
     void handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
+    void handleFruit(int y_pos, int x_pos, bool active);
 
 signals:
     void boardUpdated();
