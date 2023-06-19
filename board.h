@@ -39,6 +39,7 @@ signals:
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
                    bool left_up, bool left_down, bool right_up, bool right_down, bool game_over);
     void coloredArea(double filled);
+    void fruitEaten(int y_pos, int x_pos);
 
 
 private:

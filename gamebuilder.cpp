@@ -28,9 +28,11 @@ GameBuilder::GameBuilder(int level, int lives,
 
     for(int i = 0; i < fruit_vec.size(); i++)
     {
-        scene->addItem(fruit_vec[i]);
         QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruit);
+        QObject::connect(board, &Board::fruitEaten, fruit_vec[i], &Fruit::eaten);
+        QObject::connect(fruit_vec[i], &Fruit::addToScene, this, &GameBuilder::addToScene);
         QObject::connect(fruit_vec[i], &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
+
     }
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
@@ -84,6 +86,13 @@ void GameBuilder::pauseSlot()
     }
 
     emit pauseSignal(pause);
+}
+
+void GameBuilder::addToScene()
+{
+    QGraphicsItem *item = dynamic_cast<QGraphicsItem*>(QObject::sender());
+    scene->addItem(item);
+    qDebug() << "added to scene";
 }
 
 void GameBuilder::deleteFromScene()

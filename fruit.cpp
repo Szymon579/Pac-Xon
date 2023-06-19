@@ -8,7 +8,7 @@ Fruit::Fruit(int y, int x, int time, Fruit::Power power)
 {
     y_pos = y;
     x_pos = x;
-    sec_active = time;
+    time_to_spawn = time;
     this->power = power;
 
     if(power == add_life)
@@ -28,25 +28,35 @@ Fruit::Fruit(int y, int x, int time, Fruit::Power power)
 
     this->setPos(x_pos * 20, y_pos * 20);
 
-    setOnBoard();
-
-    timer.singleShot(sec_active * 1000, this, &Fruit::eraseFromBoard);
+    //setOnBoard();
+    is_active = false;
+    spawn_timer.singleShot(time_to_spawn * 1000, this, &Fruit::setOnBoard);
 }
-
 
 void Fruit::setOnBoard()
 {
     is_active = true;
     emit setPosOnBoard(y_pos, x_pos, is_active);
+    emit addToScene();
+    qDebug() << "added to Board";
 }
 
 void Fruit::eraseFromBoard()
 {
     is_active = false;
     emit setPosOnBoard(y_pos, x_pos, is_active);
-
     emit deleteFromScene();
     qDebug() << "erased from Board";
+}
+
+void Fruit::eaten(int y_pos, int x_pos)
+{
+    if(this->y_pos == y_pos && this->x_pos == x_pos)
+    {
+        eraseFromBoard();
+        emit givePower();
+    }
+
 }
 
 

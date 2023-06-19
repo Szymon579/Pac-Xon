@@ -270,6 +270,12 @@ void Board::howMuchFilled()
 
 void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
+    if(logic_board[1][y_pos][x_pos] == LogicBoardEnum::fruit)
+    {
+        emit fruitEaten(y_pos, x_pos);
+    }
+
+
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::player;
     logic_board[1][y_prev_pos][x_prev_pos] = LogicBoardEnum::none;
 
@@ -365,7 +371,6 @@ void Board::handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
 void Board::handleFruit(int y_pos, int x_pos, bool active)
 {
-    debugBoard(1);
 
     if(active)
     {

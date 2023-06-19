@@ -33,6 +33,7 @@ public slots:
     void killedByGhost();
     void isGameWon(double filled);
     void pauseSlot();
+    void addToScene();
     void deleteFromScene();
 
 private:
