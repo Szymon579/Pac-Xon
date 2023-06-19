@@ -20,6 +20,8 @@ public:
 
     Ghost(int y, int x, GhostDirection init_direction);
 
+    qreal step = 0.5;
+
     void changeDirection(int y, int x,
                          bool left, bool right, bool up, bool down,
                          bool left_up, bool left_down,
@@ -37,7 +39,7 @@ private:
     QPixmap ghost_texture;
     qreal ghost_size = 20;
 
-    qreal step = 0.5;
+
     GhostDirection direction;
 
     bool at_border;

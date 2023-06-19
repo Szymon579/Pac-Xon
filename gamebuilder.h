@@ -29,22 +29,22 @@ signals:
     void scoreSignal(double score);
     void pauseSignal(bool pause);
 
+
 public slots:
     void killedByGhost();
     void isGameWon(double filled);
     void pauseSlot();
     void addToScene();
     void deleteFromScene();
+    void handlePower(Fruit::Power power);
 
 private:
     QTimer master_timer;
 
-    //QGraphicsView *view = new QGraphicsView(scene);
-
     Board *board = new Board(scene);
     Player *player = new Player();
 
-    //Fruit *fruit;
+    std::vector<Ghost*> ghosts;
 
     int level = 0;
     double score = 0;

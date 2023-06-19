@@ -23,7 +23,7 @@ signals:
     void setPosOnBoard(int y_pos, int x_pos, bool active);
     void deleteFromScene();
     void addToScene();
-    void givePower();
+    void givePower(Fruit::Power power);
 
 public slots:
     void setOnBoard();

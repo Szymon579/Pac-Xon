@@ -19,6 +19,8 @@ GameBuilder::GameBuilder(int level, int lives,
 
     for(int i = 0; i < ghost_vec.size(); i++)
     {
+        ghosts.push_back(ghost_vec[i]);
+
         scene->addItem(ghost_vec[i]);
         QObject::connect(ghost_vec[i], &Ghost::checkTile, board, &Board::handleGhost);
         QObject::connect(ghost_vec[i], &Ghost::gameOver, this, &GameBuilder::killedByGhost);
@@ -30,6 +32,9 @@ GameBuilder::GameBuilder(int level, int lives,
     {
         QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruit);
         QObject::connect(board, &Board::fruitEaten, fruit_vec[i], &Fruit::eaten);
+
+        QObject::connect(fruit_vec[i], &Fruit::givePower, this, &GameBuilder::handlePower);
+
         QObject::connect(fruit_vec[i], &Fruit::addToScene, this, &GameBuilder::addToScene);
         QObject::connect(fruit_vec[i], &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
 
@@ -100,5 +105,29 @@ void GameBuilder::deleteFromScene()
     QGraphicsItem *item = dynamic_cast<QGraphicsItem*>(QObject::sender());
     scene->removeItem(item);
     qDebug() << "deleted from scene";
+}
+
+void GameBuilder::handlePower(Fruit::Power power)
+{
+    if(power == Fruit::Power::add_life)
+    {
+        lives++;
+        emit livesSignal(lives);
+    }
+
+    if(power == Fruit::Power::fast_player)
+    {
+        player->step = 2;
+    }
+
+    if(power == Fruit::Power::slow_ghost)
+    {
+        for(int i = 0; i < ghosts.size(); i++)
+        {
+            ghosts[i]->step = 0.25;
+        }
+    }
+
+
 }
 

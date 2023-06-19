@@ -20,7 +20,6 @@ Fruit::Fruit(int y, int x, int time, Fruit::Power power)
 
     QBrush fruit_brush(fruit_texture);
 
-
     this->setRect(0, 0, fruit_size, fruit_size);
     this->setBrush(fruit_brush);
     this->setPen(Qt::NoPen);
@@ -28,7 +27,6 @@ Fruit::Fruit(int y, int x, int time, Fruit::Power power)
 
     this->setPos(x_pos * 20, y_pos * 20);
 
-    //setOnBoard();
     is_active = false;
     spawn_timer.singleShot(time_to_spawn * 1000, this, &Fruit::setOnBoard);
 }
@@ -54,7 +52,7 @@ void Fruit::eaten(int y_pos, int x_pos)
     if(this->y_pos == y_pos && this->x_pos == x_pos)
     {
         eraseFromBoard();
-        emit givePower();
+        emit givePower(power);
     }
 
 }
