@@ -11,10 +11,12 @@ LevelManager::LevelManager()
 
 void LevelManager::createLevel(int level_num)
 {
-    //std::vector<Ghost*> ghost_vec;
-    makeGhosts(level_num);
+    scene = new QGraphicsScene(0, 0, 900, 600);
 
-    game = new GameBuilder(level_num, 3, ghost_vec);
+    makeGhosts(level_num);
+    makeFruits(level_num);
+
+    game = new GameBuilder(level_num, 3, ghost_vec, fruit_vec);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
     QObject::connect(game, &GameBuilder::scoreSignal, this, &LevelManager::scoreSlot);
@@ -23,6 +25,7 @@ void LevelManager::createLevel(int level_num)
     this->scene = game->scene;
 
     ghost_vec.clear();
+    fruit_vec.clear();
 
     emit livesSignal(3);
     emit scoreSignal(0);
@@ -51,11 +54,25 @@ void LevelManager::makeGhosts(int quantity)
 {
     for(int i = 0; i < quantity; i++)
     {
-        int rand_y = 2 + (rand() % 28);
-        int rand_x = 2 + (rand() % 43);
-        int rand_dir = rand() % 4;
+        int rand_y      = 2 + (rand() % 27);
+        int rand_x      = 2 + (rand() % 42);
+        int rand_dir    = rand() % 4;
 
         Ghost *ghost = new Ghost(rand_y, rand_x, (Ghost::GhostDirection)rand_dir);
         ghost_vec.push_back(ghost);
+    }
+}
+
+void LevelManager::makeFruits(int quantity)
+{
+    for(int i = 0; i < quantity; i++)
+    {
+        int rand_y      = 2 + (rand() % 27);
+        int rand_x      = 2 + (rand() % 42);
+        int rand_time   = 3 + (rand() % 13);
+        int rand_power  = rand() % 3;
+
+        Fruit *fruit = new Fruit(rand_y, rand_x, rand_time, (Fruit::Power)rand_power);
+        fruit_vec.push_back(fruit);
     }
 }

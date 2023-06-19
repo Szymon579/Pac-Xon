@@ -7,7 +7,9 @@
 #include <QTimer>
 #include <QDebug>
 
-GameBuilder::GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec)
+GameBuilder::GameBuilder(int level, int lives,
+                         std::vector<Ghost*> ghost_vec,
+                         std::vector<Fruit *> fruit_vec)
 {
     this->level = level;
     this->lives = lives;
@@ -21,20 +23,23 @@ GameBuilder::GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec)
         QObject::connect(ghost_vec[i], &Ghost::checkTile, board, &Board::handleGhost);
         QObject::connect(ghost_vec[i], &Ghost::gameOver, this, &GameBuilder::killedByGhost);
         QObject::connect(board, &Board::borderHit, ghost_vec[i], &Ghost::changeDirection);
-        QObject::connect(&player_timer, &QTimer::timeout, ghost_vec[i], &Ghost::moveGhost);
+        QObject::connect(&master_timer, &QTimer::timeout, ghost_vec[i], &Ghost::moveGhost);
     }
 
-    fruit = new Fruit(13, 24);
-    scene->addItem(fruit);
-    QObject::connect(fruit, &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
+    for(int i = 0; i < fruit_vec.size(); i++)
+    {
+        scene->addItem(fruit_vec[i]);
+        QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruit);
+        QObject::connect(fruit_vec[i], &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
+    }
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
-    QObject::connect(&player_timer, &QTimer::timeout, player, &Player::movePlayer);
+    QObject::connect(&master_timer, &QTimer::timeout, player, &Player::movePlayer);
     QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWon);
 
     QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
 
-    player_timer.start(10); //10
+    master_timer.start(10); //10
 
 }
 
@@ -52,8 +57,6 @@ void GameBuilder::killedByGhost()
 
     player->setPos(0, 0);
     player->setMoveDirection(Player::MoveDirection::none);
-
-    //player_timer.stop();
 }
 
 void GameBuilder::isGameWon(double filled)
@@ -62,7 +65,7 @@ void GameBuilder::isGameWon(double filled)
 
     if(filled > 80.0)
     {
-        player_timer.stop();
+        master_timer.stop();
         qDebug() << "YOU WIN!";
     }
 }
@@ -71,12 +74,12 @@ void GameBuilder::pauseSlot()
 {
     if(!pause)
     {
-        player_timer.stop();
+        master_timer.stop();
         pause = true;
     }
     else
     {
-        player_timer.start();
+        master_timer.start();
         pause = false;
     }
 
@@ -85,7 +88,8 @@ void GameBuilder::pauseSlot()
 
 void GameBuilder::deleteFromScene()
 {
-    scene->removeItem(fruit);
-    qDebug() << "deleted form Scene";
+    QGraphicsItem *item = dynamic_cast<QGraphicsItem*>(QObject::sender());
+    scene->removeItem(item);
+    qDebug() << "deleted from scene";
 }
 

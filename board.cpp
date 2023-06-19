@@ -365,6 +365,8 @@ void Board::handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
 void Board::handleFruit(int y_pos, int x_pos, bool active)
 {
+    debugBoard(1);
+
     if(active)
     {
         logic_board[1][y_pos][x_pos] = LogicBoardEnum::fruit;
@@ -374,6 +376,8 @@ void Board::handleFruit(int y_pos, int x_pos, bool active)
         logic_board[1][y_pos][x_pos] = LogicBoardEnum::none;
 
     }
+
+    debugBoard(1);
 }
 
 void Board::traceDrawingFailed()
