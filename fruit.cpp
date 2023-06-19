@@ -4,13 +4,22 @@
 #include <QPen>
 #include <QDebug>
 
-Fruit::Fruit(int y, int x)
+Fruit::Fruit(int y, int x, int time, Fruit::Power power)
 {
-    fruit_texture = QPixmap(":/assets/cherry.png");
-    QBrush fruit_brush(fruit_texture);
-
     y_pos = y;
     x_pos = x;
+    sec_active = time;
+    this->power = power;
+
+    if(power == add_life)
+        fruit_texture = QPixmap(":/assets/cherry.png");
+    if(power == fast_player)
+        fruit_texture = QPixmap(":/assets/pear.png");
+    if(power == slow_ghost)
+        fruit_texture = QPixmap(":/assets/melon.png");
+
+    QBrush fruit_brush(fruit_texture);
+
 
     this->setRect(0, 0, fruit_size, fruit_size);
     this->setBrush(fruit_brush);
@@ -24,16 +33,17 @@ Fruit::Fruit(int y, int x)
     timer.singleShot(sec_active * 1000, this, &Fruit::eraseFromBoard);
 }
 
+
 void Fruit::setOnBoard()
 {
-    active = true;
-    emit setPosOnBoard(y_pos, x_pos, active);
+    is_active = true;
+    emit setPosOnBoard(y_pos, x_pos, is_active);
 }
 
 void Fruit::eraseFromBoard()
 {
-    active = false;
-    setPosOnBoard(y_pos, x_pos, active);
+    is_active = false;
+    emit setPosOnBoard(y_pos, x_pos, is_active);
 
     emit deleteFromScene();
     qDebug() << "erased from Board";

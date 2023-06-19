@@ -17,7 +17,9 @@ class GameBuilder : public QObject
 {
     Q_OBJECT
 public:
-    GameBuilder(int level, int lives, std::vector<Ghost*> ghost_vec);
+    GameBuilder(int level, int lives,
+                std::vector<Ghost*> ghost_vec, std::vector<Fruit*> fruit_vec);
+
     ~GameBuilder();
 
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
@@ -34,14 +36,14 @@ public slots:
     void deleteFromScene();
 
 private:
-    QTimer player_timer;
+    QTimer master_timer;
 
     //QGraphicsView *view = new QGraphicsView(scene);
 
     Board *board = new Board(scene);
     Player *player = new Player();
 
-    Fruit *fruit;
+    //Fruit *fruit;
 
     int level = 0;
     double score = 0;

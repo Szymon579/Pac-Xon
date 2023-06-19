@@ -3,6 +3,7 @@
 
 #include "gamebuilder.h"
 #include "ghost.h"
+#include "fruit.h"
 
 #include <QObject>
 #include <QGraphicsScene>
@@ -13,7 +14,7 @@ class LevelManager : public QObject
 public:
     LevelManager();
 
-    QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
+    QGraphicsScene *scene;
     GameBuilder *game;
 
     void createLevel(int level_num);
@@ -36,6 +37,9 @@ private:
 
     std::vector<Ghost*> ghost_vec;
     void makeGhosts(int quantity);
+
+    std::vector<Fruit*> fruit_vec;
+    void makeFruits(int quantity);
 };
 
 #endif // LEVELMANAGER_H

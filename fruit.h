@@ -10,14 +10,15 @@ class Fruit : public QObject, public QGraphicsRectItem
 {
     Q_OBJECT
 public:
-    Fruit(int y, int x);
-
     enum Power
     {
         slow_ghost,
         fast_player,
         add_life
     };
+
+    Fruit(int y, int x, int time, Fruit::Power power);
+
 
 signals:
     void setPosOnBoard(int y_pos, int x_pos, bool active);
@@ -32,13 +33,12 @@ private:
     qreal fruit_size = 20;
     QTimer timer;
 
+    Power power;
+
     int y_pos;
     int x_pos;
-    bool active = true;
-    int sec_active = 10;
-
-    qreal fruit_timer = 50000;
-
+    bool is_active = true;
+    int sec_active = 0;
 
 };
 

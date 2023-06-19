@@ -24,5 +24,6 @@
         <file>assets/pause.png</file>
         <file>assets/pause30.png</file>
         <file>assets/accept.png</file>
+        <file>assets/melon.png</file>
     </qresource>
 </RCC>
