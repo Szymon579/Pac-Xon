@@ -30,16 +30,19 @@ signals:
     void pauseSignal(bool pause);
 
 
+
 public slots:
     void killedByGhost();
     void isGameWon(double filled);
     void pauseSlot();
     void addToScene();
     void deleteFromScene();
-    void handlePower(Fruit::Power power);
+    void givePower(Fruit::Power power, int effect_time);
+    void disablePower(Fruit::Power power);
 
 private:
     QTimer master_timer;
+    QTimer power_timer;
 
     Board *board = new Board(scene);
     Player *player = new Player();

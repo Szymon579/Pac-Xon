@@ -52,9 +52,16 @@ void Fruit::eaten(int y_pos, int x_pos)
     if(this->y_pos == y_pos && this->x_pos == x_pos)
     {
         eraseFromBoard();
-        emit givePower(power);
+        emit givePower(power, effect_time);
+
+        effect_timer.singleShot(effect_time * 1000, this, &Fruit::endOfPower);
     }
 
+}
+
+void Fruit::endOfPower()
+{
+    emit disablePower(power);
 }
 
 

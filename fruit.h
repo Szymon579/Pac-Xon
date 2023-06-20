@@ -23,17 +23,21 @@ signals:
     void setPosOnBoard(int y_pos, int x_pos, bool active);
     void deleteFromScene();
     void addToScene();
-    void givePower(Fruit::Power power);
+    void givePower(Fruit::Power power, int effect_time);
+    void disablePower(Fruit::Power power);
 
 public slots:
     void setOnBoard();
     void eraseFromBoard();
     void eaten(int y_pos, int x_pos);
+    void endOfPower();
 
 private:
     QPixmap fruit_texture;
     qreal fruit_size = 20;
     QTimer spawn_timer;
+    QTimer effect_timer;
+
 
     Power power;
 
@@ -41,7 +45,7 @@ private:
     int x_pos;
     bool is_active = true;
     int time_to_spawn = 0;
-    int lifetime = 0;
+    int effect_time = 5;
 
 };
 

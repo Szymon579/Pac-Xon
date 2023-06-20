@@ -33,7 +33,8 @@ GameBuilder::GameBuilder(int level, int lives,
         QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruit);
         QObject::connect(board, &Board::fruitEaten, fruit_vec[i], &Fruit::eaten);
 
-        QObject::connect(fruit_vec[i], &Fruit::givePower, this, &GameBuilder::handlePower);
+        QObject::connect(fruit_vec[i], &Fruit::givePower, this, &GameBuilder::givePower);
+        QObject::connect(fruit_vec[i], &Fruit::disablePower, this, &GameBuilder::disablePower);
 
         QObject::connect(fruit_vec[i], &Fruit::addToScene, this, &GameBuilder::addToScene);
         QObject::connect(fruit_vec[i], &Fruit::deleteFromScene, this, &GameBuilder::deleteFromScene);
@@ -107,7 +108,7 @@ void GameBuilder::deleteFromScene()
     qDebug() << "deleted from scene";
 }
 
-void GameBuilder::handlePower(Fruit::Power power)
+void GameBuilder::givePower(Fruit::Power power, int effect_time)
 {
     if(power == Fruit::Power::add_life)
     {
@@ -117,17 +118,36 @@ void GameBuilder::handlePower(Fruit::Power power)
 
     if(power == Fruit::Power::fast_player)
     {
-        player->step = 2;
+        player->step = player->step * 2;
     }
 
     if(power == Fruit::Power::slow_ghost)
     {
         for(int i = 0; i < ghosts.size(); i++)
         {
-            ghosts[i]->step = 0.25;
+            ghosts[i]->step = ghosts[i]->step / 2;
         }
     }
 
+    //power_timer.singleShot(effect_time * 1000, this, &GameBuilder::disablePower);
 
 }
+
+void GameBuilder::disablePower(Fruit::Power power)
+{
+    if(power == Fruit::Power::fast_player)
+    {
+        player->step = player->step / 2;
+    }
+
+    if(power == Fruit::Power::slow_ghost)
+    {
+        for(int i = 0; i < ghosts.size(); i++)
+        {
+            ghosts[i]->step = ghosts[i]->step * 2;
+        }
+    }
+}
+
+
 
