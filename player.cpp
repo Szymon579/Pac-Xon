@@ -60,7 +60,7 @@ void Player::keyPressEvent(QKeyEvent *event)
 
 }
 
-void Player::allignDirectionChange()
+void Player::alignDirectionChange()
 {
     if(buffer_left && fmod(this->y(), player_size) == 0) {
         direction = MoveDirection::left;
@@ -121,15 +121,17 @@ void Player::positionOnBoard()
 
 }
 
-void Player::setMoveDirection(MoveDirection dir)
+void Player::resetAfterKilled()
 {
-    direction = dir;
+    this->setPos(0, 0);
+    direction = none;
+    player_texture = pacman_right;
 }
 
 void Player::movePlayer()
 {
     borderControl();
-    allignDirectionChange();
+    alignDirectionChange();
     positionOnBoard();
 
     if(direction == MoveDirection::left) {

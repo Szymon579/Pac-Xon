@@ -21,7 +21,7 @@ public:
     QString formatForDisplay();
     void sort();
 
-private:
+public: //!!!!!!!!!!!!!!!!
     static bool compareByLength(const Result &a, const Result &b);
     std::vector<Result> results_vec;
     void debug();

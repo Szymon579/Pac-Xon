@@ -26,7 +26,7 @@ public:
 
 signals:
     void livesSignal(int lives);
-    void scoreSignal(double score);
+    void areaSignal(double score);
     void pauseSignal(bool pause);
 
 

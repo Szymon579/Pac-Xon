@@ -63,19 +63,18 @@ void GameBuilder::killedByGhost()
     lives--;
     emit livesSignal(lives);
 
-    player->setPos(0, 0);
-    player->setMoveDirection(Player::MoveDirection::none);
+    player->resetAfterKilled();
 }
 
 void GameBuilder::isGameWon(double filled)
 {
-    emit scoreSignal(filled);
+    emit areaSignal(filled);
 
-    if(filled > 80.0)
-    {
-        master_timer.stop();
-        qDebug() << "YOU WIN!";
-    }
+//    if(filled > 80.0)
+//    {
+//        master_timer.stop();
+//        qDebug() << "YOU WIN!";
+//    }
 }
 
 void GameBuilder::pauseSlot()

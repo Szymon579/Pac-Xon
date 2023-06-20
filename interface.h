@@ -4,7 +4,6 @@
 #include "levelmanager.h"
 #include "leaderboard.h"
 
-
 #include <QWidget>
 #include <QGraphicsScene>
 #include <QMainWindow>
@@ -38,9 +37,13 @@ private slots:
 
 public slots:
     void livesSlot(int lives);
-    void scoreSlot(double score);
+    void areaSlot(double area);
+    void scoreSlot(int score);
     void levelSlot(int level);
     void pauseSlot(bool pause);
+
+signals:
+    void scoreSignal(int score);
 
 private:
     Ui::Interface *ui;
@@ -57,7 +60,7 @@ private:
 
     int achived_score = 0;
     int level = 1;
-    int req_area = 20; //filled area required to finish the level
+    int required_area = 20; //filled area required to finish the level
 
 };
 

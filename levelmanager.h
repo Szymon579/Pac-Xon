@@ -21,13 +21,13 @@ public:
 
 signals:
     void livesSignal(int lives);
-    void scoreSignal(double score);
+    void areaSignal(double score);
     void levelSignal(int level);
     void pauseSignal(bool paused);
 
 public slots:
     void livesSlot(int lives);
-    void scoreSlot(double score);
+    void areaSlot(double score);
     void pauseSlot(bool pause);
 
 private:

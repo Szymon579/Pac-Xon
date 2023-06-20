@@ -25,6 +25,12 @@
      <height>640</height>
     </rect>
    </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="cursor">
     <cursorShape>ArrowCursor</cursorShape>
    </property>
@@ -141,11 +147,11 @@ border-radius: 30;</string>
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
     </widget>
-    <widget class="QLabel" name="scoreLabel">
+    <widget class="QLabel" name="areaLabel">
      <property name="geometry">
       <rect>
-       <x>760</x>
-       <y>10</y>
+       <x>770</x>
+       <y>12</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -160,14 +166,14 @@ border-radius: 30;</string>
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>score:</string>
+      <string>AREA:</string>
      </property>
     </widget>
     <widget class="QLabel" name="livesLabel">
      <property name="geometry">
       <rect>
-       <x>410</x>
-       <y>10</y>
+       <x>280</x>
+       <y>12</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -182,14 +188,14 @@ border-radius: 30;</string>
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>lives: </string>
+      <string>LIVES: </string>
      </property>
     </widget>
     <widget class="QLabel" name="levelLabel">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>10</y>
+       <y>12</y>
        <width>120</width>
        <height>25</height>
       </rect>
@@ -204,7 +210,7 @@ border-radius: 30;</string>
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>level:</string>
+      <string>LEVEL:</string>
      </property>
     </widget>
     <widget class="QWidget" name="pauseWidget" native="true">
@@ -264,6 +270,28 @@ border-radius: 15;</string>
       </property>
      </widget>
     </widget>
+    <widget class="QLabel" name="scoreLabel">
+     <property name="geometry">
+      <rect>
+       <x>520</x>
+       <y>12</y>
+       <width>151</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>18</pointsize>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>SCORE:</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="leaderPage">
     <widget class="QPushButton" name="backButton">
@@ -307,38 +335,6 @@ border-radius: 15;</string>
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/assets/results.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="leaderEdit">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>120</y>
-       <width>451</width>
-       <height>321</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial Black</family>
-       <pointsize>20</pointsize>
-       <italic>false</italic>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">font: 900 20pt &quot;Arial Black&quot;;
-color: rgb(255, 247, 77);</string>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
-&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
-p, li { white-space: pre-wrap; }
-hr { height: 1px; border-width: 0; }
-li.unchecked::marker { content: &quot;\2610&quot;; }
-li.checked::marker { content: &quot;\2612&quot;; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Arial Black'; font-size:20pt; font-weight:900; font-style:normal;&quot;&gt;
-&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'UniDreamLED'; font-weight:400;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="nameEdit">
      <property name="geometry">
       <rect>
@@ -379,6 +375,29 @@ border-radius: 15;</string>
      </property>
      <property name="text">
       <string/>
+     </property>
+    </widget>
+    <widget class="QTextEdit" name="leaderEdit">
+     <property name="geometry">
+      <rect>
+       <x>233</x>
+       <y>129</y>
+       <width>450</width>
+       <height>311</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Segoe UI</family>
+       <pointsize>26</pointsize>
+       <italic>false</italic>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 247, 77);
+font: 700 26pt &quot;Segoe UI&quot;;
+</string>
      </property>
     </widget>
    </widget>

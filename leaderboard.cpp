@@ -1,4 +1,5 @@
 #include "leaderboard.h"
+#include "qfontmetrics.h"
 
 #include <algorithm>
 
@@ -107,7 +108,7 @@ QString Leaderboard::formatForDisplay()
         }
 
         QString line = QString::number(i+1) + ". " +
-                       results_vec.at(i).name + space +
+                       results_vec.at(i).name + " " +//space +
                        QString::number(results_vec.at(i).score) + "\n";
 
         text.push_back(line);

@@ -19,7 +19,7 @@ void LevelManager::createLevel(int level_num)
     game = new GameBuilder(level_num, 3, ghost_vec, fruit_vec);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
-    QObject::connect(game, &GameBuilder::scoreSignal, this, &LevelManager::scoreSlot);
+    QObject::connect(game, &GameBuilder::areaSignal, this, &LevelManager::areaSlot);
     QObject::connect(game, &GameBuilder::pauseSignal, this, &LevelManager::pauseSlot);
 
     this->scene = game->scene;
@@ -28,7 +28,7 @@ void LevelManager::createLevel(int level_num)
     fruit_vec.clear();
 
     emit livesSignal(3);
-    emit scoreSignal(0);
+    emit areaSignal(0);
     emit levelSignal(level_num);
     emit pauseSignal(false);
 }
@@ -39,10 +39,10 @@ void LevelManager::livesSlot(int lives)
     emit livesSignal(lives);
 }
 
-void LevelManager::scoreSlot(double score)
+void LevelManager::areaSlot(double score)
 {
     this->score = score;
-    emit scoreSignal(score);
+    emit areaSignal(score);
 }
 
 void LevelManager::pauseSlot(bool pause)

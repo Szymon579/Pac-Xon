@@ -24,11 +24,11 @@ public:
     };
 
     void keyPressEvent(QKeyEvent *event);
-    void allignDirectionChange();
+    void alignDirectionChange();
     void borderControl();
     void positionOnBoard();
 
-    void setMoveDirection(MoveDirection dir);
+    void resetAfterKilled();
 
 public slots:
     void movePlayer();
