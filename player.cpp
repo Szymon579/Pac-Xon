@@ -19,7 +19,6 @@ Player::Player()
 
     player_texture = pacman_right;
     QBrush player_brush(player_texture);
-
     direction = MoveDirection::none;
 
     buffer_left = false;
@@ -56,34 +55,29 @@ void Player::keyPressEvent(QKeyEvent *event)
 
     if(event->key() == Qt::Key_Escape) {
         qDebug() << "pause pressed";
-        //direction = MoveDirection::none;
         emit pause();
     }
 
 }
 
-void Player::checkDirectionChange()
+void Player::allignDirectionChange()
 {
     if(buffer_left && fmod(this->y(), player_size) == 0) {
-        //qDebug() << "left";
         direction = MoveDirection::left;
         player_texture = pacman_left;
         buffer_left = false;
     }
     if(buffer_right && fmod(this->y(), player_size) == 0) {
-        //qDebug() << "right";
         direction = MoveDirection::right;
         player_texture = pacman_right;
         buffer_right = false;
     }
     if(buffer_up && fmod(this->x(), player_size) == 0) {
-        //qDebug() << "up";
         direction = MoveDirection::up;
         player_texture = pacman_up;
         buffer_up = false;
     }
     if(buffer_down && fmod(this->x(), player_size) == 0) {
-        //qDebug() << "down";
         direction = MoveDirection::down;
         player_texture = pacman_down;
         buffer_down = false;
@@ -132,24 +126,30 @@ void Player::setMoveDirection(MoveDirection dir)
     direction = dir;
 }
 
-//void Player::setPosition(int y, int x) {y_pos = y; x_pos = x; }
-
 void Player::movePlayer()
 {
     borderControl();
-    checkDirectionChange();
+    allignDirectionChange();
     positionOnBoard();
 
     if(direction == MoveDirection::left) {
+        if(x_pos == 0)
+            return;
         setPos(x() - step, y());
     }
     if(direction == MoveDirection::right) {
+        if(x_pos == 44)
+            return;
         setPos(x() + step, y());
     }
     if(direction == MoveDirection::up) {
+        if(y_pos == 0)
+            return;
         setPos(x(), y() - step);
     }
     if(direction == MoveDirection::down) {
+        if(y_pos == 29)
+            return;
         setPos(x(), y() + step);
     }
     if(direction == MoveDirection::none) {

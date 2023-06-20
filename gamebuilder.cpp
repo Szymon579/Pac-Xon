@@ -128,9 +128,6 @@ void GameBuilder::givePower(Fruit::Power power, int effect_time)
             ghosts[i]->step = ghosts[i]->step / 2;
         }
     }
-
-    //power_timer.singleShot(effect_time * 1000, this, &GameBuilder::disablePower);
-
 }
 
 void GameBuilder::disablePower(Fruit::Power power)
