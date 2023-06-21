@@ -16,16 +16,16 @@ Interface::Interface(QWidget *parent) :
     uiSetup();
 
     QObject::connect(&level_manager, &LevelManager::livesSignal, this, &Interface::livesSlot);
-    QObject::connect(&level_manager, &LevelManager::areaSignal, this, &Interface::areaSlot);
+    QObject::connect(&level_manager, &LevelManager::areaSignal,  this, &Interface::areaSlot);
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
-    QObject::connect(this, &Interface::scoreSignal, this, &Interface::scoreSlot);
 
     leaderboard.parseJson(leaderboard_file);
 }
 
 Interface::~Interface()
 {
+    //saveJson
     delete ui;
 }
 
@@ -129,13 +129,14 @@ void Interface::on_acceptButton_clicked()
 {
     QString name = ui->nameEdit->text();
 
-    QRegularExpression regex("^[a-z]{1,8}$");
+    QRegularExpression regex("^[a-zA-Z]{1,8}$");
     QRegularExpressionMatch match = regex.match(name);
 
     if (match.hasMatch())
     {
         ui->nameEdit->clear();
-        ui->nameEdit->setPlaceholderText(name);
+        ui->nameEdit->setVisible(false);
+        //ui->nameEdit->setPlaceholderText(name);
         leaderboard.addResult(name, total_score);
 
     }
@@ -186,7 +187,7 @@ void Interface::areaSlot(double area)
         updateLevelView(++level);
     }
 
-    emit scoreSignal(area);
+    scoreSlot(area);
 }
 
 void Interface::scoreSlot(int score)

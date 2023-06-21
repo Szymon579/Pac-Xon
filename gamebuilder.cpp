@@ -18,15 +18,11 @@ GameBuilder::GameBuilder(int level, int lives)
     board->renderTileBoard();
     scene->addItem(player);
 
-
-
     for(int i = 0; i < ghost_vec.size(); i++)
     {
-        ghosts.push_back(ghost_vec[i]);
-
         scene->addItem(ghost_vec[i]);
         QObject::connect(ghost_vec[i], &Ghost::checkTile, board, &Board::handleGhostSlot);
-        QObject::connect(ghost_vec[i], &Ghost::gameOver, this, &GameBuilder::killedByGhostSlot);
+        QObject::connect(ghost_vec[i], &Ghost::gameOver, this, &GameBuilder::playerKilledSlot);
         QObject::connect(board, &Board::borderHit, ghost_vec[i], &Ghost::changeDirection);
         QObject::connect(&master_timer, &QTimer::timeout, ghost_vec[i], &Ghost::moveGhost);
     }
@@ -41,19 +37,18 @@ GameBuilder::GameBuilder(int level, int lives)
 
         QObject::connect(fruit_vec[i], &Fruit::addToScene, this, &GameBuilder::addToSceneSlot);
         QObject::connect(fruit_vec[i], &Fruit::deleteFromScene, this, &GameBuilder::deleteFromSceneSlot);
-
     }
 
     QObject::connect(player, &Player::positionChanged, board, &Board::updateBoardSlot);
     QObject::connect(&master_timer, &QTimer::timeout, player, &Player::movePlayer);
-    QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWonSlot);
+    QObject::connect(board, &Board::coloredArea, this, &GameBuilder::areaSlot);
 
     QObject::connect(board, &Board::drawingTraceSignal, player, &Player::drawingTraceSlot);
-    QObject::connect(board, &Board::suicide, player, &Player::traceCrossedSlot);
+    QObject::connect(board, &Board::suicide, this, &GameBuilder::playerKilledSlot);
 
     QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
 
-    master_timer.start(10); //10
+    master_timer.start(10);
 
 }
 
@@ -64,15 +59,14 @@ GameBuilder::~GameBuilder()
     delete player;
 }
 
-void GameBuilder::killedByGhostSlot()
+void GameBuilder::playerKilledSlot()
 {
     lives--;
-    emit livesSignal(lives);
-
     player->resetAfterKilled();
+    emit livesSignal(lives);
 }
 
-void GameBuilder::isGameWonSlot(double filled)
+void GameBuilder::areaSlot(double filled)
 {
     emit areaSignal(filled);
 }
@@ -122,9 +116,9 @@ void GameBuilder::givePowerSlot(Fruit::Power power, int effect_time)
 
     if(power == Fruit::Power::slow_ghost)
     {
-        for(int i = 0; i < ghosts.size(); i++)
+        for(int i = 0; i < ghost_vec.size(); i++)
         {
-            ghosts[i]->step = ghosts[i]->step / 2;
+            ghost_vec[i]->step = ghost_vec[i]->step / 2;
         }
     }
 }
@@ -138,9 +132,9 @@ void GameBuilder::disablePowerSlot(Fruit::Power power)
 
     if(power == Fruit::Power::slow_ghost)
     {
-        for(int i = 0; i < ghosts.size(); i++)
+        for(int i = 0; i < ghost_vec.size(); i++)
         {
-            ghosts[i]->step = ghosts[i]->step * 2;
+            ghost_vec[i]->step = ghost_vec[i]->step * 2;
         }
     }
 }

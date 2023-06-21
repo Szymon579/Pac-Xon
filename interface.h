@@ -23,7 +23,7 @@ public:
     ~Interface();
 
 private slots:
-    //stasrtPage
+    //startPage
     void on_startButton_clicked();
     void on_leadButton_clicked();
     void on_quitButton_clicked();
@@ -36,31 +36,32 @@ private slots:
     void on_acceptButton_clicked();
 
 public slots:
+    void levelSlot(int level);
     void livesSlot(int lives);
     void areaSlot(double area);
     void scoreSlot(int score);
-    void levelSlot(int level);
+
     void pauseSlot(bool pause);
 
 signals:
-    void scoreSignal(int score);
+
 
 private:
     Ui::Interface *ui;
     QGraphicsScene *scene;
 
-    Leaderboard leaderboard;
-    QString leaderboard_file = "leaderboard.json";
-
     LevelManager level_manager;
 
-    void uiSetup();
-    void updateLevelView(int level);
-    void displayLeaderboard();
+    Leaderboard leaderboard;
+    QString leaderboard_file = "leaderboard.json";
 
     int total_score = 0;
     int level = 1;
     int required_area = 20; //filled area required to finish the level
+
+    void uiSetup();
+    void updateLevelView(int level);
+    void displayLeaderboard();
 
 };
 

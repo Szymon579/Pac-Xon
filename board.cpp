@@ -106,7 +106,7 @@ void Board::rememberTrace(int y, int x)
     trace_cords.push_back(cords);
 }
 
-void Board::traceDrawingFinished()
+void Board::traceDrawingSucceeded()
 {
     for(int i = 0; i < trace_cords.size(); i++)
     {
@@ -121,17 +121,23 @@ void Board::traceDrawingFinished()
     }
 
     trace_cords.clear();
+}
 
-    //emit drawingTraceSignal(false);
+void Board::traceDrawingFailed()
+{
+    for(int i = 0; i < trace_cords.size(); i++)
+    {
+        logic_board[0][trace_cords[i].first][trace_cords[i].second] = LogicBoardEnum::black;
+        tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(black_brush);
+    }
+
+    trace_cords.clear();
 }
 
 void Board::indexToFill()
 { 
     int y = first_trace.first;
     int x = first_trace.second;
-
-    //debugBoard(0);
-    //debugBoard(1);
 
     ghost_found = false;
     rememberBoardState();
@@ -164,7 +170,6 @@ void Board::indexToFill()
     ghost_found = false;
 
     renderTileBoard();
-    //debugBoard(0);
 
     howMuchFilled();
 }
@@ -188,6 +193,9 @@ void Board::fillArea(int y, int x)
     {
         ghost_found = true;
     }
+
+    logic_board[0][help_y][help_x] = LogicBoardEnum::blue;
+    logicBoardToTileBoard(LogicBoardEnum::blue, help_y, help_x);
 
     if (logic_board[0][help_y + 1][help_x] == LogicBoardEnum::black)
     {
@@ -303,7 +311,7 @@ void Board::updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos
 
     if(!drawing_trace)
     {
-        traceDrawingFinished();
+        traceDrawingSucceeded();
     }
 
     emit boardUpdated();
@@ -394,18 +402,7 @@ void Board::handleFruitSlot(int y_pos, int x_pos, bool active)
     //debugBoard(1);
 }
 
-void Board::traceDrawingFailed()
-{
-    qDebug() << "traceDrawingFailed called";
 
-    for(int i = 0; i < trace_cords.size(); i++)
-    {
-        logic_board[0][trace_cords[i].first][trace_cords[i].second] = LogicBoardEnum::black;
-        tile_board[trace_cords[i].first][trace_cords[i].second].setBrush(black_brush);
-    }
-
-    trace_cords.clear();
-}
 
 void Board::debugBoard(int layer)
 {

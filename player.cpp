@@ -12,19 +12,9 @@
 
 Player::Player()
 {
-//    pacman_left = QPixmap(":/assets/pacman_left.png");
-//    pacman_right = QPixmap(":/assets/pacman_right.png");
-//    pacman_up = QPixmap(":/assets/pacman_up.png");
-//    pacman_down = QPixmap(":/assets/pacman_down.png");
-
     player_texture = pacman_right;
     QBrush player_brush(player_texture);
     direction = MoveDirection::none;
-
-//    buffer_left = false;
-//    buffer_right = false;
-//    buffer_up = false;
-//    buffer_down = false;
 
     this->setRect(0, 0, player_size, player_size);
     this->setBrush(player_brush);

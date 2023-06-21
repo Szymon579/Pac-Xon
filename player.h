@@ -46,28 +46,22 @@ private:
     QPixmap player_texture;
     qreal player_size = 20;
 
-    //textures of player
-//    QPixmap pacman_left;
-//    QPixmap pacman_right;
-//    QPixmap pacman_up;
-//    QPixmap pacman_down;
-
-    QPixmap pacman_left = QPixmap(":/assets/pacman_left.png");
+    QPixmap pacman_left  = QPixmap(":/assets/pacman_left.png");
     QPixmap pacman_right = QPixmap(":/assets/pacman_right.png");
-    QPixmap pacman_up = QPixmap(":/assets/pacman_up.png");
-    QPixmap pacman_down = QPixmap(":/assets/pacman_down.png");
+    QPixmap pacman_up    = QPixmap(":/assets/pacman_up.png");
+    QPixmap pacman_down  = QPixmap(":/assets/pacman_down.png");
 
     int x_pos      = 0;
     int y_pos      = 0;
     int x_prev_pos = 0;
     int y_prev_pos = 0;
 
-    bool buffer_left    = false;
-    bool buffer_right   = false;
-    bool buffer_up      = false;
-    bool buffer_down    = false;
+    bool buffer_left   = false;
+    bool buffer_right  = false;
+    bool buffer_up     = false;
+    bool buffer_down   = false;
 
-    bool drawing_trace  = false;
+    bool drawing_trace = false;
 
 };
 

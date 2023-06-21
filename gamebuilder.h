@@ -18,7 +18,6 @@ class GameBuilder : public QObject
     Q_OBJECT
 public:
     GameBuilder(int level, int lives);
-
     ~GameBuilder();
 
     QGraphicsScene *scene = new QGraphicsScene(0, 0, 900, 600);
@@ -29,8 +28,8 @@ signals:
     void pauseSignal(bool pause);
 
 public slots:
-    void killedByGhostSlot();
-    void isGameWonSlot(double filled);
+    void playerKilledSlot();
+    void areaSlot(double filled);
     void pauseSlot();
 
     void addToSceneSlot();
@@ -45,8 +44,6 @@ private:
 
     Board *board = new Board(scene);
     Player *player = new Player();
-
-    std::vector<Ghost*> ghosts;
 
     int level = 0;
     double filled_area = 0;

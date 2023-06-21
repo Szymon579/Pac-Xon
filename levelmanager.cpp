@@ -17,7 +17,7 @@ void LevelManager::createLevel(int level_num)
     game = new GameBuilder(level_num, lives);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
-    QObject::connect(game, &GameBuilder::areaSignal, this, &LevelManager::areaSlot);
+    QObject::connect(game, &GameBuilder::areaSignal,  this, &LevelManager::areaSlot);
     QObject::connect(game, &GameBuilder::pauseSignal, this, &LevelManager::pauseSlot);
 
     this->scene = game->scene;

@@ -17,6 +17,7 @@ public:
 
     void createLevel(int level_num);
 
+
 signals:
     void livesSignal(int lives);
     void areaSignal(double score);
@@ -32,6 +33,8 @@ private:
     int level = 1;
     int lives = 3;
     double filled_area = 0;
+
+
 
 };
 

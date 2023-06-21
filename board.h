@@ -61,7 +61,7 @@ private:
     void logicBoardToTileBoard(LogicBoardEnum tile, int y, int x);
 
     void rememberTrace(int y, int x);
-    void traceDrawingFinished();
+    void traceDrawingSucceeded();
     void traceDrawingFailed();
 
     //algo
