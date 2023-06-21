@@ -31,13 +31,14 @@ public:
 
     void resetAfterKilled();
 
-public slots:
-    void movePlayer();
-    void drawingTraceSlot(bool drawing);
-
 signals:
     void positionChanged(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
     void pause();
+
+public slots:
+    void movePlayer();
+    void drawingTraceSlot(bool drawing);
+    void traceCrossedSlot();
 
 private:
     MoveDirection direction;
@@ -46,25 +47,27 @@ private:
     qreal player_size = 20;
 
     //textures of player
-    QPixmap pacman_left;
-    QPixmap pacman_right;
-    QPixmap pacman_up;
-    QPixmap pacman_down;
+//    QPixmap pacman_left;
+//    QPixmap pacman_right;
+//    QPixmap pacman_up;
+//    QPixmap pacman_down;
 
-    //player's x and y cords
-    int x_pos = 0;
-    int y_pos = 0;
+    QPixmap pacman_left = QPixmap(":/assets/pacman_left.png");
+    QPixmap pacman_right = QPixmap(":/assets/pacman_right.png");
+    QPixmap pacman_up = QPixmap(":/assets/pacman_up.png");
+    QPixmap pacman_down = QPixmap(":/assets/pacman_down.png");
+
+    int x_pos      = 0;
+    int y_pos      = 0;
     int x_prev_pos = 0;
     int y_prev_pos = 0;
 
-    //hold information about keyPressEvent to change direction when
-    //player model lines up with center of column or row
-    bool buffer_left;
-    bool buffer_right;
-    bool buffer_up;
-    bool buffer_down;
+    bool buffer_left    = false;
+    bool buffer_right   = false;
+    bool buffer_up      = false;
+    bool buffer_down    = false;
 
-    bool drawing_trace = false;
+    bool drawing_trace  = false;
 
 };
 

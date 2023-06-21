@@ -277,6 +277,13 @@ void Board::updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos
         emit fruitEaten(y_pos, x_pos);
     }
 
+    if(logic_board[0][y_pos][x_pos] == LogicBoardEnum::trace)
+    {
+        qDebug() << "suicide();";
+        emit suicide();
+        traceDrawingFailed();
+        return;
+    }
 
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::player;
     logic_board[1][y_prev_pos][x_prev_pos] = LogicBoardEnum::none;
@@ -299,7 +306,6 @@ void Board::updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos
         traceDrawingFinished();
     }
 
-    //debugBoard(0);
     emit boardUpdated();
     emit drawingTraceSignal(drawing_trace);
 }
@@ -385,7 +391,7 @@ void Board::handleFruitSlot(int y_pos, int x_pos, bool active)
 
     }
 
-    debugBoard(1);
+    //debugBoard(1);
 }
 
 void Board::traceDrawingFailed()

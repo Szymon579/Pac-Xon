@@ -36,6 +36,7 @@ signals:
     void coloredArea(double filled);
     void fruitEaten(int y_pos, int x_pos);
     void drawingTraceSignal(bool drawing);
+    void suicide();
 
 public slots:
     void updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);

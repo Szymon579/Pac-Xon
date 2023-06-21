@@ -12,11 +12,13 @@ GameBuilder::GameBuilder(int level, int lives)
     this->level = level;
     this->lives = lives;
 
+    makeGhosts(level);
+    makeFruits(level);
+
     board->renderTileBoard();
     scene->addItem(player);
 
-    makeGhosts(level);
-    makeFruits(level);
+
 
     for(int i = 0; i < ghost_vec.size(); i++)
     {
@@ -47,6 +49,7 @@ GameBuilder::GameBuilder(int level, int lives)
     QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWonSlot);
 
     QObject::connect(board, &Board::drawingTraceSignal, player, &Player::drawingTraceSlot);
+    QObject::connect(board, &Board::suicide, player, &Player::traceCrossedSlot);
 
     QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
 
@@ -56,9 +59,6 @@ GameBuilder::GameBuilder(int level, int lives)
 
 GameBuilder::~GameBuilder()
 {
-    ghost_vec.clear();
-    fruit_vec.clear();
-
     delete scene;
     delete board;
     delete player;
@@ -75,12 +75,6 @@ void GameBuilder::killedByGhostSlot()
 void GameBuilder::isGameWonSlot(double filled)
 {
     emit areaSignal(filled);
-
-//    if(filled > 80.0)
-//    {
-//        master_timer.stop();
-//        qDebug() << "YOU WIN!";
-//    }
 }
 
 void GameBuilder::pauseSlot()
