@@ -150,20 +150,23 @@ border-radius: 30;</string>
     <widget class="QLabel" name="areaLabel">
      <property name="geometry">
       <rect>
-       <x>770</x>
+       <x>755</x>
        <y>12</y>
-       <width>120</width>
+       <width>130</width>
        <height>25</height>
       </rect>
      </property>
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>18</pointsize>
-       <bold>false</bold>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(255, 247, 77);
+font: 700 18pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>AREA:</string>
@@ -174,18 +177,21 @@ border-radius: 30;</string>
       <rect>
        <x>280</x>
        <y>12</y>
-       <width>120</width>
+       <width>130</width>
        <height>25</height>
       </rect>
      </property>
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>18</pointsize>
-       <bold>false</bold>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(255, 247, 77);
+font: 700 18pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>LIVES: </string>
@@ -196,18 +202,21 @@ border-radius: 30;</string>
       <rect>
        <x>30</x>
        <y>12</y>
-       <width>120</width>
+       <width>130</width>
        <height>25</height>
       </rect>
      </property>
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>18</pointsize>
-       <bold>false</bold>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(255, 247, 77);
+font: 700 18pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>LEVEL:</string>
@@ -275,18 +284,21 @@ border-radius: 15;</string>
       <rect>
        <x>520</x>
        <y>12</y>
-       <width>151</width>
+       <width>160</width>
        <height>25</height>
       </rect>
      </property>
      <property name="font">
       <font>
+       <family>Segoe UI</family>
        <pointsize>18</pointsize>
-       <bold>false</bold>
+       <italic>false</italic>
+       <bold>true</bold>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);</string>
+      <string notr="true">color: rgb(255, 247, 77);
+font: 700 18pt &quot;Segoe UI&quot;;</string>
      </property>
      <property name="text">
       <string>SCORE:</string>
@@ -381,9 +393,9 @@ border-radius: 15;</string>
      <property name="geometry">
       <rect>
        <x>233</x>
-       <y>129</y>
+       <y>119</y>
        <width>450</width>
-       <height>311</height>
+       <height>331</height>
       </rect>
      </property>
      <property name="font">

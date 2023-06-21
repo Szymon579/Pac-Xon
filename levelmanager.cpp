@@ -5,7 +5,10 @@
 
 LevelManager::LevelManager()
 {
+}
 
+LevelManager::~LevelManager()
+{
 }
 
 void LevelManager::createLevel(int level_num)
@@ -28,16 +31,25 @@ void LevelManager::createLevel(int level_num)
     emit levelSignal(level_num);
 }
 
+void LevelManager::setLives(int lives)
+{
+    this->lives = lives;
+}
+
 void LevelManager::livesSlot(int lives)
 {
     this->lives = lives;
     emit livesSignal(lives);
+
+    if(lives < 1)
+        emit gameOverSignal();
+
 }
 
-void LevelManager::areaSlot(double score)
+void LevelManager::areaSlot(double area)
 {
-    this->filled_area = score;
-    emit areaSignal(score);
+    this->filled_area = area;
+    emit areaSignal(area);
 }
 
 void LevelManager::pauseSlot(bool pause)

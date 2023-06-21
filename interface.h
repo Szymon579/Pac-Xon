@@ -42,9 +42,10 @@ public slots:
     void scoreSlot(int score);
 
     void pauseSlot(bool pause);
+    void gameOverSlot();
 
 signals:
-
+    void scoreSignal(int score);
 
 private:
     Ui::Interface *ui;

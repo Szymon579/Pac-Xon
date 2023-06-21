@@ -19,7 +19,8 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::areaSignal,  this, &Interface::areaSlot);
     QObject::connect(&level_manager, &LevelManager::levelSignal, this, &Interface::levelSlot);
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
-
+    QObject::connect(&level_manager, &LevelManager::gameOverSignal, this, &Interface::gameOverSlot);
+    QObject::connect(this, &Interface::scoreSignal, this, &Interface::scoreSlot);
     leaderboard.parseJson(leaderboard_file);
 }
 
@@ -58,10 +59,14 @@ void Interface::uiSetup()
     ui->acceptButton->setIcon(accept_icon);
     ui->acceptButton->setIconSize(accept_pixmap.rect().size()/2);
 
+    ui->leaderEdit->setFrameStyle(0);
     ui->leaderEdit->setReadOnly(true);
     ui->leaderEdit->setFocusPolicy(Qt::NoFocus);
     ui->leaderEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->leaderEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+    ui->nameEdit->setFrame(false);
+    ui->nameEdit->setAlignment(Qt::AlignCenter);
     ui->nameEdit->setPlaceholderText(" Your nickname:");
 
     //game page
@@ -77,12 +82,17 @@ void Interface::uiSetup()
 //main page
 void Interface::on_startButton_clicked()
 {
+    total_score = 0;
+    level = 0;
+    qDebug() << "startButton pressed";
     ui->stackView->setCurrentIndex(1);
+    ui->scoreLabel->setText("SCORE: 0");
     updateLevelView(1);
 }
 
 void Interface::on_leadButton_clicked()
 {
+    ui->leaderEdit->setFixedSize(QSize(450, 480));
     ui->nameEdit->setVisible(false);
     ui->acceptButton->setVisible(false);
 
@@ -104,6 +114,7 @@ void Interface::on_menuButton_clicked()
 
 void Interface::updateLevelView(int level)
 {
+    level_manager.setLives(3);
     level_manager.createLevel(level);
     this->scene = level_manager.scene;
 
@@ -136,7 +147,8 @@ void Interface::on_acceptButton_clicked()
     {
         ui->nameEdit->clear();
         ui->nameEdit->setVisible(false);
-        //ui->nameEdit->setPlaceholderText(name);
+        ui->acceptButton->setVisible(false);
+        ui->leaderEdit->setFixedSize(QSize(450, 480));
         leaderboard.addResult(name, total_score);
 
     }
@@ -155,20 +167,14 @@ void Interface::on_backButton_clicked()
     leaderboard.saveToJsonFile(leaderboard_file);
 }
 
+
+
 //slots
 void Interface::livesSlot(int lives)
 {
     std::string s_lives = std::to_string(lives);
     QString label = "LIVES: " + QString::fromStdString(s_lives);
     ui->livesLabel->setText(label);
-
-    if(lives < 1)
-    {
-        ui->stackView->setCurrentIndex(2);
-        ui->nameEdit->setVisible(true);
-        ui->acceptButton->setVisible(true);
-        displayLeaderboard();
-    }
 }
 
 void Interface::areaSlot(double area)
@@ -188,11 +194,12 @@ void Interface::areaSlot(double area)
     }
 
     scoreSlot(area);
+
 }
 
 void Interface::scoreSlot(int score)
 {
-    this->total_score += score * level * 100;
+    this->total_score += score * level;
 
     QString label = "SCORE: " + QString::number(total_score);
     ui->scoreLabel->setText(label);
@@ -208,6 +215,15 @@ void Interface::levelSlot(int level)
 void Interface::pauseSlot(bool pause)
 {
     ui->pauseWidget->setVisible(pause);
+}
+
+void Interface::gameOverSlot()
+{
+    ui->stackView->setCurrentIndex(2);
+    ui->leaderEdit->setFixedSize(QSize(450, 330));
+    ui->nameEdit->setVisible(true);
+    ui->acceptButton->setVisible(true);
+    displayLeaderboard();
 }
 
 
