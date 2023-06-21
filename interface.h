@@ -58,7 +58,7 @@ private:
     void updateLevelView(int level);
     void displayLeaderboard();
 
-    int achived_score = 0;
+    int total_score = 0;
     int level = 1;
     int required_area = 20; //filled area required to finish the level
 

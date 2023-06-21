@@ -108,7 +108,6 @@ void Interface::updateLevelView(int level)
     this->scene = level_manager.scene;
 
     ui->graphicsView->setScene(scene);
-
     ui->graphicsView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     ui->graphicsView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 }
@@ -137,7 +136,7 @@ void Interface::on_acceptButton_clicked()
     {
         ui->nameEdit->clear();
         ui->nameEdit->setPlaceholderText(name);
-        leaderboard.addResult(name, achived_score);
+        leaderboard.addResult(name, total_score);
 
     }
     else
@@ -173,25 +172,28 @@ void Interface::livesSlot(int lives)
 
 void Interface::areaSlot(double area)
 {
+    bool next_level = false;
+
     if(area > required_area)
+        next_level = true;
+
+    area = round(area);
+    QString label = "AREA: " + QString::number(area) + "%";
+    ui->areaLabel->setText(label);
+
+    if(next_level)
     {
         updateLevelView(++level);
     }
 
-    area = round(area);
-
-    QString label = "AREA: " + QString::number(area) + "%";
-    ui->areaLabel->setText(label);
-
     emit scoreSignal(area);
-
 }
 
 void Interface::scoreSlot(int score)
 {
-    this->achived_score += score * level * 100;
+    this->total_score += score * level * 100;
 
-    QString label = "SCORE: " + QString::number(achived_score);
+    QString label = "SCORE: " + QString::number(total_score);
     ui->scoreLabel->setText(label);
 }
 

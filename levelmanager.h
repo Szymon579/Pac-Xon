@@ -2,8 +2,6 @@
 #define LEVELMANAGER_H
 
 #include "gamebuilder.h"
-#include "ghost.h"
-#include "fruit.h"
 
 #include <QObject>
 #include <QGraphicsScene>
@@ -32,14 +30,14 @@ public slots:
 
 private:
     int level = 1;
-    double score = 0;
-    int lives = 0;
+    int lives = 3;
+    double filled_area = 0;
 
-    std::vector<Ghost*> ghost_vec;
-    void makeGhosts(int quantity);
+//    std::vector<Ghost*> ghost_vec;
+//    void makeGhosts(int quantity);
 
-    std::vector<Fruit*> fruit_vec;
-    void makeFruits(int quantity);
+//    std::vector<Fruit*> fruit_vec;
+//    void makeFruits(int quantity);
 };
 
 #endif // LEVELMANAGER_H

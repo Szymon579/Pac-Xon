@@ -2,7 +2,6 @@
 #include "gamebuilder.h"
 
 #include <QObject>
-//#include <random>
 
 LevelManager::LevelManager()
 {
@@ -11,12 +10,11 @@ LevelManager::LevelManager()
 
 void LevelManager::createLevel(int level_num)
 {
+    qDebug() << "createLevel called";
+
     scene = new QGraphicsScene(0, 0, 900, 600);
 
-    makeGhosts(level_num);
-    makeFruits(level_num);
-
-    game = new GameBuilder(level_num, 3, ghost_vec, fruit_vec);
+    game = new GameBuilder(level_num, lives);
 
     QObject::connect(game, &GameBuilder::livesSignal, this, &LevelManager::livesSlot);
     QObject::connect(game, &GameBuilder::areaSignal, this, &LevelManager::areaSlot);
@@ -24,13 +22,10 @@ void LevelManager::createLevel(int level_num)
 
     this->scene = game->scene;
 
-    ghost_vec.clear();
-    fruit_vec.clear();
-
-    emit livesSignal(3);
+    emit livesSignal(lives);
     emit areaSignal(0);
-    emit levelSignal(level_num);
     emit pauseSignal(false);
+    emit levelSignal(level_num);
 }
 
 void LevelManager::livesSlot(int lives)
@@ -41,38 +36,11 @@ void LevelManager::livesSlot(int lives)
 
 void LevelManager::areaSlot(double score)
 {
-    this->score = score;
+    this->filled_area = score;
     emit areaSignal(score);
 }
 
 void LevelManager::pauseSlot(bool pause)
 {
     emit pauseSignal(pause);
-}
-
-void LevelManager::makeGhosts(int quantity)
-{
-    for(int i = 0; i < quantity; i++)
-    {
-        int rand_y      = 2 + (rand() % 27);
-        int rand_x      = 2 + (rand() % 42);
-        int rand_dir    = rand() % 4;
-
-        Ghost *ghost = new Ghost(rand_y, rand_x, (Ghost::GhostDirection)rand_dir);
-        ghost_vec.push_back(ghost);
-    }
-}
-
-void LevelManager::makeFruits(int quantity)
-{
-    for(int i = 0; i < quantity; i++)
-    {
-        int rand_y      = 2 + (rand() % 27);
-        int rand_x      = 2 + (rand() % 42);
-        int rand_time   = 3 + (rand() % 13);
-        int rand_power  = rand() % 3;
-
-        Fruit *fruit = new Fruit(rand_y, rand_x, rand_time, (Fruit::Power)rand_power);
-        fruit_vec.push_back(fruit);
-    }
 }
