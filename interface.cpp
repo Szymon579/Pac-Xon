@@ -128,8 +128,23 @@ void Interface::displayLeaderboard()
 
 void Interface::on_acceptButton_clicked()
 {
-    leaderboard.addResult(ui->nameEdit->text(), achived_score);
-    ui->nameEdit->clear();
+    QString name = ui->nameEdit->text();
+
+    QRegularExpression regex("^[a-z]{1,8}$");
+    QRegularExpressionMatch match = regex.match(name);
+
+    if (match.hasMatch())
+    {
+        ui->nameEdit->clear();
+        ui->nameEdit->setPlaceholderText(name);
+        leaderboard.addResult(name, achived_score);
+
+    }
+    else
+    {
+        ui->nameEdit->clear();
+        ui->nameEdit->setPlaceholderText("max 8 letters!");
+    }
 
     displayLeaderboard();
 }

@@ -50,7 +50,7 @@ private:
     QGraphicsScene *scene;
 
     Leaderboard leaderboard;
-    QString leaderboard_file = "test1.json";
+    QString leaderboard_file = "leaderboard.json";
 
     LevelManager level_manager;
 
