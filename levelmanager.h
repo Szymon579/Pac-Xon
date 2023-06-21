@@ -33,11 +33,6 @@ private:
     int lives = 3;
     double filled_area = 0;
 
-//    std::vector<Ghost*> ghost_vec;
-//    void makeGhosts(int quantity);
-
-//    std::vector<Fruit*> fruit_vec;
-//    void makeFruits(int quantity);
 };
 
 #endif // LEVELMANAGER_H

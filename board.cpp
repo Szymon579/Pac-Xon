@@ -121,6 +121,8 @@ void Board::traceDrawingFinished()
     }
 
     trace_cords.clear();
+
+    //emit drawingTraceSignal(false);
 }
 
 void Board::indexToFill()
@@ -268,7 +270,7 @@ void Board::howMuchFilled()
     emit coloredArea(percent);
 }
 
-void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
+void Board::updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
     if(logic_board[1][y_pos][x_pos] == LogicBoardEnum::fruit)
     {
@@ -299,10 +301,11 @@ void Board::updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 
     //debugBoard(0);
     emit boardUpdated();
+    emit drawingTraceSignal(drawing_trace);
 }
 
 //needs some improvement
-void Board::handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
+void Board::handleGhostSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
 {
     logic_board[1][y_pos][x_pos] = LogicBoardEnum::ghost;
 
@@ -369,7 +372,7 @@ void Board::handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos)
                    left_up, left_down, right_up, right_down, game_over);
 }
 
-void Board::handleFruit(int y_pos, int x_pos, bool active)
+void Board::handleFruitSlot(int y_pos, int x_pos, bool active)
 {
 
     if(active)

@@ -29,17 +29,18 @@ public:
 
     void renderTileBoard();
 
-public slots:
-    void updateBoard(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
-    void handleGhost(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
-    void handleFruit(int y_pos, int x_pos, bool active);
-
 signals:
     void boardUpdated();
     void borderHit(int y_pos, int x_pos, bool left, bool right, bool up, bool down,
                    bool left_up, bool left_down, bool right_up, bool right_down, bool game_over);
     void coloredArea(double filled);
     void fruitEaten(int y_pos, int x_pos);
+    void drawingTraceSignal(bool drawing);
+
+public slots:
+    void updateBoardSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
+    void handleGhostSlot(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos); //checks surroundings
+    void handleFruitSlot(int y_pos, int x_pos, bool active);
 
 
 private:

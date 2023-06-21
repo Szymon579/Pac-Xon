@@ -23,7 +23,7 @@ GameBuilder::GameBuilder(int level, int lives)
         ghosts.push_back(ghost_vec[i]);
 
         scene->addItem(ghost_vec[i]);
-        QObject::connect(ghost_vec[i], &Ghost::checkTile, board, &Board::handleGhost);
+        QObject::connect(ghost_vec[i], &Ghost::checkTile, board, &Board::handleGhostSlot);
         QObject::connect(ghost_vec[i], &Ghost::gameOver, this, &GameBuilder::killedByGhostSlot);
         QObject::connect(board, &Board::borderHit, ghost_vec[i], &Ghost::changeDirection);
         QObject::connect(&master_timer, &QTimer::timeout, ghost_vec[i], &Ghost::moveGhost);
@@ -31,7 +31,7 @@ GameBuilder::GameBuilder(int level, int lives)
 
     for(int i = 0; i < fruit_vec.size(); i++)
     {
-        QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruit);
+        QObject::connect(fruit_vec[i], &Fruit::setPosOnBoard, board, &Board::handleFruitSlot);
         QObject::connect(board, &Board::fruitEaten, fruit_vec[i], &Fruit::eaten);
 
         QObject::connect(fruit_vec[i], &Fruit::givePower, this, &GameBuilder::givePowerSlot);
@@ -42,9 +42,11 @@ GameBuilder::GameBuilder(int level, int lives)
 
     }
 
-    QObject::connect(player, &Player::positionChanged, board, &Board::updateBoard);
+    QObject::connect(player, &Player::positionChanged, board, &Board::updateBoardSlot);
     QObject::connect(&master_timer, &QTimer::timeout, player, &Player::movePlayer);
     QObject::connect(board, &Board::coloredArea, this, &GameBuilder::isGameWonSlot);
+
+    QObject::connect(board, &Board::drawingTraceSignal, player, &Player::drawingTraceSlot);
 
     QObject::connect(player, &Player::pause, this, &GameBuilder::pauseSlot);
 

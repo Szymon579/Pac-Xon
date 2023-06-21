@@ -60,6 +60,13 @@ void Player::keyPressEvent(QKeyEvent *event)
 
 }
 
+void Player::resetAfterKilled()
+{
+    this->setPos(0, 0);
+    direction = none;
+    player_texture = pacman_right;
+}
+
 void Player::alignDirectionChange()
 {
     if(buffer_left && fmod(this->y(), player_size) == 0) {
@@ -105,7 +112,7 @@ void Player::borderControl()
 
 }
 
-void Player::positionOnBoard()
+void Player::updatePosOnBoard()
 {
     x_prev_pos = x_pos;
     y_prev_pos = y_pos;
@@ -121,18 +128,28 @@ void Player::positionOnBoard()
 
 }
 
-void Player::resetAfterKilled()
+void Player::neverGoBack()
 {
-    this->setPos(0, 0);
-    direction = none;
-    player_texture = pacman_right;
+    if(direction == MoveDirection::left)
+        buffer_right = false;
+    if(direction == MoveDirection::right)
+        buffer_left = false;
+    if(direction == MoveDirection::up)
+        buffer_down = false;
+    if(direction == MoveDirection::down)
+        buffer_up = false;
 }
+
+
 
 void Player::movePlayer()
 {
+    if(drawing_trace)
+        neverGoBack();
+
     borderControl();
     alignDirectionChange();
-    positionOnBoard();
+    updatePosOnBoard();
 
     if(direction == MoveDirection::left) {
         if(x_pos == 0)
@@ -158,5 +175,10 @@ void Player::movePlayer()
         //do not move;
     }
 
+}
+
+void Player::drawingTraceSlot(bool drawing)
+{
+    drawing_trace = drawing;
 }
 

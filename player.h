@@ -26,26 +26,21 @@ public:
     void keyPressEvent(QKeyEvent *event);
     void alignDirectionChange();
     void borderControl();
-    void positionOnBoard();
+    void updatePosOnBoard();
+    void neverGoBack();
 
     void resetAfterKilled();
 
 public slots:
     void movePlayer();
+    void drawingTraceSlot(bool drawing);
 
 signals:
     void positionChanged(int y_pos, int x_pos, int y_prev_pos, int x_prev_pos);
     void pause();
 
 private:
-    //player's current direction
     MoveDirection direction;
-
-    //player's x and y cords
-    int x_pos = 0;
-    int y_pos = 0;
-    int x_prev_pos = 0;
-    int y_prev_pos = 0;
 
     QPixmap player_texture;
     qreal player_size = 20;
@@ -56,12 +51,20 @@ private:
     QPixmap pacman_up;
     QPixmap pacman_down;
 
+    //player's x and y cords
+    int x_pos = 0;
+    int y_pos = 0;
+    int x_prev_pos = 0;
+    int y_prev_pos = 0;
+
     //hold information about keyPressEvent to change direction when
     //player model lines up with center of column or row
     bool buffer_left;
     bool buffer_right;
     bool buffer_up;
     bool buffer_down;
+
+    bool drawing_trace = false;
 
 };
 
