@@ -35,9 +35,6 @@ set(PROJECT_SOURCES
         fruit.cpp
         fruit.h
 
-        test.cpp
-        test.h
-
         resources.qrc
 
 )
