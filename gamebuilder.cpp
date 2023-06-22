@@ -12,6 +12,8 @@ GameBuilder::GameBuilder(int level, int lives)
     this->level = level;
     this->lives = lives;
 
+    ghost_vec.clear();
+    fruit_vec.clear();
     makeGhosts(level);
     makeFruits(level);
 
@@ -103,6 +105,7 @@ void GameBuilder::deleteFromSceneSlot()
 
 void GameBuilder::givePowerSlot(Fruit::Power power, int effect_time)
 {
+
     if(power == Fruit::Power::add_life)
     {
         lives++;
@@ -118,7 +121,7 @@ void GameBuilder::givePowerSlot(Fruit::Power power, int effect_time)
     {
         for(int i = 0; i < ghost_vec.size(); i++)
         {
-            ghost_vec[i]->step = ghost_vec[i]->step / 2;
+            ghost_vec[i]->step = 0;
         }
     }
 }
@@ -134,7 +137,7 @@ void GameBuilder::disablePowerSlot(Fruit::Power power)
     {
         for(int i = 0; i < ghost_vec.size(); i++)
         {
-            ghost_vec[i]->step = ghost_vec[i]->step * 2;
+            ghost_vec[i]->step = 0.5;
         }
     }
 }
@@ -158,7 +161,7 @@ void GameBuilder::makeFruits(int quantity)
     {
         int rand_y      = 2 + (rand() % 27);
         int rand_x      = 2 + (rand() % 42);
-        int rand_time   = 3 + (rand() % 13);
+        int rand_time   = 3 + (rand() % 30);
         int rand_power  = rand() % 3;
 
         Fruit *fruit = new Fruit(rand_y, rand_x, rand_time, (Fruit::Power)rand_power);

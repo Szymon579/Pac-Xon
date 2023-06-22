@@ -5,10 +5,12 @@
 
 LevelManager::LevelManager()
 {
+
 }
 
 LevelManager::~LevelManager()
 {
+
 }
 
 void LevelManager::createLevel(int level_num)

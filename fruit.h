@@ -45,7 +45,7 @@ private:
     int x_pos;
     bool is_active = true;
     int time_to_spawn = 0;
-    int effect_time = 5;
+    int effect_time = 4;
 
 };
 

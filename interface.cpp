@@ -21,12 +21,13 @@ Interface::Interface(QWidget *parent) :
     QObject::connect(&level_manager, &LevelManager::pauseSignal, this, &Interface::pauseSlot);
     QObject::connect(&level_manager, &LevelManager::gameOverSignal, this, &Interface::gameOverSlot);
     QObject::connect(this, &Interface::scoreSignal, this, &Interface::scoreSlot);
+
     leaderboard.parseJson(leaderboard_file);
 }
 
 Interface::~Interface()
 {
-    //saveJson
+    leaderboard.saveToJsonFile(leaderboard_file);
     delete ui;
 }
 
@@ -83,7 +84,8 @@ void Interface::uiSetup()
 void Interface::on_startButton_clicked()
 {
     total_score = 0;
-    level = 0;
+    level = 1;
+    lives = 3;
     qDebug() << "startButton pressed";
     ui->stackView->setCurrentIndex(1);
     ui->scoreLabel->setText("SCORE: 0");
@@ -114,8 +116,9 @@ void Interface::on_menuButton_clicked()
 
 void Interface::updateLevelView(int level)
 {
-    level_manager.setLives(3);
-    level_manager.createLevel(level);
+    qDebug() << "upadateLeveView called";
+    //level_manager.setLives(4);
+    level_manager.createLevel(this->level);
     this->scene = level_manager.scene;
 
     ui->graphicsView->setScene(scene);
@@ -164,7 +167,6 @@ void Interface::on_acceptButton_clicked()
 void Interface::on_backButton_clicked()
 {
     ui->stackView->setCurrentIndex(0);
-    leaderboard.saveToJsonFile(leaderboard_file);
 }
 
 

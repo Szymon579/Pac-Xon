@@ -38,8 +38,6 @@ private:
     int req_area = 20;
     double filled_area = 0;
 
-
-
 };
 
 #endif // LEVELMANAGER_H

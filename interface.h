@@ -58,7 +58,8 @@ private:
 
     int total_score = 0;
     int level = 1;
-    int required_area = 20; //filled area required to finish the level
+    int lives = 3;
+    int required_area = 80; //filled area required to finish the level
 
     void uiSetup();
     void updateLevelView(int level);
